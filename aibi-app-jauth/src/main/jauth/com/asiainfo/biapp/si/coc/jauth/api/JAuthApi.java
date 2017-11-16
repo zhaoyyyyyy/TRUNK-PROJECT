@@ -131,6 +131,23 @@ public class JAuthApi {
         		list.addAll(role.getResourceSet());
         	}
         }
+        for (Resource resource : list) {
+            if (resource.getChildren().size()!=0) {
+                resource.setChildren(null);
+            }
+        }
+        List<Resource> list1 = new ArrayList<Resource>();
+        for (Resource resource : list) {
+            if (resource.getType().equals(type)) {
+                if (resource.getChildren().size()!=0) {
+                    resource.setChildren(null);
+                }
+                list1.add(resource);
+            }
+        }
+        if (type!=null) {
+            return list1;
+        }
         return list;
     }
     
