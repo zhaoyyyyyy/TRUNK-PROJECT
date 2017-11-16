@@ -156,6 +156,7 @@ public class DicDataController extends BaseController<DicData>{
 	}
 	
 	@ApiOperation(value="删除")
+	@ApiImplicitParam(name="id",value="字典ID",required=true,paramType="query",dataType="string")
 	@RequestMapping(value="/delete", method=RequestMethod.POST, produces={ MediaType.APPLICATION_JSON_VALUE })
 	public void delete(String id){
 		dicDataService.delete(id);

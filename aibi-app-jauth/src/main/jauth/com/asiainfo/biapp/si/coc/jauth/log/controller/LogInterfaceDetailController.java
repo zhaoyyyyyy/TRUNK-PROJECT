@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import springfox.documentation.annotations.ApiIgnore;
 
-//@Api(value="接口调用日志")
+@Api(value="接口调用日志")
 @RequestMapping("api/interface")
 @RestController
 public class LogInterfaceDetailController extends BaseController<LogInterfaceDetail>{
@@ -65,7 +65,7 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
         @ApiImplicitParam(name="outputParams",value="输出参数",required=false,paramType="query",dataType="string")
     })
     @RequestMapping(value="/save",method = RequestMethod.POST)
-    public String save(LogInterfaceDetail logInterfaceDetail){
+    public String save(@ApiIgnore LogInterfaceDetail logInterfaceDetail){
         loginterfaceService.save(logInterfaceDetail);
         return "success";
     }

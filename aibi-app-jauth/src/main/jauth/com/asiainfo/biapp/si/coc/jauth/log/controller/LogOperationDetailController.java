@@ -44,7 +44,7 @@ import springfox.documentation.annotations.ApiIgnore;
  * @author  panweiwei
  * @version 1.0.0.2017年10月20日
  */
-//@Api(value="用户操作日志")
+@Api(value="用户操作日志")
 @RequestMapping("api/logOperation")
 @RestController
 public class LogOperationDetailController  extends BaseController<LogOperationDetail>{
@@ -95,7 +95,7 @@ public class LogOperationDetailController  extends BaseController<LogOperationDe
         @ApiImplicitParam(name="params",value="信息",required=false,paramType="query",dataType="string")
     })
     @RequestMapping(value="/save",method=RequestMethod.POST)
-    public String saveLogOperationDetail(LogOperationDetail logOperationDetail){
+    public String saveLogOperationDetail(@ApiIgnore LogOperationDetail logOperationDetail){
         logoperationService.save(logOperationDetail);
         return "success";
     }

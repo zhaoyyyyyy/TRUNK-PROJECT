@@ -24,6 +24,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 
@@ -115,7 +116,7 @@ public class IpWhiteListController extends BaseController<IpWhiteList> {
         @ApiImplicitParam(name = "requestAddress", value="请求地址", required=true, paramType = "query", dataType = "string")
     })
 	@RequestMapping(value = "/whitelist/save", method = RequestMethod.POST)
-	public String addIpWhiteList(IpWhiteList ipWhiteList) {
+	public String addIpWhiteList(@ApiIgnore IpWhiteList ipWhiteList) {
 		IpWhiteList newIpWhiteList = new IpWhiteList();
 		newIpWhiteList.setIpAddress(ipWhiteList.getIpAddress());
 		newIpWhiteList.setRequestAddress(ipWhiteList.getRequestAddress());
@@ -140,7 +141,7 @@ public class IpWhiteListController extends BaseController<IpWhiteList> {
         @ApiImplicitParam(name = "requestAddress", value="请求地址", required=true, paramType = "query", dataType = "string")
 	})
 	@RequestMapping(value = "/whitelist/update", method = RequestMethod.POST)	
-	public String updateIpWhiteList(IpWhiteList ipWhiteList) {
+	public String updateIpWhiteList(@ApiIgnore IpWhiteList ipWhiteList) {
 	    IpWhiteList oldIpWhiteList=ipwhitelistService.get(ipWhiteList.getListId());
 	    oldIpWhiteList.setIpAddress(ipWhiteList.getIpAddress());
 	    oldIpWhiteList.setRequestAddress(ipWhiteList.getRequestAddress());
@@ -187,11 +188,11 @@ public class IpWhiteListController extends BaseController<IpWhiteList> {
                 String requestAddrconfig = ipWhiteList.getRequestAddress();
                 boolean reqflag = IpVerifyUtil.checkreqAddres(requestAddress, requestAddrconfig);
                 if (reqflag) {
-                    return "success";
+                    return "true";
                 }
             }
-		    return "refuse";
+		    return "false";
 		}
-		return "refuse";
+		return "true";
 	}
 }

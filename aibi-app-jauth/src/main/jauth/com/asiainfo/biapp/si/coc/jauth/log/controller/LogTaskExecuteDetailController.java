@@ -19,6 +19,7 @@ import com.asiainfo.biapp.si.coc.jauth.log.vo.LogTaskExecuteDetailVo;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.LocTaskExeInfo;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.LocTaskExeInfoService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +45,7 @@ import springfox.documentation.annotations.ApiIgnore;
  * @author  panweiwei
  * @version 1.0.0.2017年10月24日
  */
+@Api(value="系统调度日志")
 @RequestMapping("api/taskexecute")
 @RestController
 public class LogTaskExecuteDetailController  extends BaseController<LogTaskExecuteDetail>{
@@ -96,7 +98,7 @@ public class LogTaskExecuteDetailController  extends BaseController<LogTaskExecu
         @ApiImplicitParam(name="nodeName",value="节点名称",required=false,paramType="query",dataType="string")
     })
     @RequestMapping(value="/save",method=RequestMethod.POST)
-    public String saveLogTaskExecuteDetail(LogTaskExecuteDetail logTaskExecuteDetail){
+    public String saveLogTaskExecuteDetail(@ApiIgnore LogTaskExecuteDetail logTaskExecuteDetail){
         LocTaskExeInfo locTaskExeInfo = locTaskExeInfoService.get(logTaskExecuteDetail.getTaskExtId());
         logTaskExecuteDetail.setExeParams(locTaskExeInfo.getSysId());  
         logtaskexecuteService.save(logTaskExecuteDetail);

@@ -324,6 +324,8 @@ public class UserController {
      * @param
      * @date 2013-7-1
      */
+    @ApiOperation(value="变更用户状态")
+    @ApiImplicitParam(name="id",value="用户id",required=true,paramType="query",dataType="string")
     @RequestMapping(value = "/changeStatus", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
     public void changeStatus(String id) {
         User user = userService.get(id);
@@ -336,7 +338,15 @@ public class UserController {
         }
         userService.saveOrUpdate(user);
     }
-    
+    /**
+     * 
+     * @describe 根据id删除用户
+     * @author liukai
+     * @param
+     * @date 2013-7-1
+     */
+    @ApiOperation(value="删除用户")
+    @ApiImplicitParam(name="id",value="用户id",required=true,paramType="query",dataType="string")
     @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
     public void delete(String id) {
         User user = userService.get(id);

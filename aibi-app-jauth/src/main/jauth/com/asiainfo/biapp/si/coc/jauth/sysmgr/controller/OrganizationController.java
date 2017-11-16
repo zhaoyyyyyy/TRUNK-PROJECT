@@ -219,12 +219,16 @@ public class OrganizationController extends BaseController<Organization>{
 	 * @author ljs
 	 * @date 2013-7-30
 	 */
-	public String deleteOrg(String orgCode){
-		boolean rtn = organizationService.deleteOrgByOrgCode(orgCode);
-		if(rtn){
-			return "1";
-		}else{
-			return "0";
-		}
-	}
+	@ApiOperation(value="删除组织")
+    @ApiImplicitParam(name = "orgCode", value = "组织信息编码", required = true, paramType = "query" ,dataType = "string")
+    @RequestMapping(value="/delete",method=RequestMethod.POST)
+    public String deleteOrg(String orgCode){
+        Organization organization = organizationService.getOrgByOrgCode(orgCode);
+        if(StringUtil.isBlank(organization.getId())){
+            return "fail--NoExist";
+        }
+        organizationService.delete(organization.getId());
+        return "success";
+    }
+
 }
