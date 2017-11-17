@@ -6,6 +6,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>aibi-app-jauth</module>
+    <module>aibi-project-cp-acrm</module>
   </modules>
    <parent>
 		<groupId>org.springframework.boot</groupId>
