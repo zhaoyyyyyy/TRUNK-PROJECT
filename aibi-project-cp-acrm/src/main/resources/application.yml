@@ -1,0 +1,25 @@
+server:
+  port: 8442
+  context-path: /
+spring:
+  profiles:
+    active: dev
+  application:
+    name: cpacrm
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: true
+security: 
+  basic:
+    enabled: false
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: "${jauth-url}/eureka/"
+  instance:
+    leaseExpirationDurationInSeconds: 1
+    leaseRenewalIntervalInSeconds: 1
