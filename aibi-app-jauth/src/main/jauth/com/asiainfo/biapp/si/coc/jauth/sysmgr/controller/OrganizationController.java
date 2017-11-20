@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.asiainfo.biapp.si.coc.jauth.frame.controller.BaseController;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Group;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Organization;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.User;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.OrganizationService;
@@ -67,24 +68,26 @@ public class OrganizationController extends BaseController<Organization>{
 		@ApiImplicitParam(name = "sec", value = "树类型", required = false, paramType = "query" ,dataType = "string")
 	})
 	@RequestMapping(value="/renderOrgTree",method=RequestMethod.POST,  produces={ MediaType.ALL_VALUE })
-	public String renderOrgTree(String orgCode,String treeType,String isAsynchron,String sec){
-		if("true".equals(sec)){
-			StringBuffer sb = new StringBuffer();
-			Organization organization = organizationService.getOrgByOrgCode(orgCode);
-			return this.getSubTree(organization.getChildren(), "true", treeType, sb,"true".equals(isAsynchron)?true:false);
-		}else{
-			User user = sessionInfoHolder.getLoginUser();
-			orgCode = user.getOrginfoId();
-			if(orgCode==null){
-				return null;
-			}
-			Organization organization = organizationService.get(orgCode);
-			if(organization==null){
-				return null;
-			}
-			StringBuffer sb = new StringBuffer();
-			return this.getTree(organization, "true", treeType, sb,"true".equals(isAsynchron)?true:false);
-		}
+	public String renderOrgTree(String orgCode,String treeType,String isAsynchron,String sec){	    
+	    if("true".equals(sec)){
+            StringBuffer sb = new StringBuffer();
+            Organization organization = organizationService.getOrgByOrgCode(orgCode);
+            return this.getSubTree(organization.getChildren(), "true", treeType, sb,"true".equals(isAsynchron)?true:false);
+        }else{
+            User user = sessionInfoHolder.getLoginUser();
+            String string = "";
+            for (Group group : user.getGroupSet()) {
+                Set<Organization> organizationSet = group.getOrganizationSet();
+                for (Organization organization : organizationSet) {
+                    Organization parent = organizationService.get(organization.getParentId());
+                    if (!organizationSet.contains(parent)) {
+                        StringBuffer sb = new StringBuffer();
+                        string +=this.getTree(organization, "true", treeType, sb,"true".equals(isAsynchron)?true:false); 
+                    }                  
+                }
+            }
+            return string;
+        }
 	}
 	
 	/**
