@@ -62,6 +62,11 @@ public class UserDaoImpl extends BaseDaoImpl<User,String> implements UserDao {
 			hql.append(" and r.id != :id");
 			params.put("id", userVo.getId());
 		}
+		//创建人
+		if (StringUtils.isNotBlank(userVo.getCreateUserId())) {
+            hql.append(" and r.createUserId = :createUserId");
+            params.put("createUserId", userVo.getCreateUserId());
+        }
 		// 组织
 		if (StringUtils.isNotBlank(userVo.orginfoId)) {
 			hql.append(" and r.orginfoId = :orginfoId");

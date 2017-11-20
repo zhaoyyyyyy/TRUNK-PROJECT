@@ -6,7 +6,7 @@ window.jauth_onload = function() {
 		if ($('#saveDataForm').validateForm()) {
 			var user = $("#saveDataForm").serialize();
 			$.commAjax({
-				url : $.ctx + '/api/user/newUser',
+				url : $.ctx + '/api/user/add',
 				postData : $("#saveDataForm").formToJson(),
 				onSuccess : function(data) {
 					if (data == 'success') {

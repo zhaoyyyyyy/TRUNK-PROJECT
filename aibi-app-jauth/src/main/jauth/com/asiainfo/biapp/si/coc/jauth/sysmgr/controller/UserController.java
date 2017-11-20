@@ -80,6 +80,7 @@ public class UserController {
             userVo.setOrginfoId(user.getOrginfoId());// 本组织
             userVo.setId(user.getId());// 当前用户
             userVo.setIsAdmin(2);
+            userVo.setCreateUserId(user.getUserName());
             JQGridPage<User> userList = userService.findUserList(page, userVo);
             return JSONResult.page2Json(userList, cols);
         }
