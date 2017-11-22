@@ -1,0 +1,8 @@
+jauth-url: 
+  http://192.168.248.184:8440/jauth
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.248.142:3306/acrm_coc?useUnicode=true&characterEncoding=utf-8
+    username: coc
+    password: 1qaz2wsx
