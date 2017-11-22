@@ -1,15 +1,14 @@
 package com.asiainfo.biapp.si.coc.jauth.security.model.token;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.security.authentication.BadCredentialsException;
 
 import com.asiainfo.biapp.si.coc.jauth.security.exceptions.JwtExpiredTokenException;
 import com.asiainfo.biapp.si.coc.jauth.security.model.Scopes;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 
 /**
  * RefreshToken
@@ -37,16 +36,31 @@ public class RefreshToken implements JwtToken {
      * 
      * @return
      */
-    public static Optional<RefreshToken> create(RawAccessJwtToken token, String signingKey) {
+//    public static Optional<RefreshToken> create(RawAccessJwtToken token, String signingKey) {
+//        Jws<Claims> claims = token.parseClaims(signingKey);
+//
+//        List<String> scopes = claims.getBody().get("scopes", List.class);
+//        if (scopes == null || scopes.isEmpty() 
+//                || !scopes.stream().filter(scope -> Scopes.REFRESH_TOKEN.authority().equals(scope)).findFirst().isPresent()) {
+//            return Optional.empty();
+//        }
+//
+//        return Optional.of(new RefreshToken(claims));
+//    }
+    
+    public static RefreshToken create(RawAccessJwtToken token, String signingKey){
         Jws<Claims> claims = token.parseClaims(signingKey);
 
         List<String> scopes = claims.getBody().get("scopes", List.class);
-        if (scopes == null || scopes.isEmpty() 
-                || !scopes.stream().filter(scope -> Scopes.REFRESH_TOKEN.authority().equals(scope)).findFirst().isPresent()) {
-            return Optional.empty();
+        for(String s : scopes){
+            if(scopes == null || scopes.isEmpty() || Scopes.REFRESH_TOKEN.authority().equals(s)){
+                return null;
+            }else{
+                continue;
+            }
         }
-
-        return Optional.of(new RefreshToken(claims));
+        
+        return new RefreshToken(claims);
     }
 
     @Override

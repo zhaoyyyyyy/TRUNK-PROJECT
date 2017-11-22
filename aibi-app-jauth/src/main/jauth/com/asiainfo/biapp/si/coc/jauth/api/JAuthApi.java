@@ -1,9 +1,15 @@
 package com.asiainfo.biapp.si.coc.jauth.api;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,13 +43,6 @@ import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Resource;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Role;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.User;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.UserService;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * End-point for retrieving logged-in user details.
@@ -180,8 +179,8 @@ public class JAuthApi {
         String tokenPayload = tokenExtractor.extract(request.getHeader(WebSecurityConfig.JWT_TOKEN_HEADER_PARAM));
         
         RawAccessJwtToken rawToken = new RawAccessJwtToken(tokenPayload);
-        RefreshToken refreshToken = RefreshToken.create(rawToken, jwtSettings.getTokenSigningKey()).orElseThrow(() -> new InvalidJwtToken());
-
+//        RefreshToken refreshToken = RefreshToken.create(rawToken, jwtSettings.getTokenSigningKey()).orElseThrow(() -> new InvalidJwtToken());
+        RefreshToken refreshToken = RefreshToken.create(rawToken, jwtSettings.getTokenSigningKey());
         String jti = refreshToken.getJti();
         if (!tokenVerifier.verify(jti)) {
             throw new InvalidJwtToken();
@@ -191,9 +190,14 @@ public class JAuthApi {
         User user = userService.getUserByName(subject);
 
         if (user.getRoleSet() == null) throw new InsufficientAuthenticationException("User has no roles assigned");
-        List<GrantedAuthority> authorities = user.getRoleSet().stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getRoleName()))
-                .collect(Collectors.toList());
+//        List<GrantedAuthority> authorities = user.getRoleSet().stream()
+//                .map(authority -> new SimpleGrantedAuthority(authority.getRoleName()))
+//                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for(Role r:user.getRoleSet()){
+            authorities.add(new SimpleGrantedAuthority(r.getRoleName()));
+        }
+        
 
         UserContext userContext = UserContext.create(user.getId(),user.getUserName(), authorities);
 

@@ -1,7 +1,7 @@
 package com.asiainfo.biapp.si.coc.jauth.security.auth.ajax;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import com.asiainfo.biapp.si.coc.jauth.security.model.UserContext;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Role;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.User;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.UserService;
 
@@ -55,9 +56,13 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
         	throw new InsufficientAuthenticationException("User has no roles assigned");
         }
         
-        List<GrantedAuthority> authorities = user.getRoleSet().stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getRoleName()))
-                .collect(Collectors.toList());
+//        List<GrantedAuthority> authorities = user.getRoleSet().stream()
+//                .map(authority -> new SimpleGrantedAuthority(authority.getRoleName()))
+//                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for(Role r:user.getRoleSet()){
+            authorities.add(new SimpleGrantedAuthority(r.getRoleName()));
+        }
         
         UserContext userContext = UserContext.create(user.getId(),user.getUserName(), authorities);
         return new UsernamePasswordAuthenticationToken(userContext, null, userContext.getAuthorities());

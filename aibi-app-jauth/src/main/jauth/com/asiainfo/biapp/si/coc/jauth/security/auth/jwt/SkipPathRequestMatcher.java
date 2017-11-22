@@ -1,7 +1,7 @@
 package com.asiainfo.biapp.si.coc.jauth.security.auth.jwt;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +23,11 @@ public class SkipPathRequestMatcher implements RequestMatcher {
     
     public SkipPathRequestMatcher(List<String> pathsToSkip, String processingPath) {
         Assert.notNull(pathsToSkip);
-        List<RequestMatcher> m = pathsToSkip.stream().map(path -> new AntPathRequestMatcher(path)).collect(Collectors.toList());
+//        List<RequestMatcher> m = pathsToSkip.stream().map(path -> new AntPathRequestMatcher(path)).collect(Collectors.toList());
+        List<RequestMatcher> m = new ArrayList<>();
+        for(String p : pathsToSkip){
+            m.add(new AntPathRequestMatcher(p));
+        }
         matchers = new OrRequestMatcher(m);
         processingMatcher = new AntPathRequestMatcher(processingPath);
     }

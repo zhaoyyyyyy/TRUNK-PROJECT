@@ -1,7 +1,10 @@
 package com.asiainfo.biapp.si.coc.jauth.security.auth.jwt;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -16,9 +19,6 @@ import com.asiainfo.biapp.si.coc.jauth.security.config.JwtSettings;
 import com.asiainfo.biapp.si.coc.jauth.security.model.UserContext;
 import com.asiainfo.biapp.si.coc.jauth.security.model.token.JwtToken;
 import com.asiainfo.biapp.si.coc.jauth.security.model.token.RawAccessJwtToken;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 
 /**
  * An {@link AuthenticationProvider} implementation that will use provided
@@ -46,9 +46,13 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         String subject = jwsClaims.getBody().getSubject();
         String userId = jwsClaims.getBody().get("userId", String.class);
         List<String> scopes = jwsClaims.getBody().get("scopes", List.class);
-        List<GrantedAuthority> authorities = scopes.stream()
-                .map(authority -> new SimpleGrantedAuthority(authority))
-                .collect(Collectors.toList());
+//        List<GrantedAuthority> authorities = scopes.stream()
+//                .map(authority -> new SimpleGrantedAuthority(authority))
+//                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for(String s : scopes){
+            authorities.add(new SimpleGrantedAuthority(s));
+        }
         
         UserContext context = UserContext.create(userId,subject, authorities);
         
