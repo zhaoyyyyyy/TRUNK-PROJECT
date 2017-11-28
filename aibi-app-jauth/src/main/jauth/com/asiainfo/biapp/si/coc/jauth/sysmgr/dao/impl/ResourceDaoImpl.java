@@ -104,7 +104,7 @@ public class ResourceDaoImpl extends BaseDaoImpl<Resource,String> implements
 	 */
 	public List<Resource> getParentResourceByRole(User user, String parentId) {
 		StringBuffer hql = new StringBuffer(
-				"from Resource r where exists(select 'X' FROM  r.roleSet role where role in (:roleSet)) and r.parentId =:parentId and r.status=0 order by r.dispOrder");
+				"from Resource r where exists(select 'X' FROM  r.roleSet role where role in (:roleSet)) and r.parentId =:parentId and r.status=0 order by r.resourceCode");
 		Map<String, Object> map = new HashMap<>();
 		map.put("roleSet", user.getRoleSet());
 		map.put("parentId", parentId);
