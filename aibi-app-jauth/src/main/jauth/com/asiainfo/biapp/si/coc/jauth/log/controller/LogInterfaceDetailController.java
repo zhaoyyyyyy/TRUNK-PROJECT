@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import springfox.documentation.annotations.ApiIgnore;
 
-@Api(value="接口调用日志")
+@Api(value="32.02-接口调用日志",description="接口调用日志")
 @RequestMapping("api/interface")
 @RestController
 public class LogInterfaceDetailController extends BaseController<LogInterfaceDetail>{

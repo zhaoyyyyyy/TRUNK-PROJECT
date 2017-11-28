@@ -29,8 +29,8 @@ import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.DicData;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.DicDataService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.DicService;
 
-@Api(value = "数据字典管理")
-@RequestMapping("api/datadic/dic")
+@Api(value = "31.02-数据字典管理",description="数据字典相关操作")
+@RequestMapping("api/datadic")
 @RestController
 public class DicController extends BaseController<Dic>{
 	
@@ -58,7 +58,7 @@ public class DicController extends BaseController<Dic>{
 		@ApiImplicitParam(name = "dicType", value = "类型", required = false, paramType = "query" ,dataType = "string"),
 		@ApiImplicitParam(name = "dicCode", value = "字典编码", required = false, paramType = "query" ,dataType = "string"),
 	})
-	@RequestMapping(value="/dicPage/query", method=RequestMethod.POST, produces={ MediaType.APPLICATION_JSON_VALUE })
+	@RequestMapping(value="/dic/dicPage/query", method=RequestMethod.POST, produces={ MediaType.APPLICATION_JSON_VALUE })
 	public void findDicPageByParams(@ModelAttribute JQGridPage<Dic> page,String cols){
 		
 		//得到前端传入的参数
@@ -101,7 +101,7 @@ public class DicController extends BaseController<Dic>{
 	 */
 	@ApiOperation(value="根据ID查询字典")
 	@ApiImplicitParam(name = "id", value = "字典ID", required = true, paramType = "query" ,dataType = "string")
-	@RequestMapping(value="/get", method=RequestMethod.POST, produces={ MediaType.APPLICATION_JSON_VALUE })
+	@RequestMapping(value="/dic/get", method=RequestMethod.POST, produces={ MediaType.APPLICATION_JSON_VALUE })
 	public Map<String, Object> toDicDetail(String id){
 		Dic dic = new Dic();
 		if(!StringUtil.isEmpty(id)){
@@ -121,7 +121,7 @@ public class DicController extends BaseController<Dic>{
 		@ApiImplicitParam(name = "note", value = "备注", required = false, paramType = "query" ,dataType = "string"),
 		@ApiImplicitParam(name = "dicType", value = "类型", required = false, paramType = "query" ,dataType = "string")
 	})
-	@RequestMapping(value="/save", method=RequestMethod.POST, produces={ MediaType.APPLICATION_JSON_VALUE })
+	@RequestMapping(value="/dic/save", method=RequestMethod.POST, produces={ MediaType.APPLICATION_JSON_VALUE })
 	public String save(Dic dic){
 		String id=dic.getId();
 		if(StringUtils.isNotBlank(id)){
