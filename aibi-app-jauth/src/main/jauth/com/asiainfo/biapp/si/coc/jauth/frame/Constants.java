@@ -36,7 +36,7 @@ public class Constants extends ConfigurableContants {
 	/**
 	 * 后台菜单ID
 	 */
-	public static final String BACKGROUND_ID="3";
+	public static final String BACKGROUND_ID="JAUTH_MENU";
 	
 	
 	/**

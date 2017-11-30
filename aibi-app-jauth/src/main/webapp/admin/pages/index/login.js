@@ -46,7 +46,7 @@ function COCLogin(){
 		  dataType:'json',
 		  data:node,
 		  success: function(data){
-			  if(data!=null && data.token!=null){
+			  if(data && data.token){
 				  var ssg = window.sessionStorage;
 				  ssg.setItem("token",data.token);
 				  ssg.setItem("refreshToken",data.refreshToken);
