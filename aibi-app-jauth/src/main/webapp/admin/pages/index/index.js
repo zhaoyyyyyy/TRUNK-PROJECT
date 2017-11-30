@@ -11,7 +11,7 @@ window.jauth_onload = function(){
 		
 	
 		$.commAjax({
-			url:$.ctx+'/api/resource/initBackground',
+			url:$.ctx+'/api/resource/userResource/get',
 			type:'post',
 			cache:false,
 			onSuccess:function(data){
