@@ -7,11 +7,18 @@
 package com.asiainfo.cp.acrm.label.entity;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -230,7 +237,33 @@ public class LabelInfo extends BaseEntity {
     @ApiParam(value = "排序字段")
     private Integer sortNum;
 
-    public String getLabelId() {
+	@OneToMany
+	@JoinColumn(name="column_id")
+    private List<MdaSysTableColumn> mdaSysTableColumns;  
+    
+	@ManyToMany(fetch=FetchType.LAZY)  
+	@JoinTable(name="loc_label_vertical_column_rel",  
+	joinColumns={@JoinColumn(name="LABEL_ID")},inverseJoinColumns={@JoinColumn(name="COLUMN_ID")})  
+    private List<MdaSysTableColumn> vertialColumns;
+    
+
+	public List<MdaSysTableColumn> getVertialColumns() {
+		return vertialColumns;
+	}
+
+	public void setVertialColumns(List<MdaSysTableColumn> vertialColumns) {
+		this.vertialColumns = vertialColumns;
+	}
+
+	public List<MdaSysTableColumn> getMdaSysTableColumns() {
+		return mdaSysTableColumns;
+	}
+
+	public void setMdaSysTableColumns(List<MdaSysTableColumn> mdaSysTableColumns) {
+		this.mdaSysTableColumns = mdaSysTableColumns;
+	}
+
+	public String getLabelId() {
         return labelId;
     }
 

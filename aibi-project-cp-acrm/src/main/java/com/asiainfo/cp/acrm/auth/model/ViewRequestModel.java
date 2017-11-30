@@ -1,16 +1,25 @@
 package com.asiainfo.cp.acrm.auth.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class ViewRequestModel {
-	private String userId;
+	
+	private String customerId;
 	private String sceneId;
+	
+	@ApiModelProperty(value = "标签",required = true)
 	private String labelId;
-	private PageModel page;
+	
+	@ApiModelProperty(value = "分页信息",required = false)
+	private PageRequestModel pageInfo;
+	
 	private String filter;
-	public String getUserId() {
-		return userId;
+
+	public String getCustomerId() {
+		return customerId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 	public String getSceneId() {
 		return sceneId;
@@ -24,21 +33,22 @@ public class ViewRequestModel {
 	public void setLabelId(String labelId) {
 		this.labelId = labelId;
 	}
-	public PageModel getPage() {
-		return page;
-	}
-	public void setPage(PageModel page) {
-		this.page = page;
-	}
 	public String getFilter() {
 		return filter;
 	}
 	public void setFilter(String filter) {
 		this.filter = filter;
 	}
+	
+	public PageRequestModel getPageInfo() {
+		return pageInfo;
+	}
+	public void setPageInfo(PageRequestModel pageInfo) {
+		this.pageInfo = pageInfo;
+	}
 	@Override
 	public String toString() {
-		return "ViewRequestModel [userId=" + userId + ", sceneId=" + sceneId + ", lableId=" + labelId + ", page=" + page
+		return "ViewRequestModel [customerId=" + customerId + ", sceneId=" + sceneId + ", lableId=" + labelId + ", page=" + pageInfo
 				+ ", filter=" + filter + "]";
 	}
 	

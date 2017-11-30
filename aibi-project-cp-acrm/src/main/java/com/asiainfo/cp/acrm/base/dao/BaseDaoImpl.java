@@ -159,6 +159,28 @@ public class BaseDaoImpl<T, ID extends Serializable>  implements BaseDao<T,ID> {
 		query = this.addParametersForArr(query, params);
 		return query.getResultList();
 	}
+	
+	@Override
+	public Page<T> findPageBySql(Page<T> page, String hql, Map<String,Object> params) {
+		final Map param = params;
+		final String hqlF = hql;
+		final int start = page.getStart();
+		final int max = page.getPageSize();
+		//final int max = page.getStart() + page.getPageSize();
+		
+		Query query = em.createNativeQuery(hql);
+		query.setFirstResult(start);
+		query.setMaxResults(max);
+		query = this.addParametersForMap(query, params);
+		page.setData(query.getResultList());
+		
+		if (page.isAutoCount()) {
+			Query queryCount = em.createNativeQuery(daoHelper.buildCountQueryString(hql));
+			queryCount = this.addParametersForMap(queryCount, params);
+			page.setTotalCount(Integer.valueOf(queryCount.getSingleResult().toString()));
+		}
+		return page;
+	}
 
 	@Override
 	public List<T> findListBySql(String sql, Map<String,Object> params) {

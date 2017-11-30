@@ -162,4 +162,6 @@ public interface BaseDao<M,  ID extends Serializable> {
 	 */
 	public List<M> getAll();
 	
+	public Page<M> findPageBySql(Page<M> page, String hql, Map<String,Object> params);
+	
 }

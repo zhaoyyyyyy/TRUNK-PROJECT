@@ -2,15 +2,20 @@ package com.asiainfo.cp.acrm.auth.model;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Required;
+
 public class PortrayalRequestModel {
-	private String userId;
+	
+	
+	private String customerId;
 	private String sceneId;
 	private List<String> labelId;
-	public String getUserId() {
-		return userId;
+
+	public String getCustomerId() {
+		return customerId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 	public String getSceneId() {
 		return sceneId;
@@ -26,7 +31,7 @@ public class PortrayalRequestModel {
 	}
 	@Override
 	public String toString() {
-		return "PortrayalRequestModel [userId=" + userId + ", sceneId=" + sceneId + ", lableId=" + labelId + "]";
+		return "PortrayalRequestModel [customerId=" + customerId + ", sceneId=" + sceneId + ", lableId=" + labelId + "]";
 	}
 	
 }

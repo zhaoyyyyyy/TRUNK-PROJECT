@@ -1,14 +1,14 @@
 package com.asiainfo.cp.acrm.auth.model;
 
-public class LableModel {
+public class LabelModel {
 	private String labelId;
 	private String labelName;
 	private String labelValue;
 	
-	public LableModel() {
+	public LabelModel() {
 		super();
 	}
-	public LableModel(String labelId, String labelName, String labelValue) {
+	public LabelModel(String labelId, String labelName, String labelValue) {
 		super();
 		this.labelId = labelId;
 		this.labelName = labelName;
@@ -21,12 +21,14 @@ public class LableModel {
 		this.labelId = labelId;
 	}
 	public String getLabelName() {
+		if (this.labelName==null) return "";
 		return labelName;
 	}
 	public void setLabelName(String labelName) {
 		this.labelName = labelName;
 	}
 	public String getLabelValue() {
+		if (this.labelValue==null) return "";
 		return labelValue;
 	}
 	public void setLabelValue(String labelValue) {

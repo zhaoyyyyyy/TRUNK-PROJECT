@@ -34,7 +34,7 @@ public class WebResult<T extends Object> {
 
 	private String status ;
 	private String msg ;
-	private T data;
+	private T result;
 	
     /**
      * Title : Code 
@@ -129,13 +129,17 @@ public class WebResult<T extends Object> {
 		this.msg = msg;
 	}
 
-	public T getData() {
-		return data;
+	public T getResult() {
+		return result;
 	}
 
-	public void setData(T data) {
-		this.data = data;
+
+
+	public void setResult(T result) {
+		this.result = result;
 	}
+
+
 
 	/**
      * Description: JSON返回失败
@@ -150,7 +154,7 @@ public class WebResult<T extends Object> {
 //         return result;
     	
     	 //WebResult<T> webResult = new WebResult<T>();
-    	 this.setData(null);
+    	 this.setResult(result);
     	 this.setMsg(message);
     	 this.setStatus(WebResult.Code.FAIL+"");
          return this;
@@ -168,7 +172,7 @@ public class WebResult<T extends Object> {
 //       result.put(WebResult.Result.LIST, obj);
     	 
     	 //WebResult<T> webResult = new WebResult<>();
-    	 this.setData(obj);
+    	 this.setResult(obj);
     	 this.setStatus(WebResult.Code.OK+"");
     	 this.setMsg(message);
          return this;
@@ -186,7 +190,7 @@ public class WebResult<T extends Object> {
 //         result.put(WebResult.Result.LIST, null);
 //         return result;
     	 //WebResult<T> webResult = new WebResul	t<>();
-    	 this.setData(null);
+    	 this.setResult(null);
     	 this.setMsg(baseException.getMessage());
     	 this.setStatus(baseException.getErrorCode());
     	 return this;

@@ -57,9 +57,9 @@ public class MdaSysTableColumnDaoImpl extends BaseDaoImpl<MdaSysTableColumn, Str
             hql.append(" and m.lableId = :lableId");
             params.put("lableId", mdaSysTableColumnVo.getLabelId());
         }
-        if (null != mdaSysTableColumnVo.getTableId()) {
+        if (null != mdaSysTableColumnVo.getMdaSysTable().getTableId()) {
             hql.append(" and m.tableId = :tableId");
-            params.put("tableId", mdaSysTableColumnVo.getTableId());
+            params.put("tableId", mdaSysTableColumnVo.getMdaSysTable().getTableId());
         }
         if (StringUtils.isNotBlank(mdaSysTableColumnVo.getColumnName())) {
             hql.append(" and m.columnName = :columnName");
@@ -73,9 +73,9 @@ public class MdaSysTableColumnDaoImpl extends BaseDaoImpl<MdaSysTableColumn, Str
             hql.append(" and m.columnDataTypeId = :columnDataTypeId");
             params.put("columnDataTypeId", mdaSysTableColumnVo.getColumnDataTypeId());
         }
-        if (StringUtils.isNotBlank(mdaSysTableColumnVo.getDimTransId())) {
+        if (StringUtils.isNotBlank(mdaSysTableColumnVo.getDimtableInfo().getDimId())) {
             hql.append(" and m.dimTransId = :dimTransId");
-            params.put("dimTransId", mdaSysTableColumnVo.getDimTransId());
+            params.put("dimTransId", mdaSysTableColumnVo.getDimtableInfo().getDimId());
         }
         if (StringUtils.isNotBlank(mdaSysTableColumnVo.getUnit())) {
             hql.append(" and m.unit = :unit");
@@ -96,9 +96,9 @@ public class MdaSysTableColumnDaoImpl extends BaseDaoImpl<MdaSysTableColumn, Str
             hql.append(" and m.lableId = :lableId");
             params.put("lableId", mdaSysTableColumnVo.getLabelId());
         }
-        if (null != mdaSysTableColumnVo.getTableId()) {
+        if (null != mdaSysTableColumnVo.getMdaSysTable()) {
             hql.append(" and m.tableId = :tableId");
-            params.put("tableId", mdaSysTableColumnVo.getTableId());
+            params.put("tableId", mdaSysTableColumnVo.getMdaSysTable().getTableId());
         }
         if (StringUtils.isNotBlank(mdaSysTableColumnVo.getColumnName())) {
             hql.append(" and m.columnName = :columnName");
@@ -112,10 +112,10 @@ public class MdaSysTableColumnDaoImpl extends BaseDaoImpl<MdaSysTableColumn, Str
             hql.append(" and m.columnDataTypeId = :columnDataTypeId");
             params.put("columnDataTypeId", mdaSysTableColumnVo.getColumnDataTypeId());
         }
-        if (StringUtils.isNotBlank(mdaSysTableColumnVo.getDimTransId())) {
-            hql.append(" and m.dimTransId = :dimTransId");
-            params.put("dimTransId", mdaSysTableColumnVo.getDimTransId());
-        }
+//        if (StringUtils.isNotBlank(mdaSysTableColumnVo.getDimtableInfo().getDimId())) {
+//            hql.append(" and m.dimTransId = :dimTransId");
+//            params.put("dimTransId", mdaSysTableColumnVo.getDimtableInfo().getDimId());
+//        }
         if (StringUtils.isNotBlank(mdaSysTableColumnVo.getUnit())) {
             hql.append(" and m.unit = :unit");
             params.put("unit", mdaSysTableColumnVo.getUnit());

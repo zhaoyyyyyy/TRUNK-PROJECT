@@ -6,11 +6,20 @@
 
 package com.asiainfo.cp.acrm.label.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -61,21 +70,11 @@ public class MdaSysTableColumn extends BaseEntity {
     @ApiParam(value = "列Id")
     private String columnId;
 
-    /**
-     * 标签Id
-     */
-    @Column(name = "LABEL_ID")
-    @ApiParam(value = "标签Id")
-    private String labelId;
 
-    /**
-     * 所属表Id
-     */
-    @Column(name = "TABLE_ID")
-    @ApiParam(value = "所属表id")
-    private Integer tableId;
 
-    /**
+
+
+	/**
      * 列名
      */
     @Column(name = "COLUMN_NAME")
@@ -96,12 +95,6 @@ public class MdaSysTableColumn extends BaseEntity {
     @ApiParam(value = "列数据类型Id")
     private Integer columnDataTypeId;
 
-    /**
-     * 对应维表表名
-     */
-    @Column(name = "DIM_TRANS_ID")
-    @ApiParam(value = "对应维表表名")
-    private String dimTransId;
 
     /**
      * 单位
@@ -124,7 +117,77 @@ public class MdaSysTableColumn extends BaseEntity {
     @ApiParam(value = "列状态")
     private Integer columnStatus;
 
-    public String getColumnId() {
+//    @ManyToOne(cascade = CascadeType.REFRESH, optional = false)  
+//    @JoinColumn(name="lABEL_ID")
+    @Column(name = "LABEL_ID")
+    private String labelId;   
+    
+    
+
+	public String getLabelId() {
+		return labelId;
+	}
+
+	public void setLabelId(String labelId) {
+		this.labelId = labelId;
+	}
+
+	@ManyToMany(fetch=FetchType.LAZY)  
+	@JoinTable(name="loc_label_vertical_column_rel",  
+	joinColumns={@JoinColumn(name="COLUMN_ID")},inverseJoinColumns={@JoinColumn(name="LABEL_ID")})  
+	private List<LabelInfo> labelInfos;
+	
+	
+    public List<LabelInfo> getLabelInfos() {
+		return labelInfos;
+	}
+
+	public void setLabelInfos(List<LabelInfo> labelInfos) {
+		this.labelInfos = labelInfos;
+	}
+
+//	public LabelInfo getLabelInfo() {
+//		return labelInfo;
+//	}
+//
+//	public void setLabelInfo(LabelInfo labelInfo) {
+//		this.labelInfo = labelInfo;
+//	}
+    
+    @ManyToOne(cascade = CascadeType.REFRESH, optional = false)  
+    @JoinColumn(name="TABLE_ID")  
+    private MdaSysTable mdaSysTable;
+    
+    private String dimTransId;
+    
+    public String getDimTransId() {
+		return dimTransId;
+	}
+
+	public void setDimTransId(String dimTransId) {
+		this.dimTransId = dimTransId;
+	}
+
+	@Transient
+    private DimtableInfo dimtableInfo;
+    
+	public DimtableInfo getDimtableInfo() {
+		return dimtableInfo;
+	}
+
+	public void setDimtableInfo(DimtableInfo dimtableInfo) {
+		this.dimtableInfo = dimtableInfo;
+	}
+
+	public MdaSysTable getMdaSysTable() {
+		return mdaSysTable;
+	}
+
+	public void setMdaSysTable(MdaSysTable mdaSysTable) {
+		this.mdaSysTable = mdaSysTable;
+	}
+
+	public String getColumnId() {
         return columnId;
     }
 
@@ -132,21 +195,7 @@ public class MdaSysTableColumn extends BaseEntity {
         this.columnId = columnId;
     }
 
-    public String getLabelId() {
-        return labelId;
-    }
 
-    public void setLabelId(String labelId) {
-        this.labelId = labelId;
-    }
-
-    public Integer getTableId() {
-        return tableId;
-    }
-
-    public void setTableId(Integer tableId) {
-        this.tableId = tableId;
-    }
 
     public String getColumnName() {
         return columnName;
@@ -170,14 +219,6 @@ public class MdaSysTableColumn extends BaseEntity {
 
     public void setColumnDataTypeId(Integer columnDataTypeId) {
         this.columnDataTypeId = columnDataTypeId;
-    }
-
-    public String getDimTransId() {
-        return dimTransId;
-    }
-
-    public void setDimTransId(String dimTransId) {
-        this.dimTransId = dimTransId;
     }
 
     public String getUnit() {
