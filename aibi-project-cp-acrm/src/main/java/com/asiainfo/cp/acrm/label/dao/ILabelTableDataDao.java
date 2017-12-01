@@ -13,7 +13,7 @@ public interface ILabelTableDataDao {
 
 	public LabelModel getHorizentalLabelInfoModel(String sql,LabelMetaDataInfo lableMetaDataInfo)  throws BaseException;
 
-	public List<Map<String,Object>> getVerticalLabelInfoModel(List result, List<LabelMetaDataInfo> lableMetaDataInfos);
+	public List<Map<String,String>> getVerticalLabelInfoModel(List result, List<LabelMetaDataInfo> lableMetaDataInfos);
 	
 	public Page<Object> findVerticalDataList(PageRequestModel page,String sql);
 	

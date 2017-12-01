@@ -3,6 +3,8 @@ package com.asiainfo.cp.acrm.label.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ import com.asiainfo.cp.acrm.label.vo.MdaSysTableColumnVo;
 
 @Service
 public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
+	
+	private static Logger logger = LoggerFactory.getLogger(LabelMetaInfoServiceImpl.class);
 
 	@Autowired
 	private ILabelInfoDao labelDao;
@@ -40,20 +44,6 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 		LabelInfo labelInfo = getLabelInfo(labelId);
 		List<MdaSysTableColumn> columns = labelInfo.getMdaSysTableColumns();
 		if (columns == null || columns.size() == 0) {
-			MdaSysTableColumnVo mdaSysTableColumnVo = new MdaSysTableColumnVo();
-			mdaSysTableColumnVo.setLabelId(labelId);
-			String hql = "from MdaSysTableColumn t where t.labelId=?0 ";
-			List<MdaSysTableColumn> columnsList = null;
-			try {
-				columnsList = columnDao.findListByHql(hql, labelId);
-			} catch (Exception e) {
-				throw new RuntimeException(e.getMessage() + ",hql:" + hql);
-			}
-			columns = new ArrayList<MdaSysTableColumn>();
-			columns.addAll(columnsList);
-			labelInfo.setMdaSysTableColumns(columnsList);
-		}
-		if (columns == null || columns.size() == 0) {
 			throw new SqlRunException("标签" + labelInfo.getLabelId() + "没有对应的表列");
 		}
 		LabelMetaDataInfo result = getLabelMetaInfo(labelInfo, columns).get(0);
@@ -67,7 +57,9 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 		try {
 			labelInfos = labelDao.findLabelInfoList(labelInfoVo);
 		} catch (JpaSystemException e) {
-			throw new RuntimeException(e.getRootCause().getMessage());
+			String errorMsg="获取标签数据错误"+e.getMessage();
+			logger.error(errorMsg,e);
+			throw new RuntimeException(errorMsg,e);
 		}
 		if (labelInfos == null || labelInfos.size() < 1) {
 			throw new SqlRunException("标签未找到,labelId=" + labelId);

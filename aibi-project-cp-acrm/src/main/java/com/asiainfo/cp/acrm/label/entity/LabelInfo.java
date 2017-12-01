@@ -237,7 +237,7 @@ public class LabelInfo extends BaseEntity {
     private Integer sortNum;
 
 	@OneToMany
-	@JoinColumn(name="column_id")
+	@JoinColumn(name="label_id")
     private List<MdaSysTableColumn> mdaSysTableColumns;  
     
 	@ManyToMany(fetch=FetchType.LAZY)  
