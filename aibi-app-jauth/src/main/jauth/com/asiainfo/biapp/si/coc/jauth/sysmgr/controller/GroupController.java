@@ -43,7 +43,7 @@ import io.swagger.annotations.ApiOperation;
  * @author liukai
  * @date 2013-6-27
  */
-@Api(value = "数据范围管理",description = "用户登录,角色,资源等接口")
+@Api(value = "30.04-数据权限管理",description="数据权限相关操作")
 @RequestMapping("api/group")
 @RestController
 public class GroupController extends BaseController<Group> {

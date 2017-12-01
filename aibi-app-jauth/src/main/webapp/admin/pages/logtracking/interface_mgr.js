@@ -5,8 +5,8 @@ window.jauth_onload = function(){
 	var colNames = ['时间', '用户名', 'IP地址', 
 	                '接口名称',
 	                '接口路径', 
-	                '参数',
-	                '输出CODE/MESSAGE'];
+	                '输入参数',
+	                '输出参数'];
 	var colModel = [{
 		name : 'opTime',
 		index : 'opTime',

@@ -48,10 +48,10 @@ window.jauth_onload = function() {
 			}
 		});
 	}
-	var proscenium = "1"; // 前台
-	var app = "2"; // APP
-	var backstage = "3"; // 后台
-	var proelement = "4";  //页面
+	var proscenium = "LOC_MENU"; // 前台
+	var app = "JAUTH_API"; //APP
+	var backstage = "JAUTH_MENU"; // 后台
+	var proelement = "LOC_DOM";  //前台页面元素
 	var mySimpleTree;
 	var myTree;
 	var appTree;

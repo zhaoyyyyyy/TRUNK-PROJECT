@@ -48,7 +48,7 @@ import io.swagger.annotations.ApiOperation;
  * @author liukai
  * @date 2013-6-25
  */
-@Api(value = "资源管理")
+@Api(value = "30.03-资源管理",description="资源相关操作")
 @RequestMapping("api/resource")
 @RestController
 public class ResourceController extends BaseController<Resource> {
@@ -180,7 +180,7 @@ public class ResourceController extends BaseController<Resource> {
 	@ApiOperation(value = "通过id得到详细信息")
 	@ApiImplicitParam(name = "id", value = "资源主键", required = true, paramType = "query", dataType = "string")
 	@RequestMapping(value = "/get", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public Map<String, Object> initEditResource(String id) {
+	public Map<String, Object> findById(String id) {
 		Resource resource = resourceService.get(id);
 		Map<String, Object> map = new HashMap<>();
 		map.put("resource", resource);
@@ -204,14 +204,14 @@ public class ResourceController extends BaseController<Resource> {
 
 	/**
 	 * 
-	 * @describe 进入后台
+	 * @describe 获取用户资源权限
 	 * @author liukai
 	 * @param
 	 * @date 2013-7-30
 	 */
-	@ApiOperation(value = "进入后台")
-	@RequestMapping(value = "/initBackground", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public Map<String, Object> initBackground() {
+	@ApiOperation(value = "获取用户资源权限")
+	@RequestMapping(value = "/userResource/get", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public Map<String, Object> findUserResource() {
 		Map<String, Object> map = new HashMap<>();
 		User user = sessionInfoHolder.getLoginUser();
 		String backgroundId = Constants.BACKGROUND_ID;

@@ -53,7 +53,7 @@ import springfox.documentation.annotations.ApiIgnore;
  * @author chenchao3
  * @version 5.0.0.2017年10月23日
  */
-@Api(value = "IP白名单管理")
+@Api(value = "30.06-白名单管理",description="白名单相关操作")
 @RequestMapping("api/ipWhiteList")
 @RestController
 public class IpWhiteListController extends BaseController<IpWhiteList> {

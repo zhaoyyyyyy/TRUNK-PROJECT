@@ -118,8 +118,8 @@ public class Resource extends BaseEntity {
 	public Set<Role> roleSet = new HashSet<>(0);
 	/** 子组织列表 */
 	@OneToMany(cascade = CascadeType.ALL)
-	@OrderBy(clause = "disporder")
 	@JoinColumn(name="parent_id",insertable=false,updatable=false)
+	@OrderBy(clause = "resourcecode")
 	private Set<Resource> children = new HashSet<>(0);
 	
 	@Override
