@@ -30,7 +30,7 @@ public class LogMonitorDetailDaoImpl extends BaseDaoImpl<LogMonitorDetail,String
         StringBuffer hql = new StringBuffer("from LogMonitorDetail l where 1=1");
         //用户名
         if (StringUtils.isNotBlank(logMonitorDetailVo.getUserId())) {
-            hql.append(" and l.userId like :userId");
+            hql.append(" and l.userId LIKE :userId");
             params.put("userId", "%"+logMonitorDetailVo.getUserId()+"%");
         }
         //时间
@@ -49,7 +49,7 @@ public class LogMonitorDetailDaoImpl extends BaseDaoImpl<LogMonitorDetail,String
         }
         //message
         if (StringUtils.isNotBlank(logMonitorDetailVo.getErrorMsg())) {
-            hql.append(" and l.errorMsg like :errorMsg");
+            hql.append(" and l.errorMsg LIKE :errorMsg");
             params.put("errorMsg", "%"+logMonitorDetailVo.getErrorMsg()+"%");
         }
         return (JQGridPage<LogMonitorDetail>) super.findPageByHql(page, hql.toString(), params);
