@@ -8,6 +8,8 @@
 		<artifactId>aibi-loc-project</artifactId>
 		<version>1.0.0</version>
 	</parent>
+	<packaging>war</packaging>
+	
 	<groupId>com.asiainfo.prd</groupId>
 	<artifactId>aibi-project-cp-acrm</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
@@ -34,5 +36,13 @@
 			<version>${log4j.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
 	</dependencies>
+	<build>
+    <finalName>ROOT</finalName>
+	</build>
 </project>
