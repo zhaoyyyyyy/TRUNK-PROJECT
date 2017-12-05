@@ -167,4 +167,6 @@ public interface OrganizationDao extends BaseDao<Organization,String>{
 	 * @return
 	 */
 	public List<Organization> findListOrganization(String orgCode);
+	
+	public List<Organization> findOrgList();
 }

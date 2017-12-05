@@ -3,7 +3,10 @@
  */
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -63,31 +66,57 @@ public class OrganizationController extends BaseController<Organization>{
 	 */
 	@ApiOperation(value="构建组织树")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "treeType", value = "树类型", required = false, paramType = "query" ,dataType = "string"),
-		@ApiImplicitParam(name = "isAsynchron", value = "树类型", required = false, paramType = "query" ,dataType = "string"),
-		@ApiImplicitParam(name = "sec", value = "树类型", required = false, paramType = "query" ,dataType = "string")
+		@ApiImplicitParam(name = "rootId", value = "树", required = false, paramType = "query" ,dataType = "string"),
 	})
 	@RequestMapping(value="/renderOrgTree",method=RequestMethod.POST,  produces={ MediaType.ALL_VALUE })
-	public String renderOrgTree(String orgCode,String treeType,String isAsynchron,String sec){	    
-	    if("true".equals(sec)){
-            StringBuffer sb = new StringBuffer();
-            Organization organization = organizationService.getOrgByOrgCode(orgCode);
-            return this.getSubTree(organization.getChildren(), "true", treeType, sb,"true".equals(isAsynchron)?true:false);
-        }else{
-            User user = sessionInfoHolder.getLoginUser();
-            String string = "";
-            for (Group group : user.getGroupSet()) {
-                Set<Organization> organizationSet = group.getOrganizationSet();
-                for (Organization organization : organizationSet) {
-                    Organization parent = organizationService.get(organization.getParentId());
-                    if (!organizationSet.contains(parent)) {
-                        StringBuffer sb = new StringBuffer();
-                        string +=this.getTree(organization, "true", treeType, sb,"true".equals(isAsynchron)?true:false); 
-                    }                  
-                }
+	public String renderOrgTree(){
+	    User user = sessionInfoHolder.getLoginUser();
+        String root = this.getRequest().getParameter("rootId");
+        List<String> list = new ArrayList<>();
+        //如果是超级管理员有所有组织
+        if (user.getIsAdmin()==1) {
+            List<Organization> orgList = organizationService.findOrgList();
+            for (Organization organization : orgList) {
+                list.add(organization.getId());
             }
-            return string;
+        }else {
+            Set<Organization> orgSet = getOrgSet(user);
+            for (Organization organization : orgSet) {
+                list.add(organization.getId());
+            }
         }
+        Organization organization = organizationService.get(root);
+        StringBuffer sb = new StringBuffer();
+        return this.getTree(organization,"true",sb,list);
+	}
+	/**
+	 * 获取用户所具有的组织权限集合
+	 * Description: 
+	 *
+	 * @param user
+	 * @return
+	 */
+	public Set<Organization> getOrgSet(User user){
+	    Set<Organization> organizations=new HashSet<>();    
+	    for(Group group : user.getGroupSet()){
+	        Set<Organization> organizationSet = group.getOrganizationSet();
+	        for (Organization organization : organizationSet) {
+	            organizations=getOrg(organization, organizations);
+	        }
+	    }   
+        return organizations;
+	}
+	public Set<Organization> getOrg(Organization organization,Set<Organization> organizations){
+	    if (!organizations.contains(organization)) {
+            if (organization!=null) {
+                organizations.add(organization);
+            }
+            if (organization.getParentId()!=null && organization.getParentId()!="") {
+                Organization org = organizationService.get(organization.getParentId());
+                getOrg(org, organizations);
+            }
+        }
+        return organizations;
 	}
 	
 	/**
@@ -126,67 +155,65 @@ public class OrganizationController extends BaseController<Organization>{
 	 * @param
 	 * @date 2013-6-19
 	 */
-	private String getTree(Organization common, String selectable, String treeType, StringBuffer htmlCon,boolean isAsynchron){
-		String orgType = common.getOrgType();
-		String status = common.getInterrogateType();
-		htmlCon.append("<li id='").append(common.getOrgCode()).append("' name='").append(common.getId()).append("' selectable='").append(selectable);
-		if (orgType != null) {
-			htmlCon.append("' orgType='").append(orgType);
-		}
-		if (status != null) {
-			htmlCon.append("' status='").append(status);
-		}
-		htmlCon.append("'>");
-		htmlCon.append("<span class='text'>");
-		htmlCon.append(common.getSimpleName());
-		htmlCon.append("</span>");
-		if(isAsynchron){
-			htmlCon.append("</span><ul  class='ajax'>");
-			htmlCon.append("<li>{url: "+this.getRequest().getContextPath()+"/api/organization/renderOrgTree?sec=true&orgCode="+common.getOrgCode()+"&isAsynchron="+isAsynchron+"}</li>");
-		}else{
-			htmlCon.append("<ul>");
-			getSubTree(common.getChildren(), selectable, treeType, htmlCon,isAsynchron);
-		}
-		htmlCon.append("</ul></li>");
-		
-		return htmlCon.toString();
-	}
-	private String getLeaf(Organization common, StringBuffer htmlCon){
-		String orgType = common.getOrgType();
-		String status = common.getInterrogateType();
-		htmlCon.append("<li id='").append(common.getOrgCode()).append("' name='").append(common.getId()).append("' selectable='true'");
-		if (orgType != null) {
-			htmlCon.append(" orgType='").append(orgType).append("'");
-		}
-		if (status != null) {
-			htmlCon.append(" status='").append(status).append("'");
-		}
-		htmlCon.append(">");
-		htmlCon.append("<span class='text'>");
-		htmlCon.append(common.getSimpleName());
-		htmlCon.append("</span>");
-		htmlCon.append("</li>");
-		return htmlCon.toString();
-	}
+	public String getTree(Organization common,String selectable,StringBuffer htmlCon,List<String> list){
+        if (!list.isEmpty() && list.contains(common.getId())) {
+            String orgType = common.getOrgType();
+            String status = common.getInterrogateType();
+            htmlCon.append("<li id='").append(common.getOrgCode())
+                   .append("' name='").append(common.getId())
+                   .append("' selectable='").append(selectable);
+            if (orgType != null) {
+                htmlCon.append("' orgType='").append(orgType);
+            }
+            if (status != null) {
+                htmlCon.append("' status='").append(status);
+            }
+            htmlCon.append("'>");
+            htmlCon.append("<span class='text'>");
+            htmlCon.append(common.getSimpleName());
+            htmlCon.append("</span><ul>");
+            getSubTree(common.getChildren(), selectable, htmlCon, list);
+            htmlCon.append("</ul></li>");
+        }
+        return htmlCon.toString();
+    }
+	public String getLeaf(Organization common,StringBuffer htmlCon,List<String> list){
+        if (list.contains(common.getId())) {
+            String orgType = common.getOrgType();
+            String status = common.getInterrogateType();
+            htmlCon.append("<li id='").append(common.getOrgCode())
+                   .append("' name='").append(common.getId())
+                   .append("' selectable='true'");
+            if (orgType != null) {
+                htmlCon.append(" orgType='").append(orgType).append("'");
+            }
+            if (status != null) {
+                htmlCon.append(" status='").append(status).append("'");
+            }
+            htmlCon.append(">");
+            htmlCon.append("<span class='text'>");
+            htmlCon.append(common.getSimpleName());
+            htmlCon.append("</span>");
+            htmlCon.append("</li>");
+        }
+        return htmlCon.toString();
+    }
 	/**
 	 * @describe 取得叶子节点
 	 * @author zhougz
 	 * @param
 	 * @date 2013-6-19
 	 */
-	private String getSubTree(Set<Organization> set, String selectable, String treeType, StringBuffer htmlCon,boolean isAsynchron){
-		for (Organization common : set) {
-			if(StringUtil.isNotEmpty(treeType) && treeType.indexOf(common.getOrgType())== -1){
-				continue;
-			}
-			if (!common.getChildren().isEmpty()) {
-				getTree(common, selectable, treeType, htmlCon,isAsynchron);
-			}else{
-				getLeaf(common, htmlCon);
-			}
-		}
-		return htmlCon.toString();
-	}
+	public String getSubTree(Set<Organization> set,String selectable,StringBuffer htmlCon,List<String> list){
+        for(Organization common:set){
+            if (common.getChildren()!=null && !common.getChildren().isEmpty()) {
+                getTree(common, selectable, htmlCon, list);
+            }else {
+                getLeaf(common, htmlCon,list);
+            }
+        }
+        return htmlCon.toString();
+    }
 	
 	/**
 	 * 创建组织

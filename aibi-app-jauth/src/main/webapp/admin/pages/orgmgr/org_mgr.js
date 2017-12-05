@@ -3,10 +3,12 @@ window.jauth_onload = function(){
 };
 function loadTree(){
 	var mySimpleTree;
+	var rootId = "999";
 	var _url = $.ctx+"/api/organization/renderOrgTree?isAsynchron=true";
 	$.commAjax({
 		url : _url,
 		isShowMask : false,
+		postData:{"rootId":rootId},
 		type : 'POST',
 		onSuccess : function(data) {
 			$("li.root").append(data);

@@ -414,4 +414,8 @@ public class OrganizationServiceImpl extends BaseServiceImpl<Organization,String
 	public List<Organization> findListOrganization(String orgCode){
 		return organizationDao.findListOrganization(orgCode);
 	}
+	
+	public List<Organization> findOrgList(){
+	    return organizationDao.findOrgList();
+	}
 }

@@ -302,4 +302,7 @@ public class OrganizationDaoImpl extends BaseDaoImpl<Organization,String> implem
 		}
 		return findListByHql(hql, code);
 	}
+	public List<Organization> findOrgList(){
+	    return this.findListByHql("from Organization o where 1=1");
+	}
 }

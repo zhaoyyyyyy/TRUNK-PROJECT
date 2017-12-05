@@ -28,24 +28,33 @@
 						</td>
 					</tr>
 					<tr>
-						<th>排序序号</th>
+						<!-- <th>排序序号</th>
 						<td>
 							<input class="inputStyle"  numberbox="true" maxlength="10" type="text" name="orderNum" />
+						</td> -->
+						<th>组织状态<span class="required">*</span></th>
+						<td>
+                       		<input dataDic="ZZZTZD" class="inputStyle" required="true" type="text" name="orgStatus" />
 						</td>
 						<th>组织类型<span class="required">*</span></th>
 						<td>
-							<input class="inputStyle easyui-validatebox" required="true" type="text" name="orgType"/>
+							<input dataDic="ZZLXZD" class="inputStyle" required="true" type="text" name="orgType"/>
 						</td>
 					</tr>
 					<tr>
-						<th>审核方式<span class="required">*</span></th>
+					    <th>排序序号</th>
+						<td>
+							<input class="inputStyle"  numberbox="true" maxlength="10" type="text" name="orderNum" />
+						</td>
+						<!-- <th>审核方式<span class="required">*</span></th>
 						<td>
                        		<input class="inputStyle easyui-validatebox" required="true" type="text" name="interrogateType" value="ADMIN" />
-						</td>
-						<th>组织状态<span class="required">*</span></th>
+						</td> -->
+						<!-- <th>组织状态<span class="required">*</span></th>
 						<td>
                        		<input class="inputStyle easyui-validatebox" required="true" type="text" name="orgStatus" value="OPEN" />
-						</td>
+						</td> -->
+						
 					</tr>
 				</tbody>		
 			</table>

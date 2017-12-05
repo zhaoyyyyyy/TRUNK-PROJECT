@@ -217,4 +217,5 @@ public interface OrganizationService extends BaseService<Organization,String>{
 	 */
 	public List<Organization> findListOrganization(String orgCode);
 	
+	public List<Organization> findOrgList();
 }
