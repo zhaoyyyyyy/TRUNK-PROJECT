@@ -11,8 +11,6 @@ import com.asiainfo.biapp.si.coc.jauth.frame.dao.BaseDaoImpl;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.dao.CoconfigDao;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Coconfig;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Resource;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Role;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.CoconfigVo;
 
 /**

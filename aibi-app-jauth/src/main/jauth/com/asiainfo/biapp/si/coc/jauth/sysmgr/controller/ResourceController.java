@@ -3,6 +3,11 @@
  */
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,7 +34,6 @@ import com.asiainfo.biapp.si.coc.jauth.frame.json.JSONResult;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.DateUtil;
-import com.asiainfo.biapp.si.coc.jauth.security.auth.ajax.AjaxLoginProcessingFilter;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Resource;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Role;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.User;
@@ -37,11 +41,6 @@ import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.ResourceService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.UserService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.utils.SessionInfoHolder;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.ResourceVo;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * @describe
@@ -246,7 +245,6 @@ public class ResourceController extends BaseController<Resource> {
 	@RequestMapping(value = "/renderOrgTree", method = RequestMethod.POST, produces = { MediaType.ALL_VALUE })
 	public String renderOrgTree() {
 		String resource = this.getRequest().getParameter("resourceId");
-		String roleId = this.getRequest().getParameter("roleId");
 		User user = userServer.get(sessionInfoHolder.getLoginId());
 		List<String> list = new ArrayList<>();
 		// 如果是管理员能显示所有菜单

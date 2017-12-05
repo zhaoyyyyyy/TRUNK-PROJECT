@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.Constants;
@@ -163,9 +160,9 @@ public class UserDaoImpl extends BaseDaoImpl<User,String> implements UserDao {
 			params.put("realName", "%" + userVo.getRealName() + "%");
 		}
 		// 该用户有数据范围
-		if (userVo.getGroupSet() != null && userVo.getGroupSet().size() > 0) {
+		if (userVo.getGroupSet() != null && !userVo.getGroupSet().isEmpty()) {
 			hql.append(" and  exists (select 'X' from r.orgSet o where o.orgCode in (:orgSet)) ");
-			Set<String> set = new HashSet<String>();
+			Set<String> set = new HashSet<>();
 
 			for (Group group : userVo.getGroupSet()) {
 				for (Organization o : group.getOrganizationSet()) {

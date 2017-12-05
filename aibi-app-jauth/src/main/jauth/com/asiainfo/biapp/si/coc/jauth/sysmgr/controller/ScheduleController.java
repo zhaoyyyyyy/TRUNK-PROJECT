@@ -1,5 +1,10 @@
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 import com.asiainfo.biapp.si.coc.jauth.frame.controller.BaseController;
 import com.asiainfo.biapp.si.coc.jauth.frame.json.JSONResult;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
@@ -19,15 +26,8 @@ import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.LocTaskExeInfo;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.User;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.LocTaskExeInfoService;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.UserService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.utils.SessionInfoHolder;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.LocTaskExeInfoVo;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 
@@ -67,6 +67,8 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
 	private LocTaskExeInfoService locTaskExeInfoService;
 	@Autowired
 	private SessionInfoHolder sessionInfoHolder;
+	
+	private static final String SUCCESS = "success";
 
 	@Override
 	protected BaseService<LocTaskExeInfo, String> getBaseService() {
@@ -218,9 +220,9 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
 			oldLocTask.setTaskExeTime(locTask.getTaskExeTime()
 					.replace(",", " "));
 			locTaskExeInfoService.saveOrUpdate(oldLocTask);
-			return "success";
+			return SUCCESS;
 		}
-		if (!"success".equals(this.queryNameExist(locTask.getTaskExeName()))) {
+		if (!SUCCESS.equals(this.queryNameExist(locTask.getTaskExeName()))) {
 			return "failure";
 		}
 		if (StringUtils.isBlank(locTask.getTaskExeTime())) {
@@ -231,7 +233,7 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
 		}
 		locTask.setTaskExeTime(locTask.getTaskExeTime().replace(",", " "));
 		locTaskExeInfoService.saveOrUpdate(locTask);
-		return "success";
+		return SUCCESS;
 	}
 
 	/**
@@ -253,7 +255,7 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
 		if (locTaskExeInfo != null) {
 			return "exits";
 		}
-		return "success";
+		return SUCCESS;
 	}
 
 	/**
