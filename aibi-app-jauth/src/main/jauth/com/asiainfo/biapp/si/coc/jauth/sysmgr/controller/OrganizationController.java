@@ -75,7 +75,7 @@ public class OrganizationController extends BaseController<Organization> {
     public String renderOrgTree(String orgCode, String treeType, String isAsynchron, String sec) {
         // 如果是管理员有所有
         User user = sessionInfoHolder.getLoginUser();
-        String roots = this.getRequest().getParameter("rootId");
+        String root = this.getRequest().getParameter("rootId");
         List<String> list = new ArrayList<>();
         if (user.getIsAdmin() == 1) {
             List<Organization> orgList = organizationService.findOrgList();
@@ -94,11 +94,23 @@ public class OrganizationController extends BaseController<Organization> {
             return this.getSubTree(organization.getChildren(), "true", treeType, sb,
                 "true".equals(isAsynchron) ? true : false, list);
         }
-        Organization organization = organizationService.get(roots);
+        Organization organization = null;
+        if (root!=null&& root!="") {
+            organization = organizationService.get(root);
+        }else {
+            organization = organizationService.get(orgCode);
+        }
         StringBuffer sb = new StringBuffer();
         return this.getTree(organization, "true", treeType, sb, "true".equals(isAsynchron) ? true : false, list);
     }
 
+    /**
+     * 
+     * Description:获取用户拥有组织集合
+     *
+     * @param user
+     * @return
+     */
     public Set<Organization> getOrgSet(User user) {
         Set<Organization> organizations = new HashSet<>();
         for (Group group : user.getGroupSet()) {

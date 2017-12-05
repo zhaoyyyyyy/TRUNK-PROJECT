@@ -12,7 +12,7 @@ window.jauth_onload = function() {
 			}
 		});
 	}
-	var rootOrgCode = "1";
+	var rootOrgCode = "999";
 	var selectTrees = $("#selectTrees").val()
 	var mySimpleTree;
 	var myTree;
