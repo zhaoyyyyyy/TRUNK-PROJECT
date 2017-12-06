@@ -90,7 +90,7 @@ public class OrganizationController extends BaseController<Organization> {
         }
         if ("true".equals(sec)) {
             StringBuffer sb = new StringBuffer();
-            Organization organization = organizationService.get(orgCode);
+            Organization organization = organizationService.getOrgByOrgCode(orgCode);
             return this.getSubTree(organization.getChildren(), "true", treeType, sb,
                 "true".equals(isAsynchron) ? true : false, list);
         }
@@ -98,7 +98,7 @@ public class OrganizationController extends BaseController<Organization> {
         if (root!=null&& root!="") {
             organization = organizationService.get(root);
         }else {
-            organization = organizationService.get(orgCode);
+            organization = organizationService.getOrgByOrgCode(orgCode);
         }
         StringBuffer sb = new StringBuffer();
         return this.getTree(organization, "true", treeType, sb, "true".equals(isAsynchron) ? true : false, list);
