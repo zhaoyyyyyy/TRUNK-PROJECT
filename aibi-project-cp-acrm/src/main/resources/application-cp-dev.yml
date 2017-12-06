@@ -1,8 +1,12 @@
 jauth-url: 
-  http://192.168.248.184:8440/jauth
+  http://192.168.248.166:8080/jauth
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.248.142:3306/acrm_coc?useUnicode=true&characterEncoding=utf-8
     username: coc
     password: 1qaz2wsx
+    test-while-idle: true
+    validation-query: SELECT 1 FROM DUAL
+    time-between-eviction-runs-millis: 180000
+    
