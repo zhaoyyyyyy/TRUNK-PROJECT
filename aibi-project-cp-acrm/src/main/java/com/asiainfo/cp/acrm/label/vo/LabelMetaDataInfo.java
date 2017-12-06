@@ -11,6 +11,7 @@ public class LabelMetaDataInfo {
 	private String dimValueCol;
 	private String tableShortName;
 	private String dimtableShortName;
+	private String dimValueColAliasName;
 	private String customerId;
 	
 	
@@ -44,10 +45,14 @@ public class LabelMetaDataInfo {
 	public void setLabelId(String labelId) {
 		this.labelId = labelId;
 	}
+	
+	
 	@Override
 	public String toString() {
-		return "LabelMetaDataInfo [labelId=" + labelId + ", tableName=" + tableName + ", columnName=" + columnName
-				+ ", dimtableName=" + dimtableName + ", dimCodeCol=" + dimCodeCol + ", dimValueCol=" + dimValueCol
+		return "LabelMetaDataInfo [labelId=" + labelId + ", labelName=" + labelName + ", tableName=" + tableName
+				+ ", columnName=" + columnName + ", dimtableName=" + dimtableName + ", dimCodeCol=" + dimCodeCol
+				+ ", dimValueCol=" + dimValueCol + ", tableShortName=" + tableShortName + ", dimtableShortName="
+				+ dimtableShortName + ", dimValueColAliasName=" + dimValueColAliasName + ", customerId=" + customerId
 				+ "]";
 	}
 	public LabelMetaDataInfo() {
@@ -94,6 +99,11 @@ public class LabelMetaDataInfo {
 	public void setDimValueCol(String dimValueCol) {
 		this.dimValueCol = dimValueCol;
 	}
-	
+	public String getDimValueColAliasName() {
+		return dimValueColAliasName;
+	}
+	public void setDimValueColAliasName(String dimValueColAliasName) {
+		this.dimValueColAliasName = dimValueColAliasName;
+	}
 	
 }

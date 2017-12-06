@@ -24,6 +24,15 @@ public interface ILabelMetaInfoService {
 	public LabelMetaDataInfo getHorizentalLabelMetaInfo(String labelId) throws BaseException;
 	
     /**
+     * Description:获取宽表元数据
+     * 
+     * @param labelIds  标签Ids
+     * @return
+     * @throws BaseException
+     */	
+	public List<LabelMetaDataInfo> getHorizentalLabelMetaInfos(List<String> labelIds) throws BaseException;
+	
+    /**
      * Description:获取纵表元数据
      *
      * @param labelId  标签Id
@@ -31,6 +40,7 @@ public interface ILabelMetaInfoService {
      * @throws BaseException
      */	
 	public List<LabelMetaDataInfo> getVerticalLabelMetaInfo(String labelId) throws BaseException;
+	
 	
     /**
      * Description:获取宽表数据SQL
@@ -42,6 +52,8 @@ public interface ILabelMetaInfoService {
      */	
 	public String getTableSQL(PortrayalRequestModel reqModel,LabelMetaDataInfo lableMetaDataInfo);
 	
+	public String getTableSQL(PortrayalRequestModel reqModel,List<LabelMetaDataInfo> lableMetaDataInfos);
+	
     /**
      * Description:获取纵表数据SQL
      *
@@ -51,4 +63,5 @@ public interface ILabelMetaInfoService {
      * @throws BaseException
      */	
 	public String getTableSQL(ViewRequestModel reqModel,List<LabelMetaDataInfo> lableMetaDataInfos);
+	
 }

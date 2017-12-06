@@ -32,7 +32,8 @@ public class LabelTableDataDaoImpl extends BaseDaoImpl<Object, String> implement
 		}catch(Exception e){
 			String errorMsg="获取纵表数据错误"+e.getMessage();
 			logger.error(errorMsg,e);
-			throw new RuntimeException(errorMsg+",sql:"+sql);
+			//throw new RuntimeException(errorMsg+",sql:"+sql);
+			return null;
 		}
 		List <LabelModel> resultData=new ArrayList<LabelModel>();
         for(int i=0;i<result.size();i++) {     
@@ -40,14 +41,46 @@ public class LabelTableDataDaoImpl extends BaseDaoImpl<Object, String> implement
             LabelModel labelModel=new LabelModel();
             labelModel.setLabelId(lableMetaDataInfo.getLabelId());
             labelModel.setLabelName(lableMetaDataInfo.getLabelName());
-            labelModel.setLabelValue(""+obj);
-             //使用obj[0],obj[1],obj[2]取出属性
+            if (obj==null) {
+            	labelModel.setLabelValue("");
+            }else {
+            		labelModel.setLabelValue(""+obj);
+            }
             resultData.add(labelModel);
         }  
         if (result==null ||result.size()==0){
-        	return null;
+        		return null;
         }
 		return resultData.get(0);
+	}
+	
+	@Override
+	public List<LabelModel> getHorizentalLabelInfoModels(String sql, List<LabelMetaDataInfo> lableMetaDataInfos)
+			throws BaseException {
+		Map<String,Object> params = new HashMap<>();
+		List result=null;
+		result=this.findListBySql(sql, params);
+		List <LabelModel> resultData=new ArrayList<LabelModel>();
+        for(int i=0;i<result.size();i++) {     
+	        	if (lableMetaDataInfos.size()==1){
+	            Object obj = (Object) result.get(i);
+	            LabelModel labelModel=new LabelModel();
+	            labelModel.setLabelId(lableMetaDataInfos.get(0).getLabelId());
+	            labelModel.setLabelName(lableMetaDataInfos.get(0).getLabelName());
+	            	labelModel.setLabelValue(obj==null?"":""+obj);
+	            resultData.add(labelModel);
+	        	}else {
+	        		Object[] obj = (Object[]) result.get(i);
+	        		for (int j=0;j<lableMetaDataInfos.size();j++){
+	    	            LabelModel labelModel=new LabelModel();
+	    	            labelModel.setLabelId(lableMetaDataInfos.get(j).getLabelId());
+	    	            labelModel.setLabelName(lableMetaDataInfos.get(j).getLabelName());
+	    	        		labelModel.setLabelValue(obj[j]==null?"":""+obj[j]);
+                    resultData.add(labelModel);
+	        		}
+	        	}
+        }  
+		return resultData;
 	}
 	
 	@Override
@@ -56,25 +89,24 @@ public class LabelTableDataDaoImpl extends BaseDaoImpl<Object, String> implement
 		Map<String,Object> params = new HashMap<>();
 		List<Map<String,String>> list=new ArrayList<Map<String,String>>();
         for(int i=0;i<result.size();i++) { 
-        	Map<String ,String> column=new HashMap<String,String>();
-        	if (lableMetaDataInfos.size()==1){
-        		Object obj = (Object) result.get(0);
-        		if (obj==null){
-        			column.put(lableMetaDataInfos.get(0).getColumnName(), "");
-        		}else{
-        			column.put(lableMetaDataInfos.get(0).getColumnName(), ""+obj);
-        		}
-        	}else{
-        		Object[] obj = (Object[]) result.get(i);
-        		for (int j=0;j<lableMetaDataInfos.size();j++){
-        			if (obj[j]==null){
-        				column.put(lableMetaDataInfos.get(j).getColumnName(), "");
-        			}else{
-        				column.put(lableMetaDataInfos.get(j).getColumnName(), ""+obj[j]);
-        			}
-        		}
-        	}
-             //使用obj[0],obj[1],obj[2]取出属性
+	        	Map<String ,String> column=new HashMap<String,String>();
+	        	if (lableMetaDataInfos.size()==1){
+	        		Object obj = (Object) result.get(0);
+	        		if (obj==null){
+	        			column.put(lableMetaDataInfos.get(0).getColumnName(), "");
+	        		}else{
+	        			column.put(lableMetaDataInfos.get(0).getColumnName(), ""+obj);
+	        		}
+	        	}else{
+	        		Object[] obj = (Object[]) result.get(i);
+	        		for (int j=0;j<lableMetaDataInfos.size();j++){
+	        			if (obj[j]==null){
+	        				column.put(lableMetaDataInfos.get(j).getColumnName(), "");
+	        			}else{
+	        				column.put(lableMetaDataInfos.get(j).getColumnName(), ""+obj[j]);
+	        			}
+	        		}
+	        	}
             list.add(column);
         }
         
@@ -91,13 +123,7 @@ public class LabelTableDataDaoImpl extends BaseDaoImpl<Object, String> implement
 		page.setPageStart(currentPage);
 		page.setSortCol(pageModel.getSortCol());
 		page.setSortCol(pageModel.getSortCol());
-		try{
-			page=super.findPageBySql(page, sql, null);
-		}catch(Exception e){
-			String errorMsg="获取纵表分页数据错误"+e.getMessage();
-			logger.error(errorMsg,e);
-			throw new RuntimeException(errorMsg+",sql:"+sql);
-		}
+		page=super.findPageBySql(page, sql, null);
 		return page;
 	}
 	
@@ -105,14 +131,6 @@ public class LabelTableDataDaoImpl extends BaseDaoImpl<Object, String> implement
 	@Override
 	public List findVerticalDataList(String sql) {
 		Map params=new HashMap();
-		List result=null;
-		try{
-			result=super.findListBySql(sql, params);
-		}catch(Exception e){
-			String errorMsg="获取纵表数据错误"+e.getMessage();
-			logger.error(errorMsg);
-			throw new RuntimeException(errorMsg+",sql:"+sql);
-		}
-		return result;
+		return super.findListBySql(sql, params);
 	}
 }

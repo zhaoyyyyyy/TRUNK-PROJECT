@@ -49,7 +49,7 @@ public interface ILabelInfoDao extends BaseDao<LabelInfo, String> {
      * @return
      */
     public Page<LabelInfo> findLabelInfoPageList(Page<LabelInfo> page, LabelInfoVo labelInfoVo);
-
+    
     /**
      * Description: 按条件查询列表
      *

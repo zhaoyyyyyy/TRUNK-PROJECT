@@ -145,13 +145,17 @@ public class LabelInfoDaoImpl extends BaseDaoImpl<LabelInfo, String> implements 
         }
         return super.findPageByHql(page, hql.toString(), params);
     }
-
+    
     public List<LabelInfo> findLabelInfoList(LabelInfoVo labelInfoVo) {
         Map<String, Object> params = new HashMap<>();
         StringBuffer hql = new StringBuffer("from LabelInfo l where 1=1 ");
         if (StringUtil.isNotBlank(labelInfoVo.getLabelId())) {
             hql.append("and l.labelId = :labelId ");
-            params.put("labelId", labelInfoVo.getLabelId());
+	        params.put("labelId", labelInfoVo.getLabelId());
+        }
+        if (labelInfoVo.getLabelIds()!=null && labelInfoVo.getLabelIds().size()>0) {
+            hql.append("and l.labelId in (:labelId )");
+	        params.put("labelId", labelInfoVo.getLabelIds());
         }
         if (null != labelInfoVo.getKeyType()) {
             hql.append("and l.keyType = :keyType ");

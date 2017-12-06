@@ -1,5 +1,6 @@
 package com.asiainfo.cp.acrm.auth.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,10 +75,12 @@ public class CustomerController extends BaseController<User> {
 		}
 		ViewResponseModel respData=new ViewResponseModel();
 		
-		if (page!=null && page.getData()!=null){
+		if (page!=null && page.getData()!=null&& page.getData().size()!=0){
 			respData.setAmount(""+page.getData().size());
+			respData.setDataList(page.getData());
 		}else{
 			respData.setAmount("0");
+			respData.setDataList(new ArrayList());
 		}
 		if (viewReqModel.getPageInfo()!=null){
 			PageResponseModel respModel=new PageResponseModel();
@@ -86,7 +89,6 @@ public class CustomerController extends BaseController<User> {
 			respModel.setPageSize(""+page.getPageSize());
 			respModel.setTotalCount(""+page.getTotalCount());
 		}
-		respData.setDataList(page.getData());
 		return  webResult.success("分页查询成功", respData);
 	}
 

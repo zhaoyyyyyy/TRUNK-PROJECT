@@ -37,4 +37,6 @@ public interface ILabelTableDataService {
 	public List findVerticalDataList(String sql,List<LabelMetaDataInfo> lableMetaDataInfos) ;
 
 	public Page<Object> findVerticalDataList(PageRequestModel page,String sql,List<LabelMetaDataInfo> lableMetaDataInfos);
+
+	public List<LabelModel> findHorizentalLabelInfoModels(String sql, List<LabelMetaDataInfo> lableMetaDataInfos) throws BaseException;
 }

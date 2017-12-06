@@ -1,10 +1,16 @@
 package com.asiainfo.cp.acrm.auth.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +23,6 @@ import com.asiainfo.cp.acrm.base.exception.BaseException;
 import com.asiainfo.cp.acrm.base.exception.ParamRequiredException;
 import com.asiainfo.cp.acrm.base.page.Page;
 import com.asiainfo.cp.acrm.base.utils.StringUtil;
-import com.asiainfo.cp.acrm.label.service.ILabelInfoService;
 import com.asiainfo.cp.acrm.label.service.ILabelMetaInfoService;
 import com.asiainfo.cp.acrm.label.service.ILabelTableDataService;
 import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
@@ -26,10 +31,9 @@ import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
 @Transactional
 public class CustomerServiceImpl implements ICustomerService{
 	
-	@Autowired
-	private ILabelInfoService labelInfoSvc;
+	private static Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 	
-    @Autowired
+	@Autowired
     private ILabelMetaInfoService labelMetaInfoSvc;
     
     @Autowired
@@ -49,15 +53,39 @@ public class CustomerServiceImpl implements ICustomerService{
 			}
 		}
 		List<LabelModel> resultData=new ArrayList<LabelModel>();
-		for (String labelId:reqModel.getLabelId()){
-			LabelMetaDataInfo result=labelMetaInfoSvc.getHorizentalLabelMetaInfo(labelId);
-			System.out.println(labelMetaInfoSvc.getTableSQL(reqModel,result));
-			LabelModel model=labelTableDataSvc.findHorizentalLabelInfoModel(labelMetaInfoSvc.getTableSQL(reqModel,result), result);
-			if (model!=null){
-				resultData.add(model);
+		List<LabelMetaDataInfo> labelMetaDataInfos=labelMetaInfoSvc.getHorizentalLabelMetaInfos(reqModel.getLabelId());
+		Map<String, List<LabelMetaDataInfo>> tableToLabelMetaDataInfos = getTableToLabelMetaDataInfosMap(
+				labelMetaDataInfos);
+		Set<Entry<String,List<LabelMetaDataInfo>>> s = tableToLabelMetaDataInfos.entrySet();
+		for(Entry<String,List<LabelMetaDataInfo>> e : s) {
+			String sql=labelMetaInfoSvc.getTableSQL(reqModel,e.getValue());
+			List<LabelModel> models=null;
+			try {
+				models=labelTableDataSvc.findHorizentalLabelInfoModels(sql, e.getValue());
+			}catch(Exception ex) {
+				String errorMsg="获取宽表数据错误"+ex.getMessage()+",sql:"+sql;
+				logger.error(errorMsg,e);
+				throw new RuntimeException(errorMsg);
 			}
+			resultData.addAll(models);
 		}
 		return resultData;
+	}
+
+	private Map<String, List<LabelMetaDataInfo>> getTableToLabelMetaDataInfosMap(
+			List<LabelMetaDataInfo> labelMetaDataInfos) {
+		Map <String,List<LabelMetaDataInfo>> tableToLabelMetaDataInfos=new HashMap<String,List<LabelMetaDataInfo>>();
+		for (LabelMetaDataInfo each:labelMetaDataInfos) {
+			String tableName=each.getTableName();
+			if (tableToLabelMetaDataInfos.containsKey(tableName)) {
+				tableToLabelMetaDataInfos.get(tableName).add(each);
+			}else {
+				List<LabelMetaDataInfo> list=new ArrayList<>();
+				list.add(each);
+				tableToLabelMetaDataInfos.put(tableName, list);
+			}
+		}
+		return tableToLabelMetaDataInfos;
 	}
 	
 	@Override
@@ -79,16 +107,25 @@ public class CustomerServiceImpl implements ICustomerService{
 		}
 		
 		String labelId=reqModel.getLabelId();
-    	List<LabelMetaDataInfo> result=labelMetaInfoSvc.getVerticalLabelMetaInfo(labelId);
-    	String sql=labelMetaInfoSvc.getTableSQL(reqModel,result);
-    	Page page=new Page();
-    	if (reqModel.getPageInfo()==null){
-    		List list=labelTableDataSvc.findVerticalDataList(sql,result);
-    		page.setData(list);
-    		return page;
-    	}
-    	page=labelTableDataSvc.findVerticalDataList(reqModel.getPageInfo(), sql,result);
-		return page;
+	    	List<LabelMetaDataInfo> result=labelMetaInfoSvc.getVerticalLabelMetaInfo(labelId);
+	    	if (result==null) {
+	    		return null;
+	    	}
+	    	String sql=labelMetaInfoSvc.getTableSQL(reqModel,result);
+	    	Page page=new Page();
+	    	try {
+		    	if (reqModel.getPageInfo()==null){
+		    		List list=labelTableDataSvc.findVerticalDataList(sql,result);
+		    		page.setData(list);
+		    	}else {
+		    		page=labelTableDataSvc.findVerticalDataList(reqModel.getPageInfo(), sql,result);
+		    	}
+	    	}catch(Exception e) {
+	    		String errorMsg="获取宽表数据错误"+e.getMessage()+",sql:"+sql;
+			logger.error(errorMsg,e);
+			throw new RuntimeException(errorMsg);
+	    	}
+	    	return page;
 	}
 	
 }
