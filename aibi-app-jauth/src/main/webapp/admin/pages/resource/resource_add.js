@@ -27,7 +27,8 @@ window.jauth_onload = function() {
 									resourceCode : data.resource.resourceCode ,
 									address : data.resource.address ,
 									parentName : data.resource.parentName,
-									dispOrder : data.resource.dispOrder
+									dispOrder : data.resource.dispOrder,
+									type : data.resource.type
 								}
 							});
 						}
@@ -44,6 +45,7 @@ window.jauth_onload = function() {
 				resourceCode : null ,
 				address : null ,
 				parentName : null ,
+				type : null ,
 				dispOrder : null
 			}
 		});

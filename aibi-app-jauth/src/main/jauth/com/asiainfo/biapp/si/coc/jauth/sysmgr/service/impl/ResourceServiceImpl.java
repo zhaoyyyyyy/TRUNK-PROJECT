@@ -53,7 +53,6 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource,String> implem
 			BeanUtils.copyProperties(resource, saveResource);
 			saveResource.setId(null);
 			saveResource.setStatus(0);
-			saveResource.setType("菜单");
 			saveResource.setCreateTime(getSystemDate());
 			saveResource.setAppSysCode("1");
 		} else{
@@ -61,6 +60,7 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource,String> implem
 			saveResource.setAddress(resource.getAddress());
 			saveResource.setResourceName(resource.getResourceName());
 			saveResource.setResourceCode(resource.getResourceCode());
+			saveResource.setType(resource.getType());
 			saveResource.setParentId(resource.getParentId());
 			saveResource.setDispOrder(resource.getDispOrder());
 		}

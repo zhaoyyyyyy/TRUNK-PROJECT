@@ -46,18 +46,24 @@
 						</td>
 					</tr>
 					<tr>
-						<th >
-							请选择父资源<span class="req">*</span>
-						</th>
-						<td>
-							<v-input defValue="parentName" id="parentName" name="parentName" class="easyui-validatebox read_inputStyle" 
-								required="true" maxLen="30" readonly="readonly" /></v-input>
-						<th >
+					<th>资源类型<span class="req">*</span></th>
+						<td><v-input id="type" name="type" defValue="type" type="text" 
+						class="inputStyle easyui-validatebox" required="true" datadic="ZYLXZD" ></v-input></td>
+						<th>
 							序号
 						</th>
 						<td>
 							<input v-model="dispOrder" name="dispOrder"
 								id="dispOrder" class="inputStyle"  maxLen="30" />
+						</td>
+					</tr>
+					<tr>
+						<th >
+							请选择父资源<span class="req">*</span>
+						</th>
+						<td colspan="3">
+							<v-input defValue="parentName" id="parentName" name="parentName" class="easyui-validatebox read_inputStyle" 
+								required="true" maxLen="30" readonly="readonly" /></v-input>
 						</td>
 					</tr>
 					<tr>
