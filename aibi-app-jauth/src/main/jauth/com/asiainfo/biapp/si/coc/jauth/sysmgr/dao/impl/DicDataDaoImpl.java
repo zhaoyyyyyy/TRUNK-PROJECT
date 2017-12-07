@@ -91,4 +91,8 @@ public class DicDataDaoImpl extends BaseDaoImpl<DicData,String> implements DicDa
 		}
 		return (JQGridPage<DicData>) super.findPageByHql(page, hql.toString(), params);
 	}
+	
+	public List<DicData> findDicDataList(DicDataVo dicDataVo){
+        return this.findListByHql("from DicData where 1=1 ");
+	}
 }

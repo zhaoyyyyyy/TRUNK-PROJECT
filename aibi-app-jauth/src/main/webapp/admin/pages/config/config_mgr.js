@@ -7,6 +7,7 @@ var createConfigurationTemplate = [ {
 		code : '{PARENT_CODE}_请输入',
 		type : 'boolean',
 		value : '01',
+		flag:''
 	} ]
 }, {
 	name : '文本配置',
@@ -15,7 +16,8 @@ var createConfigurationTemplate = [ {
 		code : '请输入编码',
 		type : 'text',
 		value : '请输入配置项的值',
-		desc : ''
+		desc : '',
+		flag:''
 	} ]
 }, {
 	name : '数据库配置',
@@ -24,22 +26,26 @@ var createConfigurationTemplate = [ {
 		code : '{PARENT_CODE}_DRIVERCLASS',
 		type : 'enum',
 		dimCode : 'driverClass',
-		value : 'http://xxx.xxx.xxx.xxx'
+		value : 'http://xxx.xxx.xxx.xxx',
+		flag:''
 	}, {
 		name : '地址',
 		code : '{PARENT_CODE}_URL',
 		type : 'text',
 		value : 'root',
+		flag:''
 	}, {
 		name : '用户名',
 		code : '{PARENT_CODE}_NAME',
 		type : 'text',
-		value : '请输入配置项的值'
+		value : '请输入配置项的值',
+		flag:''
 	}, {
 		name : '密码',
 		code : '{PARENT_CODE}_PW',
 		type : 'text',
-		value : '请输入配置项的值'
+		value : '请输入配置项的值',
+		flag:''
 	} ]
 }, {
 	name : '枚举配置',
@@ -48,7 +54,17 @@ var createConfigurationTemplate = [ {
 		code : '{PARENT_CODE}_DRIVERCLASS',
 		type : 'enum',
 		dimCode : 'driverClass',
-		value : 'http://xxx.xxx.xxx.xxx'
+		value : 'http://xxx.xxx.xxx.xxx',
+		flag:''
+	} ]
+}, {
+	name : '新增目录',
+	fields : [ {
+		name : '请输入名称',
+		code : '请输入编码',
+		type : 'catalog',
+		value : '请输入配置项的值',
+		desc : ''
 	} ]
 } ]
 

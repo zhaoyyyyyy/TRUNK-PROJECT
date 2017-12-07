@@ -26,4 +26,6 @@ public interface DicDataService extends BaseService<DicData,String>{
 	public List<DicData> findDataListByDicCode(String dicCode);
 	
 	public JQGridPage<DicData> findDicDataList(JQGridPage<DicData> page,DicDataVo dicDataVo);
+	
+	public List<DicData> findDicDataList(DicDataVo dicDataVo);
 }

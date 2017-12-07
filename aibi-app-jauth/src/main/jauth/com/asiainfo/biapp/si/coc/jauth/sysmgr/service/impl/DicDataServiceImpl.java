@@ -62,4 +62,8 @@ public class DicDataServiceImpl extends BaseServiceImpl<DicData,String> implemen
 	public JQGridPage<DicData> findDicDataList(JQGridPage<DicData> page,DicDataVo dicDataVo) {
 		return dicDataDao.findDicDataList(page, dicDataVo);
 	}
+	
+	public List<DicData> findDicDataList(DicDataVo dataVo){
+	    return dicDataDao.findDicDataList(dataVo);
+	}
 }

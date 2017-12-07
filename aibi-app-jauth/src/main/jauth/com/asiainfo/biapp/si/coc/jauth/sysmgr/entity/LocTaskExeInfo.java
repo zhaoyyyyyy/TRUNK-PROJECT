@@ -1,3 +1,4 @@
+
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.entity;
 
 import java.util.HashSet;
@@ -18,10 +19,9 @@ import org.hibernate.annotations.OrderBy;
 import com.asiainfo.biapp.si.coc.jauth.frame.entity.BaseEntity;
 
 /**
- * 
  * Title : ScheduleController
  * <p/>
- * Description : 
+ * Description :
  * <p/>
  * CopyRight : CopyRight (c) 2017
  * <p/>
@@ -29,121 +29,128 @@ import com.asiainfo.biapp.si.coc.jauth.frame.entity.BaseEntity;
  * <p/>
  * JDK Version Used : JDK 1.8 +
  * <p/>
- * Modification History	:
+ * Modification History :
  * <p/>
- * <pre>NO.    Date    Modified By    Why & What is modified</pre>
- * <pre>1    2017年10月23日    chenchao3        Created</pre>
+ * 
+ * <pre>
+ * NO.    Date    Modified By    Why & What is modified
+ * </pre>
+ * 
+ * <pre>
+ * 1    2017年10月23日    chenchao3        Created
+ * </pre>
  * <p/>
  *
- * @author  chenchao3
+ * @author chenchao3
  * @version 5.0.0.2017年10月23日
  */
 @Entity
 @Table(name = "LOC_TASK_EXE_INFO")
 public class LocTaskExeInfo extends BaseEntity {
-	
-	private static final long serialVersionUID = 1L;
-	
-	@Id@Column(name = "task_exe_id")
-	@GeneratedValue
-	private Integer taskExeId;
-	
-	@Column(name = "task_exe_name")
-	private String taskExeName;
-	
-	@Column(name = "parent_exe_id")
-	private String parentExeId;
-	
-	@Column(name = "task_id")
-	private String taskId;
-	
-	@Column(name = "sys_id")
-	private String sysId;
-	
-	@Column(name = "task_exe_time")
-	private String taskExeTime;
-	
-	@Column(name = "exe_type")
-	private String exeType;
-	
-	@Column(name = "exe_status")
-	private String exeStatus;
 
-	@OrderBy(clause = "task_exe_id")
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "parent_exe_id")
-	private Set<LocTaskExeInfo> children = new HashSet<>(0);
+    private static final long serialVersionUID = 1L;
 
-	public Integer getTaskExeId() {
-		return taskExeId;
-	}
+    @Id
+    @Column(name = "task_exe_id")
+    @GeneratedValue
+    private Integer taskExeId;
 
-	public void setTaskExeId(Integer taskExeId) {
-		this.taskExeId = taskExeId;
-	}
+    @Column(name = "task_exe_name")
+    private String taskExeName;
 
-	public String getTaskExeName() {
-		return taskExeName;
-	}
+    @Column(name = "parent_exe_id")
+    private String parentExeId;
 
-	public void setTaskExeName(String taskExeName) {
-		this.taskExeName = taskExeName;
-	}
+    @Column(name = "task_id")
+    private String taskId;
 
-	public String getParentExeId() {
-		return parentExeId;
-	}
+    @Column(name = "sys_id")
+    private String sysId;
 
-	public void setParentExeId(String parentExeId) {
-		this.parentExeId = parentExeId;
-	}
+    @Column(name = "task_exe_time")
+    private String taskExeTime;
 
-	public String getTaskId() {
-		return taskId;
-	}
+    @Column(name = "exe_type")
+    private String exeType;
 
-	public void setTaskId(String taskId) {
-		this.taskId = taskId;
-	}
+    @Column(name = "exe_status")
+    private String exeStatus;
 
-	public String getSysId() {
-		return sysId;
-	}
+    @OrderBy(clause = "task_exe_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "parent_exe_id")
+    private Set<LocTaskExeInfo> children = new HashSet<>(0);
 
-	public void setSysId(String sysId) {
-		this.sysId = sysId;
-	}
+    public Integer getTaskExeId() {
+        return taskExeId;
+    }
 
-	public String getTaskExeTime() {
-		return taskExeTime;
-	}
+    public void setTaskExeId(Integer taskExeId) {
+        this.taskExeId = taskExeId;
+    }
 
-	public void setTaskExeTime(String taskExeTime) {
-		this.taskExeTime = taskExeTime;
-	}
+    public String getTaskExeName() {
+        return taskExeName;
+    }
 
-	public String getExeType() {
-		return exeType;
-	}
+    public void setTaskExeName(String taskExeName) {
+        this.taskExeName = taskExeName;
+    }
 
-	public void setExeType(String exeType) {
-		this.exeType = exeType;
-	}
+    public String getParentExeId() {
+        return parentExeId;
+    }
 
-	public String getExeStatus() {
-		return exeStatus;
-	}
+    public void setParentExeId(String parentExeId) {
+        this.parentExeId = parentExeId;
+    }
 
-	public void setExeStatus(String exeStatus) {
-		this.exeStatus = exeStatus;
-	}
+    public String getTaskId() {
+        return taskId;
+    }
 
-	public Set<LocTaskExeInfo> getChildren() {
-		return children;
-	}
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
 
-	public void setChildren(Set<LocTaskExeInfo> children) {
-		this.children = children;
-	}
+    public String getSysId() {
+        return sysId;
+    }
+
+    public void setSysId(String sysId) {
+        this.sysId = sysId;
+    }
+
+    public String getTaskExeTime() {
+        return taskExeTime;
+    }
+
+    public void setTaskExeTime(String taskExeTime) {
+        this.taskExeTime = taskExeTime;
+    }
+
+    public String getExeType() {
+        return exeType;
+    }
+
+    public void setExeType(String exeType) {
+        this.exeType = exeType;
+    }
+
+    public String getExeStatus() {
+        return exeStatus;
+    }
+
+    public void setExeStatus(String exeStatus) {
+        this.exeStatus = exeStatus;
+    }
+
+    public Set<LocTaskExeInfo> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<LocTaskExeInfo> children) {
+        this.children = children;
+    }
 
 }

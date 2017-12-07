@@ -72,23 +72,29 @@ public class ConfigController extends BaseController<Coconfig> {
 
 	// 子节点
 	private String getTree(Coconfig coconfig, StringBuffer html) {
-		html.append("<li id='").append(coconfig.getConfigKey()).append("' name='").append(coconfig.getConfigKey())
-				.append("' selectable='true'><span class='text'>").append(coconfig.getConfigName()).append("</span>");
-		html.append("</span><ul  class='ajax'>");
-		html.append("<li>{url: " + this.getRequest().getContextPath() + "/api/config/tree?coKey="
-				+ coconfig.getConfigKey() + "}</li></ul></li>");
+	    if (coconfig.getConfigValType()==5) {
+	        html.append("<li id='").append(coconfig.getConfigKey()).append("' name='").append(coconfig.getConfigKey())
+                .append("' selectable='true'><span class='text'>").append(coconfig.getConfigName()).append("</span>");
+            html.append("</span><ul  class='ajax'>");
+            html.append("<li>{url: " + this.getRequest().getContextPath() + "/api/config/tree?coKey="
+                + coconfig.getConfigKey() + "}</li></ul></li>"); 
+        }
+		
 		return html.toString();
 	}
 
 	// 最小节点
 	private String getLeaf(Coconfig coconfig, StringBuffer htmlCon) {
-		htmlCon.append("<li id='").append(coconfig.getConfigKey()).append("' name='").append(coconfig.getConfigKey())
-				.append("' selectable='true'");
-		htmlCon.append(">");
-		htmlCon.append("<span class='text'>");
-		htmlCon.append(coconfig.getConfigName());
-		htmlCon.append("</span>");
-		htmlCon.append("</li>");
+	    if (coconfig.getConfigValType()==5) {
+	        htmlCon.append("<li id='").append(coconfig.getConfigKey()).append("' name='").append(coconfig.getConfigKey())
+                    .append("' selectable='true'");
+            htmlCon.append(">");
+            htmlCon.append("<span class='text'>");
+            htmlCon.append(coconfig.getConfigName());
+            htmlCon.append("</span>");
+            htmlCon.append("</li>");
+        }
+		
 		return htmlCon.toString();
 	}
 

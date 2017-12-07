@@ -40,4 +40,5 @@ public interface DicDataDao extends BaseDao<DicData,String>{
 	
 	public JQGridPage<DicData> findDicDataList(JQGridPage<DicData> page,DicDataVo dicDataVo);
 	
+	public List<DicData> findDicDataList(DicDataVo dicDataVo);
 }
