@@ -47,9 +47,8 @@ public class CustomerController extends BaseController<User> {
 			labels =customerSvc.getLabelModels(reqModel);
 		} catch (BaseException e) {
 			return webResult.fail(e);
-		}catch (Exception e){
-			return webResult.fail(e.getMessage());
 		}
+		
 		PortrayalResponseModel repData=new PortrayalResponseModel();
 		repData.setAmount(""+labels.size());
 		repData.setDataList(labels);
@@ -70,9 +69,8 @@ public class CustomerController extends BaseController<User> {
 			page=customerSvc.view(viewReqModel);
 		} catch (BaseException e) {
 			return webResult.fail(e);
-		}catch (Exception e){
-			return webResult.fail(e.getMessage());
 		}
+		
 		ViewResponseModel respData=new ViewResponseModel();
 		
 		if (page!=null && page.getData()!=null&& page.getData().size()!=0){
