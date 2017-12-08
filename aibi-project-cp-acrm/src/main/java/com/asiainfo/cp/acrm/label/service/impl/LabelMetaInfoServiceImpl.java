@@ -3,10 +3,10 @@ package com.asiainfo.cp.acrm.label.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import com.asiainfo.cp.acrm.auth.model.PortrayalRequestModel;
@@ -16,7 +16,6 @@ import com.asiainfo.cp.acrm.base.exception.SqlRunException;
 import com.asiainfo.cp.acrm.base.utils.StringUtil;
 import com.asiainfo.cp.acrm.label.dao.IDimtableInfoDao;
 import com.asiainfo.cp.acrm.label.dao.ILabelInfoDao;
-import com.asiainfo.cp.acrm.label.dao.IMdaSysTableColumnDao;
 import com.asiainfo.cp.acrm.label.entity.DimtableInfo;
 import com.asiainfo.cp.acrm.label.entity.LabelInfo;
 import com.asiainfo.cp.acrm.label.entity.MdaSysTable;
@@ -24,7 +23,6 @@ import com.asiainfo.cp.acrm.label.entity.MdaSysTableColumn;
 import com.asiainfo.cp.acrm.label.service.ILabelMetaInfoService;
 import com.asiainfo.cp.acrm.label.vo.LabelInfoVo;
 import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
-import com.asiainfo.cp.acrm.label.vo.MdaSysTableColumnVo;
 
 @Service
 public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
@@ -61,6 +59,9 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			if (columns == null || columns.size() == 0) {
 				logger.error("标签" + each.getLabelId() + "没有对应的表列");
 				continue;
+			}
+			if (columns.size()>1) {
+				logger.error("宽表标签"+each.getLabelId()+"对应" +columns.size()+"列，错误");
 			}
 			List<LabelMetaDataInfo> eachResult = getLabelMetaInfo(each, columns);
 			result.addAll(eachResult);
@@ -130,8 +131,8 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 				metaDataInfo.setDimtableName(dimInfo.getDimTablename());
 				metaDataInfo.setDimCodeCol(dimInfo.getDimCodeCol());
 				metaDataInfo.setDimValueCol(dimInfo.getDimValueCol());
-				metaDataInfo.setDimtableShortName(DIMTABLE_SHORTNAME_DEFAULT + i);
-				metaDataInfo.setDimValueColAliasName(DIM_COLUMNVALUE_ALIAS_NAME_DEFAULT+i);
+				metaDataInfo.setDimtableShortName(DIMTABLE_SHORTNAME_DEFAULT + RandomUtils.nextInt());
+				metaDataInfo.setDimValueColAliasName(DIM_COLUMNVALUE_ALIAS_NAME_DEFAULT+RandomUtils.nextInt());
 			}
 			result.add(metaDataInfo);
 		}
