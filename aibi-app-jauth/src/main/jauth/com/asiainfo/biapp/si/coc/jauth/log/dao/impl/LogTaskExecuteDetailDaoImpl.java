@@ -37,11 +37,11 @@ public class LogTaskExecuteDetailDaoImpl extends BaseDaoImpl<LogTaskExecuteDetai
         }
         //执行时间
         if (StringUtils.isNotBlank(logTaskExecuteDetailVo.getStartTimeStart())) {
-            hql.append(" and l.startTimeStart >= :startTimeStart");
+            hql.append(" and l.startTime >= :startTimeStart");
             params.put("startTimeStart", DateUtil.parse(logTaskExecuteDetailVo.getStartTimeStart(),DateUtil.FMT_DATE_YYYYMMDDHHmmss));
         }
         if (StringUtils.isNotBlank(logTaskExecuteDetailVo.getStartTimeEnd())) {
-            hql.append(" and l.startTimeEnd <= :startTimeEnd");
+            hql.append(" and l.startTime <= :startTimeEnd");
             params.put("startTimeEnd", DateUtil.parse(logTaskExecuteDetailVo.getStartTimeEnd(),DateUtil.FMT_DATE_YYYYMMDDHHmmss));
         }
         //执行状态
