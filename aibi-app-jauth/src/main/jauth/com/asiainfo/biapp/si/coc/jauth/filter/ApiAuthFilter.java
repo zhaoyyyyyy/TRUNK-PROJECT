@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.json.JSONResult;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.WebResult;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Resource;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Role;
@@ -120,7 +121,7 @@ public class ApiAuthFilter implements Filter {
 			out = response.getWriter();
 			out.append(JSONResult.map2Json(WebResult.fail(msg)));
 		} catch (IOException e) {
-			e.printStackTrace();
+			LogUtil.error("接口响应失败", e);
 		} finally {
 			if (out != null) {
 				out.close();

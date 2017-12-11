@@ -12,9 +12,10 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
 import com.asiainfo.cp.acrm.base.page.Page;
+import com.asiainfo.cp.acrm.base.utils.LogUtil;
 
 /**
- * @describe TODO
+ * @describe Hibernate回调函数拓展类
  * @author zhougz
  * @date 2013-5-27
  */
@@ -84,7 +85,7 @@ public class HibernateCallbackExtends implements HibernateCallback{
 	      try {
 	        page.setTotalCount(this.daoHelper.countResult(countQuery, values));
 	      } catch (Exception e) {
-	        e.printStackTrace();
+	    	  LogUtil.error("分页器执行出错",e);
 	      }
 	    }
 	    if (page.getTotalCount() > 0) {

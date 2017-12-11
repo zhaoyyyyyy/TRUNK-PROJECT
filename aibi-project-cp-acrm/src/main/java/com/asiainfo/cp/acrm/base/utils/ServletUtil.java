@@ -30,7 +30,7 @@ public class ServletUtil {
 			out = response.getWriter();
 			out.append(JSONObject.fromObject(webResult.fail(baseException)).toString() );
 		} catch (IOException e) {
-			e.printStackTrace();
+			LogUtil.error("响应接口信息日常",e);
 		} finally {
 			if (out != null) {
 				out.close();

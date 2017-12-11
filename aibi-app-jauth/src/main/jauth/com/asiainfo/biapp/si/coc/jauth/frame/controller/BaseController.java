@@ -16,6 +16,7 @@ import com.asiainfo.biapp.si.coc.jauth.frame.entity.BaseEntity;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.GenericsUtil;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
 
 import net.sf.json.JSONObject;
@@ -67,7 +68,7 @@ public abstract class BaseController<T>  {
 		try {
 			this.entity = (T) GenericsUtil.getGenericClass(this.getClass()).newInstance() ;
 		} catch (Exception e) {
-			e.printStackTrace();
+			LogUtil.error("基础视图层,反射类信息失败", e);
 		}
 	}
 	
@@ -111,7 +112,7 @@ public abstract class BaseController<T>  {
 			response.setContentType(type + ";charset=UTF-8");
 			response.getWriter().write(text);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LogUtil.error("向显示部分输出流异常", e);
 		}
 	}
 

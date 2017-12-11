@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.page.Page;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 
 /**
  * @author zhougz
@@ -83,7 +84,7 @@ public class HibernateCallbackExtends implements HibernateCallback{
 	      try {
 	        page.setTotalCount(this.daoHelper.countResult(countQuery, values));
 	      } catch (Exception e) {
-	        e.printStackTrace();
+	    	  LogUtil.error("hibernate获取分页器失败", e);
 	      }
 	    }
 	    if (page.getTotalCount() > 0) {

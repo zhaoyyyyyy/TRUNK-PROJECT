@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.asiainfo.cp.acrm.base.exception.BaseException;
 import com.asiainfo.cp.acrm.base.exception.SqlRunException;
 import com.asiainfo.cp.acrm.base.page.Page;
+import com.asiainfo.cp.acrm.base.utils.LogUtil;
 
 /**
  * @describe Hibernate持久层实现类
@@ -47,8 +48,6 @@ public class BaseDaoImpl<T, ID extends Serializable>  implements BaseDao<T,ID> {
 //		super(domainClass, em);
 //		this.em = em;
 //	}
-
-	
 	
 	HibernateDaoHelper daoHelper = new HibernateDaoHelper();
 	public Logger logger = LoggerFactory.getLogger(super.getClass());
@@ -141,7 +140,7 @@ public class BaseDaoImpl<T, ID extends Serializable>  implements BaseDao<T,ID> {
 			query = this.addParametersForArr(query, args);
 			return query.getResultList();
 		}catch(Exception e){
-			e.printStackTrace();
+			LogUtil.error("HQL执行出错"+hql,e);
 			throw new SqlRunException();
 		}
 	}

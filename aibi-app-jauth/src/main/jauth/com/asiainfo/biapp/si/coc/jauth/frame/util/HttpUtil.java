@@ -70,7 +70,7 @@ public class HttpUtil {
 			return sb.toString();
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			LogUtil.error("发送Http请求失败:"+urlAddr, e);
 		} finally {
 			if (urlCon != null) {
 				urlCon.disconnect();

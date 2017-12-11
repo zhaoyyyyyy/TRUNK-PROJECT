@@ -26,10 +26,9 @@ public class MD5 {
 	            str = bi.toString(36);// 36进制数的字符串形式 
 	 
 	        } catch (NoSuchAlgorithmException e) { 
-	            e.printStackTrace(); 
+	        	LogUtil.error("Md5转码失败", e);
 	        } 
 	        return str; 
 	    }
 	  
-		
 }

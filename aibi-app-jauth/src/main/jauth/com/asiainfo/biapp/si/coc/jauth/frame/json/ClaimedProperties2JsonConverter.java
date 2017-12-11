@@ -12,6 +12,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
+
 public class ClaimedProperties2JsonConverter extends Obj2JsonConverter {
 
 	private static Logger logger = LoggerFactory.getLogger(ClaimedProperties2JsonConverter.class);
@@ -69,7 +71,7 @@ public class ClaimedProperties2JsonConverter extends Obj2JsonConverter {
 			try {
 				o = obj.getClass().getMethod(methodName).invoke(obj);
 			} catch (Exception e) {
-				e.printStackTrace();
+				LogUtil.error("属性转json反射器错误", e);
 			} 
 			jsonRslt.element(s, o == null?"":o.toString());
 		}

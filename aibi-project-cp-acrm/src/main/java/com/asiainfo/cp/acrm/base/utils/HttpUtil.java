@@ -31,7 +31,7 @@ public class HttpUtil {
 	        try {  
 	            result = java.net.URLEncoder.encode(source,encode);  
 	        } catch (UnsupportedEncodingException e) {  
-	            e.printStackTrace();  
+	        	LogUtil.error("URL编码转换异常",e);
 	            return "0";  
 	        }  
 	        return result;  
@@ -41,7 +41,7 @@ public class HttpUtil {
 	        try {  
 	            result = java.net.URLEncoder.encode(source,"GBK");  
 	        } catch (UnsupportedEncodingException e) {  
-	            e.printStackTrace();  
+	        	LogUtil.error("URL通过GBK转码异常",e);  
 	            return "0";  
 	        }  
 	        return result;  
@@ -102,7 +102,7 @@ public class HttpUtil {
 	            // 获得返回的输入流  
 	            inputStream = httpUrlConn.getInputStream();  
 	        } catch (Exception e) {  
-	            e.printStackTrace();  
+	        	LogUtil.error("发送http请求取得返回的输入流",e);
 	        }  
 	        return inputStream;  
 	    }
@@ -177,9 +177,8 @@ public class HttpUtil {
 	                result += line;
 	            }
 	        } catch (Exception e) {
-	        	e.printStackTrace();
+	        	LogUtil.error("发送GET请求出现异常",e);
 	        	throw new IOException();
-//	            System.out.println("发送GET请求出现异常！" + e);
 	        }
 	        // 使用finally块来关闭输入流
 	        finally {
@@ -188,7 +187,7 @@ public class HttpUtil {
 	                    in.close();
 	                }
 	            } catch (Exception e2) {
-	                e2.printStackTrace();
+	            	LogUtil.error("关闭HTTP输出流异常",e2);
 	            }
 	        }
 	        return result;
@@ -276,8 +275,7 @@ public class HttpUtil {
 	                result += line;
 	            }
 	        } catch (Exception e) {
-//	            System.out.println("发送 POST 请求出现异常！"+e);
-	            e.printStackTrace();
+	        	LogUtil.error("发送 POST 请求出现异常",e);
 	        }
 	        //使用finally块来关闭输出流、输入流
 	        finally{
@@ -290,7 +288,7 @@ public class HttpUtil {
 	                }
 	            }
 	            catch(IOException ex){
-	                ex.printStackTrace();
+	            	LogUtil.error("发送 POST请求IO无法关闭",ex);
 	            }
 	        }
 	        return result;
