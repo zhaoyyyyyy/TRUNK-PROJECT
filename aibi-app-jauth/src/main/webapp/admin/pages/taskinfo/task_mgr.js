@@ -6,7 +6,7 @@ window.jauth_onload = function() {
 		type : 'POST',
 		async : false,
 		onSuccess : function(data) {
-			$("li.root").append(data);
+			$("li.rootd").append(data);
 			mySimpleTree = $('#tree').simpleTree(
 					{
 						autoclose : false,
