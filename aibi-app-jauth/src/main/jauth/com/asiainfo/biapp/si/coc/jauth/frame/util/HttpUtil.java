@@ -5,6 +5,7 @@ package com.asiainfo.biapp.si.coc.jauth.frame.util;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -28,6 +29,7 @@ public class HttpUtil {
 	 */
 	public static String sentHttpReq(String urlAddr,Map<String,String> map) {
 		HttpURLConnection urlCon = null;
+		 DataOutputStream out = null;
 		try {
 			URL url = new URL(urlAddr);
 			urlCon = (HttpURLConnection) url.openConnection();
@@ -52,14 +54,12 @@ public class HttpUtil {
 		    // 现在通过输出流对象构建对象输出流对象，以实现输出可序列化的对象。
 			//ObjectOutputStream oos = new ObjectOutputStream(os);
 			// 向对象输出流写出数据，这些数据将存到内存缓冲区中
-			 DataOutputStream out = new DataOutputStream(os);
+			 out = new DataOutputStream(os);
 			  String content = "keys=" +keys+"&values="+values;
 		        // DataOutputStream.writeBytes将字符串中的16位的unicode字符以8位的字符形式写道流里面
+			  out.flush();
 	        out.writeBytes(content); 
-	        out.flush();
-	        out.close(); // flush and close
 			urlCon.getOutputStream().flush();
-			urlCon.getOutputStream().close();
 			InputStream is = urlCon.getInputStream();// <===注意，实际发送请求的代码段就在这里
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			StringBuilder sb = new StringBuilder();
@@ -73,7 +73,20 @@ public class HttpUtil {
 			LogUtil.error("发送Http请求失败:"+urlAddr, e);
 		} finally {
 			if (urlCon != null) {
+				try {
+					urlCon.getOutputStream().close();
+				} catch (IOException e) {
+					LogUtil.error("关闭输出流失败", e);
+					e.printStackTrace();
+				}
 				urlCon.disconnect();
+			}
+			if (out != null) {
+				try {
+					out.close();
+				} catch (IOException e) {
+					LogUtil.error("关闭输出流失败", e);
+				} 
 			}
 		}
 		return null;

@@ -1,8 +1,11 @@
 package com.asiainfo.cp.acrm.base.utils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 public class LogUtil {
 
@@ -16,9 +19,18 @@ public class LogUtil {
 
     private static String LEVEL_ERROR = "ERROR";
 
-    public static void main(String[] args) throws Exception {
+    
+    private static String jauthUrl;
 
-        LogUtil.error("自定义LOG");
+    @Value("${jauth-url}")
+    public void setJauthUrl(String jauthUrl) {
+        this.jauthUrl = jauthUrl;
+    }
+    private static String nodeName;
+
+    @Value("${spring.application.name}")
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
     }
 
     public static void debug(Object message) {
@@ -121,8 +133,26 @@ public class LogUtil {
      * @param msg
      */
     private static void saveLog(String level,String threadName, String interfaceUrl, String method, Object msg) {
-        // 组装http远程调用
-        System.out.println(interfaceUrl + "========method==" + method + "msg" + msg+"threadName==="+threadName);
+    	try {
+            // 组装http远程调用
+            Map<String, Object> params = new HashMap<>();
+
+            params.put("userId", "admin");
+            params.put("ipAddr", "127.0.0.1");
+            params.put("opTime", new Date());
+
+            params.put("sysId", nodeName);
+            params.put("nodeName", nodeName);
+
+            params.put("levelId", level);
+            params.put("threadName", threadName);
+            params.put("interfaceUrl", interfaceUrl + "/" + method);
+            params.put("errorMsg", msg);
+
+            HttpUtil.sendPost(jauthUrl + "/api/monitor/save", params);
+        } catch (Exception e) {
+        	LogUtil.error("给JAUTH同步日志出错",e);
+        }
     }
 
 }
