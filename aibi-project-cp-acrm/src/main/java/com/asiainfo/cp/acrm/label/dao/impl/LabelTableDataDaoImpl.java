@@ -33,7 +33,6 @@ public class LabelTableDataDaoImpl extends BaseDaoImpl<Object, String> implement
 		}catch(Exception e){
 			String errorMsg="获取纵表数据错误"+e.getMessage();
 			LogUtil.error(errorMsg,e);
-			//throw new RuntimeException(errorMsg+",sql:"+sql);
 			return null;
 		}
 		List <LabelModel> resultData=new ArrayList<LabelModel>();

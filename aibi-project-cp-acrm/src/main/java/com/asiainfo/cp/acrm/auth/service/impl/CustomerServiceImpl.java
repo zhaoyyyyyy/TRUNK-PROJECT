@@ -21,6 +21,7 @@ import com.asiainfo.cp.acrm.auth.model.ViewRequestModel;
 import com.asiainfo.cp.acrm.auth.service.ICustomerService;
 import com.asiainfo.cp.acrm.base.exception.BaseException;
 import com.asiainfo.cp.acrm.base.exception.ParamRequiredException;
+import com.asiainfo.cp.acrm.base.exception.SqlRunException;
 import com.asiainfo.cp.acrm.base.page.Page;
 import com.asiainfo.cp.acrm.base.utils.LogUtil;
 import com.asiainfo.cp.acrm.base.utils.StringUtil;
@@ -64,7 +65,7 @@ public class CustomerServiceImpl implements ICustomerService{
 			}catch(Exception ex) {
 				String errorMsg="获取宽表数据错误"+ex.getMessage()+",sql:"+sql;
 				LogUtil.error(errorMsg,ex);
-				throw new RuntimeException(errorMsg);
+				throw new SqlRunException(errorMsg);
 			}
 			resultData.addAll(models);
 		}
@@ -122,7 +123,7 @@ public class CustomerServiceImpl implements ICustomerService{
 	    	}catch(Exception e) {
 	    		String errorMsg="获取宽表数据错误"+e.getMessage()+",sql:"+sql;
 			LogUtil.error(errorMsg,e);
-			throw new RuntimeException(errorMsg);
+			throw new SqlRunException(errorMsg);
 	    	}
 	    	return page;
 	}
