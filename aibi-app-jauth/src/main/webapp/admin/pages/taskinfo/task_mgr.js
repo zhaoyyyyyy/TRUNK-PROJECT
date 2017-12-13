@@ -132,6 +132,7 @@ window.jauth_onload = function() {
 					}).trigger("reloadGrid", [ {
 						page : 1
 					} ]);
+					window.location.reload();
 				}
 			});
 	// 查询

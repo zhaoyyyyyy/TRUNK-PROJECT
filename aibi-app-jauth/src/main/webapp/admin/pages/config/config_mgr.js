@@ -100,7 +100,7 @@ function fun_add(i, configKey) {
 		}).trigger("reloadGrid", [ {
 			page : 1
 		} ]);
-		// window.location.reload();
+		window.location.reload();
 	}
 }
 
@@ -232,8 +232,9 @@ function fun_del(configKey) {
 					}).trigger("reloadGrid", [ {
 						page : 1
 					} ]);
+					window.location.reload();
 				});
-				// window.location.reload();
+			    
 			}
 		});
 	});
