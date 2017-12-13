@@ -6,7 +6,9 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LogUtil {
 
     private static Map<String, Logger> loggerMap = new HashMap<String, Logger>();
@@ -84,7 +86,7 @@ public class LogUtil {
         String className = ste.getClassName();
         String method = ste.getMethodName();
         String threadName = Thread.currentThread().getName();
-        saveLog(LEVEL_ERROR, threadName,className, method, message+":"+t.getMessage());
+        //saveLog(LEVEL_ERROR, threadName,className, method, message+":"+t.getMessage());
         Logger log = getLogger(className);
         log.error(message, t);
     }
