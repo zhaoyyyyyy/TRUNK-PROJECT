@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.dao.BaseDao;
+import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.impl.BaseServiceImpl;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.dao.IpWhiteListDao;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.IpWhiteList;
@@ -35,5 +36,9 @@ public class IpWhiteListServiceImpl extends BaseServiceImpl<IpWhiteList, String>
 	public List<IpWhiteList> findIpWhiteList() {
 		return ipwhitelistDao.findIpWhiteList();
 	}
+    @Override
+    public JQGridPage<IpWhiteList> finIpWhiteListPage(JQGridPage<IpWhiteList> page) {
+        return ipwhitelistDao.finIpWhiteListPage(page);
+    }
 	
 }

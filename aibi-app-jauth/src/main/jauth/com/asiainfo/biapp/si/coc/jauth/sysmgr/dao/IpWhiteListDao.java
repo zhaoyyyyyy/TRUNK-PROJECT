@@ -3,6 +3,7 @@ package com.asiainfo.biapp.si.coc.jauth.sysmgr.dao;
 import java.util.List;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.dao.BaseDao;
+import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.IpWhiteList;
 
 public interface IpWhiteListDao extends BaseDao<IpWhiteList, String>{
@@ -16,4 +17,5 @@ public interface IpWhiteListDao extends BaseDao<IpWhiteList, String>{
 	 */
     public List<IpWhiteList> findIpWhiteList();
 
+    public JQGridPage<IpWhiteList> finIpWhiteListPage(JQGridPage<IpWhiteList> page);
 }

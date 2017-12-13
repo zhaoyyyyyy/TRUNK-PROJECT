@@ -2,6 +2,7 @@ package com.asiainfo.biapp.si.coc.jauth.sysmgr.service;
 
 import java.util.List;
 
+import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.IpWhiteList;
 /**
@@ -20,4 +21,6 @@ public interface IpWhiteListService extends BaseService<IpWhiteList, String>{
 	 * @date 2017-10-23
 	 */
 	public List<IpWhiteList> findIpWhiteList();
+	
+	public JQGridPage<IpWhiteList> finIpWhiteListPage(JQGridPage<IpWhiteList> page);
 }

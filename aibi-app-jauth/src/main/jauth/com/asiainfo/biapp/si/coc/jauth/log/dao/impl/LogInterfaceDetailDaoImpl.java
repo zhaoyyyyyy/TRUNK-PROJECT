@@ -63,6 +63,11 @@ public class LogInterfaceDetailDaoImpl extends BaseDaoImpl<LogInterfaceDetail,St
             hql.append(" and l.outputParams LIKE :outputParams");
             params.put("outputParams", "%"+logInterfaceDetailVo.getOutputParams()+"%");
         }
+		if(StringUtils.isNotBlank(page.getSortCol())){
+            hql.append(" order by l."+page.getSortCol()+" "+page.getSortOrder());
+        }else{
+            hql.append(" order by l.opTime desc");
+        }
 		return (JQGridPage<LogInterfaceDetail>) super.findPageByHql(page, hql.toString(), params);
 	}
 

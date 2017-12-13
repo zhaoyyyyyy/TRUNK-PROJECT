@@ -4,12 +4,12 @@ window.jauth_onload = function(){
 			var colNames = [ 'IP白名单', '请求地址', '操作'];
 			var colModel = [ {
 						name : 'ipAddress',
-						index : 'ipaddress',
+						index : 'ipAddress',
 						width : 40,
 						align : 'left'
 					},{
 						name : 'requestAddress',
-						index : 'requestddress',
+						index : 'requestAddress',
 						width : 40,
 						align : 'left'
 					}, {

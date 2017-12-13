@@ -61,6 +61,11 @@ public class LogOperationDetailDaoImpl extends BaseDaoImpl<LogOperationDetail,St
 			hql.append(" and resource.resourceName LIKE :resourceName");
 			params.put("resourceName", "%"+logOperationDetailVo.getResourceName()+"%");
 		}
+		if(StringUtils.isNotBlank(page.getSortCol())){
+            hql.append(" order by l."+page.getSortCol()+" "+page.getSortOrder());
+        }else{
+            hql.append(" order by l.opTime desc");
+        }
 		return (JQGridPage<LogOperationDetail>) super.findPageByHql(page, hql.toString(), params);
 	}
 

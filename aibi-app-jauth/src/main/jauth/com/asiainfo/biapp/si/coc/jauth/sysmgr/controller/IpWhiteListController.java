@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.controller.BaseController;
 import com.asiainfo.biapp.si.coc.jauth.frame.json.JSONResult;
+import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.IpWhiteList;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.IpWhiteListService;
@@ -78,9 +79,10 @@ public class IpWhiteListController extends BaseController<IpWhiteList> {
 	@ApiImplicitParam(name="cols",value="列名称",required=true,paramType="query",dataType="string",defaultValue="ipAddress,requestAddress,listId")
 	@RequestMapping(value = "/whitelist/query", method = RequestMethod.POST, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public String queryIpWhiteList(String cols) {
-		List<IpWhiteList> ipWhiteLists = ipwhitelistService.findIpWhiteList();
-		return JSONResult.list2JsonAsPage(ipWhiteLists, cols);
+	public String queryIpWhiteList(JQGridPage<IpWhiteList> page,String cols) {
+	    page.setPageSize(50);
+		JQGridPage<IpWhiteList> ipWhiteLists = ipwhitelistService.finIpWhiteListPage(page);
+		return JSONResult.page2Json(page, cols);
 	}
 
 	/**

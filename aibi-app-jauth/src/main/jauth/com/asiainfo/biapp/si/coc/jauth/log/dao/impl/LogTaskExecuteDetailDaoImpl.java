@@ -54,6 +54,11 @@ public class LogTaskExecuteDetailDaoImpl extends BaseDaoImpl<LogTaskExecuteDetai
             hql.append(" and l.userId LIKE :userId");
             params.put("userId", "%"+logTaskExecuteDetailVo.getUserId()+"%");
         }
+        if(StringUtils.isNotBlank(page.getSortCol())){
+            hql.append(" order by l."+page.getSortCol()+" "+page.getSortOrder());
+        }else{
+            hql.append(" order by l.startTime desc");
+        }
         return (JQGridPage<LogTaskExecuteDetail>) super.findPageByHql(page, hql.toString(), params);
     }
 
