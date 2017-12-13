@@ -14,6 +14,7 @@ import com.asiainfo.cp.acrm.auth.model.PageRequestModel;
 import com.asiainfo.cp.acrm.base.dao.BaseDaoImpl;
 import com.asiainfo.cp.acrm.base.exception.BaseException;
 import com.asiainfo.cp.acrm.base.page.Page;
+import com.asiainfo.cp.acrm.base.utils.LogUtil;
 import com.asiainfo.cp.acrm.label.dao.ILabelTableDataDao;
 import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
 
@@ -31,7 +32,7 @@ public class LabelTableDataDaoImpl extends BaseDaoImpl<Object, String> implement
 			result=this.findListBySql(sql, params);
 		}catch(Exception e){
 			String errorMsg="获取纵表数据错误"+e.getMessage();
-			logger.error(errorMsg,e);
+			LogUtil.error(errorMsg,e);
 			//throw new RuntimeException(errorMsg+",sql:"+sql);
 			return null;
 		}

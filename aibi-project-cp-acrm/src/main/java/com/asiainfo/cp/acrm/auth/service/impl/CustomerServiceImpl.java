@@ -22,6 +22,7 @@ import com.asiainfo.cp.acrm.auth.service.ICustomerService;
 import com.asiainfo.cp.acrm.base.exception.BaseException;
 import com.asiainfo.cp.acrm.base.exception.ParamRequiredException;
 import com.asiainfo.cp.acrm.base.page.Page;
+import com.asiainfo.cp.acrm.base.utils.LogUtil;
 import com.asiainfo.cp.acrm.base.utils.StringUtil;
 import com.asiainfo.cp.acrm.label.service.ILabelMetaInfoService;
 import com.asiainfo.cp.acrm.label.service.ILabelTableDataService;
@@ -30,8 +31,6 @@ import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
 @Service
 @Transactional
 public class CustomerServiceImpl implements ICustomerService{
-	
-	private static Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 	
 	@Autowired
     private ILabelMetaInfoService labelMetaInfoSvc;
@@ -64,7 +63,7 @@ public class CustomerServiceImpl implements ICustomerService{
 				models=labelTableDataSvc.findHorizentalLabelInfoModels(sql, e.getValue());
 			}catch(Exception ex) {
 				String errorMsg="获取宽表数据错误"+ex.getMessage()+",sql:"+sql;
-				logger.error(errorMsg,e);
+				LogUtil.error(errorMsg,ex);
 				throw new RuntimeException(errorMsg);
 			}
 			resultData.addAll(models);
@@ -122,7 +121,7 @@ public class CustomerServiceImpl implements ICustomerService{
 		    	}
 	    	}catch(Exception e) {
 	    		String errorMsg="获取宽表数据错误"+e.getMessage()+",sql:"+sql;
-			logger.error(errorMsg,e);
+			LogUtil.error(errorMsg,e);
 			throw new RuntimeException(errorMsg);
 	    	}
 	    	return page;

@@ -13,6 +13,7 @@ import com.asiainfo.cp.acrm.auth.model.PortrayalRequestModel;
 import com.asiainfo.cp.acrm.auth.model.ViewRequestModel;
 import com.asiainfo.cp.acrm.base.exception.BaseException;
 import com.asiainfo.cp.acrm.base.exception.SqlRunException;
+import com.asiainfo.cp.acrm.base.utils.LogUtil;
 import com.asiainfo.cp.acrm.base.utils.StringUtil;
 import com.asiainfo.cp.acrm.label.dao.IDimtableInfoDao;
 import com.asiainfo.cp.acrm.label.dao.ILabelInfoDao;
@@ -26,8 +27,6 @@ import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
 
 @Service
 public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
-	
-	private static Logger logger = LoggerFactory.getLogger(LabelMetaInfoServiceImpl.class);
 
 	@Autowired
 	private ILabelInfoDao labelDao;
@@ -57,11 +56,11 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 		for (LabelInfo each:labelInfos) {
 			List<MdaSysTableColumn> columns = each.getMdaSysTableColumns();
 			if (columns == null || columns.size() == 0) {
-				logger.error("标签" + each.getLabelId() + "没有对应的表列");
+				LogUtil.error("标签" + each.getLabelId() + "没有对应的表列");
 				continue;
 			}
 			if (columns.size()>1) {
-				logger.error("宽表标签"+each.getLabelId()+"对应" +columns.size()+"列，错误");
+				LogUtil.error("宽表标签"+each.getLabelId()+"对应" +columns.size()+"列，错误");
 			}
 			List<LabelMetaDataInfo> eachResult = getLabelMetaInfo(each, columns);
 			result.addAll(eachResult);
@@ -77,7 +76,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			labelInfos = labelDao.findLabelInfoList(labelInfoVo);
 		} catch (Exception e) {
 			String errorMsg="获取标签数据错误"+e.getMessage();
-			logger.error(errorMsg,e);
+			LogUtil.error(errorMsg,e);
 			throw new SqlRunException(errorMsg);
 		}
 		if (labelInfos!=null && labelInfos.size()>0) {
@@ -94,7 +93,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			labelInfos = labelDao.findLabelInfoList(labelInfoVo);
 		} catch (Exception e) {
 			String errorMsg="获取标签数据错误"+e.getMessage();
-			logger.error(errorMsg,e);
+			LogUtil.error(errorMsg,e);
 			throw new SqlRunException(errorMsg);
 		}
 		return labelInfos;
@@ -110,7 +109,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			MdaSysTableColumn column = columns.get(i);
 			MdaSysTable table = column.getMdaSysTable();
 			if (table == null) {
-				logger.error("标签对应表未找到,labelId=:" + labelInfo.getLabelId());
+				LogUtil.error("标签对应表未找到,labelId=:" + labelInfo.getLabelId());
 				continue;
 			}
 			LabelMetaDataInfo metaDataInfo = new LabelMetaDataInfo();
@@ -124,7 +123,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 				if (dimInfo == null) {
 					dimInfo = dimDao.getDimtableInfoReload(column.getDimTransId());
 					if (dimInfo == null) {
-						logger.error("标签对应表列" + column.getColumnName() + "的维表" + column.getDimTransId() + "未找到");
+						LogUtil.error("标签对应表列" + column.getColumnName() + "的维表" + column.getDimTransId() + "未找到");
 						continue;
 					}
 				}
