@@ -95,7 +95,12 @@ public class JAuthApi {
         User user = userService.getUserByName(userName);
         if(user.getGroupSet() != null){
         	for(Group group : user.getGroupSet()){
-        		list.addAll(group.getOrganizationSet());
+        	    for(Organization org : group.getOrganizationSet()){
+        	        org.setChildren(null);
+        	        if(!list.contains(org)){
+        	            list.add(org);
+        	        }
+        	    }
         	}
         }
         return list;
