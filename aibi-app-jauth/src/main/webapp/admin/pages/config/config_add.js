@@ -62,7 +62,7 @@ window.jauth_onload = function() {
 				+'<p v-if="\'catalog\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle easyui-validatebox"  required="true" ></v-input><input name="configValType" type="hidden" value="5" /> </p>'
 				+'</td>';
 			html+='</tr><tr>';
-			html+='<th v-show="\'undefined\'!=\''+obj[0].desc+'\'">配置描述</th><td colspan="5"  v-show="\'undefined\'!=\''+obj[0].desc+'\'"><textarea id="configDesc"name="configDesc" v-model="configDesc"class="input_textarea"></textarea></td>'
+			html+='<th v-show="\'undefined\'!=\''+obj[0].desc+'\'">配置描述</th><td colspan="5" v-show="\'undefined\'!=\''+obj[0].desc+'\'"><textarea maxlength="128" id="configDesc"name="configDesc" v-model="configDesc"class="input_textarea"></textarea></td>'
 			html+='</tr>';
 		}else{//如果fileds有多个
 			

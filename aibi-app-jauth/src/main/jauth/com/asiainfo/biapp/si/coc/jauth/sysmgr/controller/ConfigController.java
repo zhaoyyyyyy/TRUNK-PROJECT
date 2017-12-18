@@ -175,15 +175,14 @@ public class ConfigController extends BaseController<Coconfig> {
 		String isEdit = request.getParameter("isEdit");
 		String[] conKeys = coconfig.getConfigKey().split(",");// 分割Key
 		if (conKeys.length == 1) {// 判断是否为同时添加多条数据
-			Coconfig oldCon = coconfigService.getCoconfigByKey(conKeys[0]);
+			Coconfig oldCon = coconfigService.getCoconfigByKey(coconfig.getParentKey()+"_"+conKeys[0]);
 			if (null != oldCon) {
 				if ("1".equals(isEdit)) {// 编辑
 					oldCon.setConfigName(coconfig.getConfigName());
 					oldCon.setConfigDesc(coconfig.getConfigDesc());
 					oldCon.setConfigVal(coconfig.getConfigVal());
 					coconfigService.saveOrUpdate(oldCon);
-				}
-				if ("0".equals(isEdit)) {
+				}else{
 					return "The key has already exited";
 				}
 			} else {// 新建
@@ -216,7 +215,7 @@ public class ConfigController extends BaseController<Coconfig> {
 						continue;
 					}
 				}
-				if (null != coconfigService.getCoconfigByKey(conKeys[i])) {
+				if (null != coconfigService.getCoconfigByKey(coconfig.getParentKey()+"_"+conKeys[i])) {
 					return "Line " + (i + 1) + " has already exited";
 				}
 			}
