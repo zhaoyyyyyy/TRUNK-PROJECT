@@ -16,6 +16,8 @@ public interface CoconfigService extends BaseService<Coconfig, String> {
 
 	public Coconfig getCoconfigByKey(String configKey);
 	
+	public List<Coconfig> getAllConfig();
+	
 	public List<Coconfig> getCoconfigByParentKey(String configKey);
 	
 	public JQGridPage<Coconfig> findCoconfigList(JQGridPage<Coconfig> page, CoconfigVo coconfigVo);

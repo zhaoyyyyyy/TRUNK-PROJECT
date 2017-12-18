@@ -1,5 +1,6 @@
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -147,6 +148,18 @@ public class ConfigController extends BaseController<Coconfig> {
 		JQGridPage<Coconfig> coconfigList = coconfigService.findCoconfigList(page, coconfigVo);
 		return JSONResult.page2Json(coconfigList, cols);
 	}
+	
+	@ApiOperation(value = "查询所有配置")
+    @RequestMapping(value = "/queryList", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public List<Coconfig> getAll() {
+	    List<Coconfig> configAndCList = coconfigService.getAllConfig();
+	    List<Coconfig> configList = new ArrayList<>();
+	    for(Coconfig c : configAndCList){
+            c.setChildren(null);
+            configList.add(c);
+	    }
+        return configList;
+    }
 
 	// 新增或修改
 	@ApiOperation(value = "保存")

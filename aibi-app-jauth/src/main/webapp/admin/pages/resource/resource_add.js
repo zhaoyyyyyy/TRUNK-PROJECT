@@ -1,5 +1,6 @@
 window.jauth_onload = function() {
 	var id = $.getUrlParam("id");
+	var parentId = $.getUrlParam("parentId");
 	if(id!=null){
 		$.commAjax({
 			url:$.ctx+'/api/resource/get',
@@ -36,19 +37,44 @@ window.jauth_onload = function() {
 			}
 		});
 	}else{
-		new Vue({
-			el : '#saveDataForm',
-			data : {
-				resourceId : null ,
-				parentId : null ,
-				resourceName : null ,
-				resourceCode : null ,
-				address : null ,
-				parentName : null ,
-				type : null ,
-				dispOrder : null
-			}
-		});
+		if(parentId != null){
+			$.commAjax({
+				url:$.ctx+'/api/resource/get',
+				postData:{"id":parentId},
+				type:'post',
+				cache:false,
+				async:false,
+				onSuccess:function(data){
+					new Vue({
+						el : '#saveDataForm',
+						data : {
+							resourceId : null ,
+							parentId : null ,
+							resourceName : null ,
+							resourceCode : null ,
+							address : null ,
+							parentName : data.resource.resourceName ,
+							type : null ,
+							dispOrder : null
+						}
+					});
+				}
+			});
+		}else{
+			new Vue({
+				el : '#saveDataForm',
+				data : {
+					resourceId : null ,
+					parentId : null ,
+					resourceName : null ,
+					resourceCode : null ,
+					address : null ,
+					parentName : null ,
+					type : null ,
+					dispOrder : null
+				}
+			});
+		}
 	}
 	var proscenium = "LOC_MENU"; // 前台
 	var app = "JAUTH_API"; //APP

@@ -29,6 +29,11 @@ public class CoconfigDaoImpl extends BaseDaoImpl<Coconfig, String> implements Co
 		return this.findOneByHql("from Coconfig c where c.configKey = ?0 ", configKey);
 	}
 	
+	@Override
+    public List<Coconfig> getAllConfig() {
+        return this.findListByHql("from Coconfig c where 1 = ?0 ", 1);
+    }
+	
 	/**
 	 * 通过父KEY取
 	 */

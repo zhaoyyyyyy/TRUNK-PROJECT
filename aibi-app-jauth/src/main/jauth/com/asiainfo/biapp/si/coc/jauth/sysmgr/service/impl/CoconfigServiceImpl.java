@@ -39,6 +39,10 @@ public class CoconfigServiceImpl extends BaseServiceImpl<Coconfig, String> imple
 		return coconfigDao.getCoconfigByKey(configKey);
 	}
 	@Override
+    public List<Coconfig> getAllConfig() {
+        return coconfigDao.getAllConfig();
+    }
+	@Override
 	public List<Coconfig> getCoconfigByParentKey(String configKey){
 		return coconfigDao.getCoconfigByParentKey(configKey);
 	}
