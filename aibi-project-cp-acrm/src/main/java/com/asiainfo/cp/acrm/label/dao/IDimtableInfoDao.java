@@ -9,10 +9,7 @@ package com.asiainfo.cp.acrm.label.dao;
 import java.util.List;
 
 import com.asiainfo.cp.acrm.base.dao.BaseDao;
-import com.asiainfo.cp.acrm.base.page.Page;
 import com.asiainfo.cp.acrm.label.entity.DimtableInfo;
-import com.asiainfo.cp.acrm.label.entity.LabelInfo;
-import com.asiainfo.cp.acrm.label.vo.LabelInfoVo;
 
 /**
  * 维表注册表读取服务
@@ -28,8 +25,6 @@ public interface IDimtableInfoDao extends BaseDao<DimtableInfo, String> {
      * @return
      */
 	public DimtableInfo getDimtableInfo(String dimId);
-	
-	public DimtableInfo getDimtableInfoReload(String dimId);
 	
 	public List<DimtableInfo> findDimtableInfoList();
 	

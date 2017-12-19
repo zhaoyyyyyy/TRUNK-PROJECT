@@ -21,7 +21,6 @@ import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
 @Service
 public class LabelTableDataDaoImpl extends BaseDaoImpl<Object, String> implements ILabelTableDataDao{
 	
-	private static Logger logger = LoggerFactory.getLogger(LabelTableDataDaoImpl.class);
 	
 	@Override
 	public LabelModel getHorizentalLabelInfoModel(String sql, LabelMetaDataInfo lableMetaDataInfo)

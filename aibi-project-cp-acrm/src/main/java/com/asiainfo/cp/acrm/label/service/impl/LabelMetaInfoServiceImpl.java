@@ -7,6 +7,7 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.asiainfo.cp.acrm.auth.model.PortrayalRequestModel;
@@ -27,7 +28,10 @@ import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
 
 @Service
 public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
-
+	
+	@Value("${cache.isDimtableCached}")
+	private Boolean isDimtableCached;
+	
 	@Autowired
 	private ILabelInfoDao labelDao;
 
@@ -113,6 +117,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 				continue;
 			}
 			LabelMetaDataInfo metaDataInfo = new LabelMetaDataInfo();
+			metaDataInfo.setDimtableId(column.getDimTransId());
 			metaDataInfo.setTableShortName(TABLE_SHORTNAME_DEFAULT);
 			metaDataInfo.setColumnName(column.getColumnName());
 			metaDataInfo.setLabelId(labelInfo.getLabelId());
@@ -121,11 +126,8 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			if (column.getDimTransId() != null) {
 				DimtableInfo dimInfo = dimDao.getDimtableInfo(column.getDimTransId());
 				if (dimInfo == null) {
-					dimInfo = dimDao.getDimtableInfoReload(column.getDimTransId());
-					if (dimInfo == null) {
-						LogUtil.error("标签对应表列" + column.getColumnName() + "的维表" + column.getDimTransId() + "未找到");
-						continue;
-					}
+					LogUtil.error("标签对应表列" + column.getColumnName() + "的维表" + column.getDimTransId() + "未找到");
+					continue;
 				}
 				metaDataInfo.setDimtableName(dimInfo.getDimTablename());
 				metaDataInfo.setDimCodeCol(dimInfo.getDimCodeCol());
@@ -166,7 +168,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 					whereSQL.append(" and ").append(filter);
 				}
 			}
-			if (each.getDimtableName() == null) {
+			if (each.getDimtableName() == null||isDimtableCached) {
 				selectSQL.append(" ").append(each.getTableShortName()).append(".").append(each.getColumnName());
 			} else {
 				selectSQL.append(" ").append(each.getDimtableShortName()).append(".").append(each.getDimValueCol())

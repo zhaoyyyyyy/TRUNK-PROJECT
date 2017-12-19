@@ -9,4 +9,9 @@ spring:
     test-while-idle: true
     validation-query: SELECT 1 FROM DUAL
     time-between-eviction-runs-millis: 180000
-    
+cache:
+  loadDataScope: DimtableInfoDaoImpl
+  isDimtableCached: false
+context:
+  listener:
+    classes: com.asiainfo.cp.acrm.ApplicationStartup

@@ -6,3 +6,10 @@ spring:
     url: jdbc:mysql://10.1.245.175:3306/cocdev?useUnicode=true&characterEncoding=utf-8
     username: cocdev
     password: cocdev
+cache:
+  loadDataScope: DimtableInfoDaoImpl
+  isDimtableCached: true
+context:
+  listener:
+    classes: com.asiainfo.cp.acrm.ApplicationStartup
+    

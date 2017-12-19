@@ -22,12 +22,14 @@ import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.asiainfo.cp.acrm.base.exception.BaseException;
 import com.asiainfo.cp.acrm.base.exception.SqlRunException;
 import com.asiainfo.cp.acrm.base.page.Page;
 import com.asiainfo.cp.acrm.base.utils.LogUtil;
+import com.asiainfo.cp.acrm.base.utils.cache.ICacheClient;
 
 /**
  * @describe Hibernate持久层实现类
@@ -48,6 +50,11 @@ public class BaseDaoImpl<T, ID extends Serializable>  implements BaseDao<T,ID> {
 //		super(domainClass, em);
 //		this.em = em;
 //	}
+	
+	@Autowired
+	@Qualifier("jvmCacheClient")
+	protected ICacheClient  iCacheClient;
+	
 	
 	HibernateDaoHelper daoHelper = new HibernateDaoHelper();
 	public Logger logger = LoggerFactory.getLogger(super.getClass());

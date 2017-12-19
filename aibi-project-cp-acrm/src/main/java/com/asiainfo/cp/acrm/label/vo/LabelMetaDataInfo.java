@@ -13,6 +13,7 @@ public class LabelMetaDataInfo {
 	private String dimtableShortName;
 	private String dimValueColAliasName;
 	private String customerId;
+	private String dimtableId;
 	
 	
 	public String getCustomerId() {
@@ -46,14 +47,11 @@ public class LabelMetaDataInfo {
 		this.labelId = labelId;
 	}
 	
-	
-	@Override
-	public String toString() {
-		return "LabelMetaDataInfo [labelId=" + labelId + ", labelName=" + labelName + ", tableName=" + tableName
-				+ ", columnName=" + columnName + ", dimtableName=" + dimtableName + ", dimCodeCol=" + dimCodeCol
-				+ ", dimValueCol=" + dimValueCol + ", tableShortName=" + tableShortName + ", dimtableShortName="
-				+ dimtableShortName + ", dimValueColAliasName=" + dimValueColAliasName + ", customerId=" + customerId
-				+ "]";
+	public String getDimtableId() {
+		return dimtableId;
+	}
+	public void setDimtableId(String dimtableId) {
+		this.dimtableId = dimtableId;
 	}
 	public LabelMetaDataInfo() {
 		super();
