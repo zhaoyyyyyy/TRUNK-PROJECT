@@ -24,34 +24,6 @@ public class DimTableDataDaoImpl extends BaseDaoImpl implements IDimDataDao,Cach
 	@Autowired
 	private IDimtableInfoDao dimTableInfoDAO;
 	
-    private void loadDimTableValue() {
-//			Map<String,DimtableInfo> map = dimTableInfoDAO.getDimtableInfoMap();
-//			
-//			for (Map.Entry<String,DimtableInfo> entry: map.entrySet()) { 
-//				String dimTableId=entry.getKey();
-//				DimtableInfo dimTableInfo=entry.getValue();
-//				cacheTable(dimTableId, dimTableInfo);
-//			}
-	}
-    
-    private void cacheTable(String dimTableId) {
-    		DimtableInfo dimTableInfo=dimTableInfoDAO.get(dimTableId);
-    		this.cacheTable(dimTableId, dimTableInfo);
-    }
-
-	private void cacheTable(String dimTableId, DimtableInfo dimTableInfo) {
-		StringBuffer hql=new StringBuffer();
-		hql.append(" select ")
-			.append(dimTableInfo.getDimCodeCol())
-			.append(" ").append(dimTableInfo.getDimValueCol())
-			.append(" from ").append(dimTableInfo.getDimTablename());
-		List dimTableDatas=dimTableInfoDAO.findListByHql(hql.toString(), new HashMap());
-		for(int i=0;i<dimTableDatas.size();i++) { 
-		    	String[] obj = (String[]) dimTableDatas.get(i);
-		    iCacheClient.put(this.getKey(dimTableId, obj[0]),obj[1]==null?"":obj[1].trim());
-		}
-	}
-    
     private String getKey(String dimTableId,String columnKey) {
     		return CACHE_PREFIX+SPLIT+dimTableId+SPLIT+columnKey;
     }
