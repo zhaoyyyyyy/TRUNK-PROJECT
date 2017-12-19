@@ -16,6 +16,9 @@ public interface CoconfigDao extends BaseDao<Coconfig, String> {
 	/**
 	 * 通过key拿配置
 	 */
+    
+    public List<Coconfig> getAllConfig();
+    
 	public Coconfig getCoconfigByKey(String configKey);
 	
 	public List<Coconfig> getCoconfigByParentKey(String configKey);

@@ -1,5 +1,6 @@
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class ConfigController extends BaseController<Coconfig> {
 			Coconfig coconfig = coconfigService.getCoconfigByKey(coKey);
 			return getSubTree(coconfig.getChildren(), htmlC);
 		} else {
-			Coconfig coconfig = coconfigService.getCoconfigByKey("Config_Center");
+			Coconfig coconfig = coconfigService.getCoconfigByKey("LOC");
 			StringBuffer html = new StringBuffer();
 			return getTree(coconfig, html);
 		}
@@ -147,6 +148,18 @@ public class ConfigController extends BaseController<Coconfig> {
 		JQGridPage<Coconfig> coconfigList = coconfigService.findCoconfigList(page, coconfigVo);
 		return JSONResult.page2Json(coconfigList, cols);
 	}
+	
+	@ApiOperation(value = "查询所有配置")
+    @RequestMapping(value = "/queryList", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public List<Coconfig> getAll() {
+	    List<Coconfig> configAndCList = coconfigService.getAllConfig();
+	    List<Coconfig> configList = new ArrayList<>();
+	    for(Coconfig c : configAndCList){
+            c.setChildren(null);
+            configList.add(c);
+	    }
+        return configList;
+    }
 
 	// 新增或修改
 	@ApiOperation(value = "保存")
@@ -162,16 +175,18 @@ public class ConfigController extends BaseController<Coconfig> {
 		String isEdit = request.getParameter("isEdit");
 		String[] conKeys = coconfig.getConfigKey().split(",");// 分割Key
 		if (conKeys.length == 1) {// 判断是否为同时添加多条数据
-			Coconfig oldCon = coconfigService.getCoconfigByKey(conKeys[0]);
+		    if((coconfig.getParentKey()+"_"+conKeys[0]).length()>128){
+		        return "编码过长";
+		    }
+			Coconfig oldCon = coconfigService.getCoconfigByKey(coconfig.getParentKey()+"_"+conKeys[0]);
 			if (null != oldCon) {
 				if ("1".equals(isEdit)) {// 编辑
 					oldCon.setConfigName(coconfig.getConfigName());
 					oldCon.setConfigDesc(coconfig.getConfigDesc());
 					oldCon.setConfigVal(coconfig.getConfigVal());
 					coconfigService.saveOrUpdate(oldCon);
-				}
-				if ("0".equals(isEdit)) {
-					return "The key has already exited";
+				}else{
+					return "编码已存在";
 				}
 			} else {// 新建
 				coconfig.setConfigKey(coconfig.getParentKey()+"_"+conKeys[0]);
@@ -198,13 +213,16 @@ public class ConfigController extends BaseController<Coconfig> {
 			for (int i = 0; i < conKeys.length; i++) {// 判断表中是否存在相同编码
 				for (int k = 0; k < conKeys.length; k++) {// 判断将要插入数据中是否存在相同编码
 					if (conKeys[i].equals(conKeys[k]) && i != k) {
-						return "Please don't input the same Key";
+						return "请不要输入相同的编码";
 					} else {
 						continue;
 					}
 				}
-				if (null != coconfigService.getCoconfigByKey(conKeys[i])) {
-					return "Line " + (i + 1) + " has already exited";
+				if((coconfig.getParentKey()+"_"+conKeys[i]).length()>128){
+	                return "第" + (i + 1) + "行编码过长";
+	            }
+				if (null != coconfigService.getCoconfigByKey(coconfig.getParentKey()+"_"+conKeys[i])) {
+					return "第" + (i + 1) + "行编码已存在";
 				}
 			}
 			for (int i = 0; i < conKeys.length; i++) {// 添加新配置

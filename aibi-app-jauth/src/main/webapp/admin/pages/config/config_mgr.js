@@ -219,23 +219,40 @@ window.jauth_onload = function() {
 }
 
 function fun_del(configKey) {
-	$.confirm('此操作会删除本节点及叶子节点数据，且不可恢复，是否继续？', function() {
-		$.commAjax({
-			url : $.ctx + '/api/config/delete',
-			postData : {
-				key : configKey
-			},
-			onSuccess : function(data) {
-				$.success('删除成功。', function() {
-					$("#mainGrid").setGridParam({
-						postData : $("#formSearch").formToJson()
-					}).trigger("reloadGrid", [ {
-						page : 1
-					} ]);
-					window.location.reload();
-				});
-			    
+	var mssssg = "";
+	$.commAjax({
+		url : $.ctx + '/api/config/get',
+		postData : {
+			"coKey" : configKey
+		},
+		type : 'post',
+		cache : false,
+		onSuccess : function(data) {
+			if(data.config.children.length != 0){
+				mssssg = "此操作会删除本节点及叶子节点数据，且不可恢复，是否继续？";
+			}else{
+				mssssg = "此操作会删除本叶子节点，确定删除？";
 			}
-		});
-	});
+			$.confirm(mssssg, function() {
+				$.commAjax({
+					url : $.ctx + '/api/config/delete',
+					postData : {
+						key : configKey
+					},
+					onSuccess : function(data) {
+						$.success('删除成功。', function() {
+							$("#mainGrid").setGridParam({
+								postData : $("#formSearch").formToJson()
+							}).trigger("reloadGrid", [ {
+								page : 1
+							} ]);
+							window.location.reload();
+						});
+					    
+					}
+				});
+			});
+		}
+	})
+	
 }

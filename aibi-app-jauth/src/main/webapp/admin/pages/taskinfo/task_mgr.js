@@ -174,6 +174,7 @@ function fun_to_update(id) {
 		}).trigger("reloadGrid", [ {
 			page : 1
 		} ]);
+		window.location.reload();
 	}
 }
 function fun_to_up(id) {
@@ -212,6 +213,7 @@ function fun_to_delete(id) {
 					}).trigger("reloadGrid", [ {
 						page : 1
 					} ]);
+					window.location.reload();
 				});
 			}
 		});

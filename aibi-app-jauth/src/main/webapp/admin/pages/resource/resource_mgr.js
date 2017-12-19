@@ -1,4 +1,6 @@
 window.jauth_onload = function() {
+	
+	var parentId="";
 	// 列表
 	var urlShow = $.ctx + '/api/resource/resourcePage/query';
 	var colNames = ['资源名称', '资源编码', '资源值',  '操作'];
@@ -51,7 +53,7 @@ window.jauth_onload = function() {
 	// 添加按钮
 	$('#btn_add').click(function() {
 		var dg = $.dialog('资源新增', $.ctx
-						+ '/admin/pages/resource/resource_add.html', 600, 500);
+						+ '/admin/pages/resource/resource_add.html?parentId='+parentId, 600, 500);
 		dg.reload = function() {
 			$("#mainGrid").setGridParam({
 						postData : $("#formSearch").formToJson()
@@ -89,6 +91,7 @@ window.jauth_onload = function() {
 				cascadeParentChecked : cascadeParentChecked,
 				cascadeChildrenChecked : cascadeChildrenChecked,
 				afterClick: function(node){
+					parentId = node.attr('id');
 					$('#parentId').val(node.attr('id'));
 					$("#mainGrid").setGridParam({
 						postData : $("#formSearch").formToJson()
@@ -120,6 +123,7 @@ window.jauth_onload = function() {
 				cascadeParentChecked : cascadeParentChecked,
 				cascadeChildrenChecked : cascadeChildrenChecked,
 				afterClick: function(node){
+					parentId = node.attr('id');
 					$('#parentId').val(node.attr('id'));
 					$("#mainGrid").setGridParam({
 						postData : $("#formSearch").formToJson()
@@ -153,6 +157,7 @@ window.jauth_onload = function() {
 				cascadeParentChecked : cascadeParentChecked,
 				cascadeChildrenChecked : cascadeChildrenChecked,
 				afterClick: function(node){
+					parentId = node.attr('id');
 					$('#parentId').val(node.attr('id'));
 					$("#mainGrid").setGridParam({
 						postData : $("#formSearch").formToJson()
@@ -184,6 +189,7 @@ window.jauth_onload = function() {
 				cascadeParentChecked : cascadeParentChecked,
 				cascadeChildrenChecked : cascadeChildrenChecked,
 				afterClick: function(node){
+					parentId = node.attr('id');
 					$('#parentId').val(node.attr('id'));
 					$("#mainGrid").setGridParam({
 						postData : $("#formSearch").formToJson()
@@ -228,7 +234,7 @@ function fun_del(id) {
 			});
 }
 function fun_to_detail(id) {
-	var dg = $.dialog('资源编辑', $.ctx + '/admin/pages/resource/resource_add.html?id=' + id, 600, 500);
+	var dg = $.dialog('资源编辑', $.ctx + '/admin/pages/resource/resource_add.html?parentId=' + id, 600, 500);
 	dg.reload = function() {
 		$("#mainGrid").setGridParam({
 					postData : $("#formSearch").formToJson()

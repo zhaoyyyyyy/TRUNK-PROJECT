@@ -30,7 +30,7 @@
 				<tr>
 					<th>调度名称<span class="required">*</span></th>
 					<td colspan="7"><input id="taskExeName" name="taskExeName" v-model="taskExeName"
-						onblur="fun_jiaoyan(this)" class="inputStyle easyui-validatebox"></input>
+						onblur="fun_jiaoyan(this)" class="inputStyle easyui-validatebox" required="true"></input>
 						<span v-bind:style="{color:msgColor}">{{message}}</span><input type="hidden" id="oldName" name="oldName"></input></td>
 				</tr>
 				<tr>
