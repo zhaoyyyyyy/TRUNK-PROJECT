@@ -57,19 +57,6 @@ public class MdaSysTable extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     
-    @OneToMany(mappedBy = "mdaSysTable", cascade = CascadeType.ALL,fetch=FetchType.LAZY)  
-    private List<MdaSysTableColumn>columns;
-    
-    
-    
-    public List<MdaSysTableColumn> getColumns() {
-		return columns;
-	}
-
-	public void setColumns(List<MdaSysTableColumn> columns) {
-		this.columns = columns;
-	}
-
 	//@OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序  
     /**
      * 元数据表ID
