@@ -15,7 +15,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     public void onApplicationEvent(ContextRefreshedEvent event){
     	
     		String isDimtableCached=event.getApplicationContext().getEnvironment().getProperty("cache.isDimtableCached");
-    		String cacheScope=event.getApplicationContext().getEnvironment().getProperty("cache.scope");
+    		String cacheScope=event.getApplicationContext().getEnvironment().getProperty("cache.loadDataScope");
     		if(StringUtil.isNotEmpty(isDimtableCached)&& isDimtableCached.trim().equals("true")||cacheScope!=null) {
     			cacheUpdate(event,isDimtableCached,cacheScope);
     		}
