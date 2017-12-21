@@ -175,15 +175,13 @@ public class ConfigController extends BaseController<Coconfig> {
 		String isEdit = request.getParameter("isEdit");
 		String[] conKeys = coconfig.getConfigKey().split(",");// 分割Key
 		if (conKeys.length == 1) {// 判断是否为同时添加多条数据
+		    if(!"1".equals(isEdit)){
+		        conKeys[0] = coconfig.getParentKey()+"_"+conKeys[0];
+            }
 		    if((coconfig.getParentKey()+"_"+conKeys[0]).length()>128){
 		        return "编码过长";
 		    }
-		    Coconfig oldCon = new Coconfig();
-		    if("1".equals(isEdit)){
-		        oldCon = coconfigService.getCoconfigByKey(conKeys[0]);
-		    }else{
-		        oldCon = coconfigService.getCoconfigByKey(coconfig.getParentKey()+"_"+conKeys[0]);
-		    }
+		    Coconfig oldCon = coconfigService.getCoconfigByKey(conKeys[0]);
 			if (null != oldCon) {
 				if ("1".equals(isEdit)) {// 编辑
 					oldCon.setConfigName(coconfig.getConfigName());
