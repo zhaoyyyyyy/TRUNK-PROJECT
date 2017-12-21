@@ -29,6 +29,7 @@ window.jauth_onload = function() {
 				index : 'id',
 				width : 120,
 				fixed : true,
+				sortable : false,
 				formatter : function(value, opts, data) {
 					// 用编号查看，用ID删除
 					return "<a onclick='fun_detail(\"" + data.id

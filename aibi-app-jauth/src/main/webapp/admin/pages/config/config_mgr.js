@@ -191,6 +191,7 @@ window.jauth_onload = function() {
 				index : 'configKey',
 				width : 120,
 				fixed : true,
+				sortable : false,
 				formatter : function(value, opts, data) {
 					return "<a onclick='fun_add(\"" + data.configValType
 							+ "\",\"" + data.configKey

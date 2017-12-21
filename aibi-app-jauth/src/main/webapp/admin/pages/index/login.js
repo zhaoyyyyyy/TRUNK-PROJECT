@@ -3,12 +3,12 @@ $(function(){
 		COCLogin();
 		return false;
 	});
-	$("#loginSubmit,#pwd,#username").keyup(function(e){
-		if(e.keyCode == 13){
-			COCLogin();
-		}
-		return false;
-	});
+//	$("#loginSubmit,#pwd,#username").keyup(function(e){
+//		if(e.keyCode == 13){
+//			COCLogin();
+//		}
+//		return false;
+//	});
 	rememb();
 	$("#rememb").change(function(){
 		if(this.checked){
@@ -52,6 +52,7 @@ function COCLogin(){
 				  ssg.setItem("refreshToken",data.refreshToken);
 				  location.href = jQuery.ctx+"/admin/pages/index/index.html";
 			  }else{
+				  debugger;
 				  alert('用户名/密码错误');
 			  }
 		   },

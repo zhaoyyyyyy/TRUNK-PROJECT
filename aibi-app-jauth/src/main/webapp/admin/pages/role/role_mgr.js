@@ -35,6 +35,7 @@ window.jauth_onload = function() {
 				index : 'id',
 				width : 120,
 				fixed : true,
+				sortable : false,
 				formatter : function(value, opts, data) {
 					return "<a onclick='fun_to_detail(\"" + data.id
 							+ "\")' class='s_edit' >编辑</a>"

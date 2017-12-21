@@ -50,6 +50,7 @@ window.jauth_onload = function() {
 				index : 'exeStatus',
 				width : 12,
 				align : 'center',
+				sortable : false,
 				formatter : function(value, opts, data) {
 					var action;
 					if (data.exeStatus == 1) {
@@ -200,22 +201,39 @@ function fun_to_detail(id) {
 	}
 }
 function fun_to_delete(id) {
-	$.confirm('该操作会删除所有该节点下的子调度，您确定要继续吗？', function() {
-		$.commAjax({
-			url : $.ctx + '/api/schedule/taskExeInfo/delete',
-			postData : {
-				"taskExeId" : id
-			},
-			onSuccess : function(data) {
-				$.success('删除成功。', function() {
-					$("#mainGrid").setGridParam({
-						postData : $("#formSearch").formToJson()
-					}).trigger("reloadGrid", [ {
-						page : 1
-					} ]);
-					window.location.reload();
-				});
+	var mssssg = "";
+	$.commAjax({
+		url : $.ctx + '/api/schedule/taskExeInfo/get',
+		postData : {
+			"exeId" : id
+		},
+		type : 'post',
+		cache : false,
+		onSuccess : function(data) {
+			if(data.locTaskExeInfo.children.length != 0){
+				mssssg = "此操作会删除本节点及叶子节点数据，且不可恢复，是否继续？";
+			}else{
+				mssssg = "此操作会删除本叶子节点，确定删除？";
 			}
-		});
+			$.confirm(mssssg, function() {
+				$.commAjax({
+					url : $.ctx + '/api/schedule/taskExeInfo/delete',
+					postData : {
+						"taskExeId" : id
+					},
+					onSuccess : function(data) {
+						$.success('删除成功。', function() {
+							$("#mainGrid").setGridParam({
+								postData : $("#formSearch").formToJson()
+							}).trigger("reloadGrid", [ {
+								page : 1
+							} ]);
+							window.location.reload();
+						});
+					}
+				});
+			})
+		}
 	})
+	
 }

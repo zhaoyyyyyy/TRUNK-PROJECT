@@ -10,7 +10,7 @@ window.jauth_onload=function() {
 			formatter:function(v){return $.getCodeDesc('ZDLX',v);}
 		},
 		{name:'note', index:'note', width:40,  align:'left'},
-		{name:'id', index:'id', width:120, fixed:true,  align:'center',
+		{name:'id', index:'id', width:120, fixed:true,  align:'center',sortable : false,
 			formatter:function(value, opts, data) {
 		      	return "<a onclick='fun_to_edit(\""+data.id+"\")' class='s_edit' >编辑</a>" +"<a onclick='fun_to_detail(\""+data.dicCode+"\")' class='s_ls' >详情</a>" 
 			}

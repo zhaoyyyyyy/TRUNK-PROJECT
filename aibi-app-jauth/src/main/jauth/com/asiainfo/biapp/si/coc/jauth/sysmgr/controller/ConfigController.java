@@ -178,7 +178,12 @@ public class ConfigController extends BaseController<Coconfig> {
 		    if((coconfig.getParentKey()+"_"+conKeys[0]).length()>128){
 		        return "编码过长";
 		    }
-			Coconfig oldCon = coconfigService.getCoconfigByKey(coconfig.getParentKey()+"_"+conKeys[0]);
+		    Coconfig oldCon = new Coconfig();
+		    if("1".equals(isEdit)){
+		        oldCon = coconfigService.getCoconfigByKey(conKeys[0]);
+		    }else{
+		        oldCon = coconfigService.getCoconfigByKey(coconfig.getParentKey()+"_"+conKeys[0]);
+		    }
 			if (null != oldCon) {
 				if ("1".equals(isEdit)) {// 编辑
 					oldCon.setConfigName(coconfig.getConfigName());

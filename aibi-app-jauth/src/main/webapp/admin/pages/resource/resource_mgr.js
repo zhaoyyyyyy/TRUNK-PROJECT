@@ -24,6 +24,7 @@ window.jauth_onload = function() {
 				index : 'id',
 				width : 120,
 				fixed : true,
+				sortable : false,
 				formatter : function(value, opts, data) {
 					return "<a onclick='fun_to_detail(\"" + data.id
 							+ "\")' class='s_edit' >编辑</a>"
@@ -234,7 +235,7 @@ function fun_del(id) {
 			});
 }
 function fun_to_detail(id) {
-	var dg = $.dialog('资源编辑', $.ctx + '/admin/pages/resource/resource_add.html?parentId=' + id, 600, 500);
+	var dg = $.dialog('资源编辑', $.ctx + '/admin/pages/resource/resource_add.html?id=' + id, 600, 500);
 	dg.reload = function() {
 		$("#mainGrid").setGridParam({
 					postData : $("#formSearch").formToJson()

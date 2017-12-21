@@ -81,6 +81,7 @@ window.jauth_onload = function(){
 		index : 'id',
 		width : 260,
 		fixed : true,
+		sortable : false,
 		align : 'center',
 		formatter : function(value, opts, data) {
 			return "<a onclick='fun_to_detail(\"" + data.id

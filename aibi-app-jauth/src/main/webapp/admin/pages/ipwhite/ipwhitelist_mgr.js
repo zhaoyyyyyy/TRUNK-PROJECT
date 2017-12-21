@@ -17,6 +17,7 @@ window.jauth_onload = function(){
 						index : 'listId',
 						width : 120,
 						fixed : true,
+						sortable : false,
 						formatter : function(value, opts, data) {
 							return "<a onclick='fun_to_detail(\"" + data.listId
 									+ "\")' class='s_edit' >编辑</a>"
@@ -28,6 +29,7 @@ window.jauth_onload = function(){
 						url : urlShow,
 						colNames : colNames,
 						colModel : colModel,
+						rowNum : 999,
 						rownumbers : true,
 						autowidth : true,
 						viewrecords : true	
