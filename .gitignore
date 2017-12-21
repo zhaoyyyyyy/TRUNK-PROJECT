@@ -3,3 +3,8 @@
 /.project
 /.settings/
 *.rej
+/bin/
+.externalToolBuilders/
+aibi-project-cp-acrm/.settings/
+*.classpath
+*.project
