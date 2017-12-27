@@ -192,7 +192,7 @@ public class ConfigController extends BaseController<Coconfig> {
 					return "编码已存在";
 				}
 			} else {// 新建
-				coconfig.setConfigKey(coconfig.getParentKey()+"_"+conKeys[0]);
+				coconfig.setConfigKey(conKeys[0]);
 				coconfig.setStatus(1);
 				coconfig.setSysId(coconfig.getParentKey());
 				if ("taskConfig".equals(coconfig.getParentKey())) {// 调度任务配置添加到数据字典中

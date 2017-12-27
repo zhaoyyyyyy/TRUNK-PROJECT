@@ -3,6 +3,17 @@ window.jauth_onload = function() {
 	 * 列表
 	 */
 	var dicCode = $.getUrlParam("dicCode");
+	var dicid = $.getUrlParam("dicId");
+	$.commAjax({
+		url:$.ctx + '/api/datadic/dic/get',
+		postData:{"id":dicid},
+		onSuccess:function(data){
+			new Vue({
+				el:"#dicName",
+				data:data
+			})
+		}
+	})
 	var urlShow = $.ctx + '/api/datadic/dicdataPage/query?dicCode='+dicCode;
 	var colNames = [ '编码', '名称', '备注', '操作' ];
 	var colModel = [

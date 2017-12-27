@@ -75,7 +75,7 @@ function fun_add(i, configKey) {
 		i = i - 1;
 		isEdit = 1;
 		dg = $.dialog('编辑  [  ' + configKey + '  ]', $.ctx
-				+ '/admin/pages/config/config_add.html', 800, 500);
+				+ '/admin/pages/config/config_add.html', 1200, 500);
 		dg.getParams = function() {
 			return {
 				'configFields' : createConfigurationTemplate[i].fields,
@@ -100,7 +100,6 @@ function fun_add(i, configKey) {
 		}).trigger("reloadGrid", [ {
 			page : 1
 		} ]);
-		window.location.reload();
 	}
 }
 
@@ -162,7 +161,7 @@ window.jauth_onload = function() {
 			{
 				name : 'configKey',
 				index : 'configKey',
-				width : 25,
+				width : 50,
 				align : 'left'
 			},
 			{
@@ -174,7 +173,7 @@ window.jauth_onload = function() {
 			{
 				name : 'configDesc',
 				index : 'configDesc',
-				width : 40,
+				width : 50,
 				align : 'left'
 			},
 			{
@@ -189,7 +188,7 @@ window.jauth_onload = function() {
 			{
 				name : 'configKey',
 				index : 'configKey',
-				width : 120,
+				width : 100,
 				fixed : true,
 				sortable : false,
 				formatter : function(value, opts, data) {
@@ -247,7 +246,6 @@ function fun_del(configKey) {
 							}).trigger("reloadGrid", [ {
 								page : 1
 							} ]);
-							window.location.reload();
 						});
 					    
 					}
@@ -256,4 +254,9 @@ function fun_del(configKey) {
 		}
 	})
 	
+}
+function fun_to_refresh(){
+	$.confirm("待完善", function() {
+		
+	})
 }

@@ -15,11 +15,16 @@
 		<form id="formSearch">
 			<table class="searchTable">
 				<tr>
+					<th>当前字典</th>
+					<td colspan="7" id="dicName">
+						<span style="font-size:20px;font-weight:bolder">[   {{dic.dicName}}   ]</span>
+					</td>
+				</tr>
+				<tr>
 					<th>编号</th>
 					<td><input class="inputStyle" type="text" name="code" /></td>
 					<th>名称</th>
-					<td><input class="inputStyle" type="text" name="dataName" />
-					</td>
+					<td><input class="inputStyle" type="text" name="dataName" /></td>
 					<th>备注</th>
 					<td><input class="inputStyle" type="text" name="note" /> <input
 						name="dicCode" value="" type="hidden" id="dicCode" /></td>

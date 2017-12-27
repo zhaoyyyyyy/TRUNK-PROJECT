@@ -12,7 +12,7 @@ window.jauth_onload=function() {
 		{name:'note', index:'note', width:40,  align:'left'},
 		{name:'id', index:'id', width:120, fixed:true,  align:'center',sortable : false,
 			formatter:function(value, opts, data) {
-		      	return "<a onclick='fun_to_edit(\""+data.id+"\")' class='s_edit' >编辑</a>" +"<a onclick='fun_to_detail(\""+data.dicCode+"\")' class='s_ls' >详情</a>" 
+		      	return "<a onclick='fun_to_edit(\""+data.id+"\")' class='s_edit' >编辑</a>" +"<a onclick='fun_to_detail(\""+data.dicCode+"\",\""+data.id+"\")' class='s_ls' >详情</a>" 
 			}
 		}
 	];
@@ -77,8 +77,8 @@ function saveFile(){
  * 去详情页面
  * @param {} dicno
  */
-function fun_to_detail(dicCode){
-	location.href=$.ctx+'/admin/pages/datadic/datadic_mgr.html?dicCode='+dicCode;
+function fun_to_detail(dicCode,id){
+	location.href=$.ctx+'/admin/pages/datadic/datadic_mgr.html?dicCode='+dicCode+"&dicId="+id;
 }
 
 
