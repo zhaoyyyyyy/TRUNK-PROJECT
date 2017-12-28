@@ -1,5 +1,10 @@
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 import com.asiainfo.biapp.si.coc.jauth.frame.controller.BaseController;
 import com.asiainfo.biapp.si.coc.jauth.frame.json.JSONResult;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
@@ -23,12 +30,6 @@ import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.DicData;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.CoconfigService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.DicDataService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.CoconfigVo;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author zhangnan

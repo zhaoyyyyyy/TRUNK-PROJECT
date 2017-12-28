@@ -1,7 +1,7 @@
 window.jauth_onload = function() {
 	var id = $.getUrlParam("id");
 	var parentId = $.getUrlParam("parentId");
-	if(id!=null){
+	if(id !=null && id != "" && id != undefined){
 		$.commAjax({
 			url:$.ctx+'/api/resource/get',
 			postData:{"id":id},
@@ -37,7 +37,7 @@ window.jauth_onload = function() {
 			}
 		});
 	}else{
-		if(parentId != null){
+		if(parentId != null && parentId != "" && parentId != undefined){
 			$.commAjax({
 				url:$.ctx+'/api/resource/get',
 				postData:{"id":parentId},
@@ -54,7 +54,7 @@ window.jauth_onload = function() {
 							resourceCode : null ,
 							address : null ,
 							parentName : data.resource.resourceName ,
-							type : null ,
+							type : data.resource.type ,
 							dispOrder : null
 						}
 					});
