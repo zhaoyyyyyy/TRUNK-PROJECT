@@ -102,8 +102,15 @@ function fun_add(i, configKey) {
 		} ]);
 	}
 }
-
+var model = {
+		btn : ""
+}
 window.jauth_onload = function() {
+	
+	new Vue({
+		el : '#buttonA',
+		data : model
+	})
 	$.commAjax({
 		url : $.ctx + '/api/config/tree',
 		isShowMask : false,
@@ -123,7 +130,6 @@ window.jauth_onload = function() {
 						}).trigger("reloadGrid", [ {
 							page : 1
 						} ]);
-						var btnAreaHtml = '';
 						$.each(
 							createConfigurationTemplate,
 							function(i) {
@@ -134,17 +140,11 @@ window.jauth_onload = function() {
 										+ '" onclick="fun_add('
 										+ i
 										+ ')" /></div></div>';
-								btnAreaHtml = btnAreaHtml
+								model.btn = model.btn
 										+ btn;
 						})
-						btnAreaHtml = btnAreaHtml
+						model.btn = model.btn
 								+ '<div class="clear"></div>';
-						new Vue({
-							el : '#buttonA',
-							data : {
-								btn : btnAreaHtml
-							}
-						})
 					}
 				})
 		}
@@ -256,7 +256,49 @@ function fun_del(configKey) {
 	
 }
 function fun_to_refresh(){
-	$.confirm("待完善", function() {
-		
+	$.confirm("该操作会关闭树并重新获取，确认继续吗？", function() {
+		$("#LOC").remove();
+		model.btn="";
+		$("#refresh").html('<ul class="simpleTree" id="tree" style="margin-left: 5px; margin-top: 5px;">'
+		+'<li class="root"><span class="text" id="root">配置项树</span><div style="float:right; margin-right:10px">'
+		+'<input type="button" onclick="fun_to_refresh()" value="刷新"></input></div></li></ul>');
+		$.commAjax({
+			url : $.ctx + '/api/config/tree',
+			isShowMask : false,
+			type : 'POST',
+			async : false,
+			onSuccess : function(data) {
+				$("li.root").append(data);
+				mySimpleTree = $('#tree').simpleTree(
+					{
+						autoclose : false,
+						afterClick : function(thi) {
+							_parentKey = $(thi).attr('id');
+							$("#mainGrid").setGridParam({
+								postData : {
+									parentKey : _parentKey
+								}
+							}).trigger("reloadGrid", [ {
+								page : 1
+							} ]);
+							$.each(
+								createConfigurationTemplate,
+								function(i) {
+									var btnObj = createConfigurationTemplate[i]
+									var btn = '<div class="left newButton"><div>'
+											+ '<input type="button" class="add" value="'
+											+ btnObj.name
+											+ '" onclick="fun_add('
+											+ i
+											+ ')" /></div></div>';
+									model.btn = model.btn
+											+ btn;
+							})
+							model.btn = model.btn
+									+ '<div class="clear"></div>';
+						}
+					})
+			}
+		});
 	})
 }
