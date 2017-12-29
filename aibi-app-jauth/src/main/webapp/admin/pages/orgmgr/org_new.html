@@ -5,26 +5,31 @@
 		<title>组织详细信息</title>
 		<script type="text/javascript" src="../../common/include.js"></script>
 		<script type="text/javascript" src="org_new.js"></script>
+		<style type="text/css">
+		[v-cloak] {
+			display: none;
+		}
+		</style>
 	</head>
 	<body>
-		<form id="saveDataForm">
+		<form id="saveDataForm" v-cloak>
 			<table border="0" width="100%" cellpadding="0" cellspacing="0" class="commTable" >
 				<tbody> 
 					<tr>
 						<th>父组织名称</th>
 						<td colspan="3" id="vie">
-							<span id="parentOrgCode" name="parentOrgCode" style="display:none">{{parent.id}}</span>
-							<span>{{parent.simpleName}}</span>
+							<input v-model="parentId" id="parentOrgCode" name="parentOrgCode" style="display:none"></span>
+							<span>{{parentName}}</span>
 						</td>
 					</tr>
 					<tr>
 						<th>组织Code<span class="required">*</span></th>
 						<td>
-							<input class="inputStyle easyui-validatebox" required="true" maxLen="30" type="text" name="orgCode" />
+							<input v-model="orgCode" class="inputStyle easyui-validatebox" required="true" maxLen="30" type="text" name="orgCode" />
 						</td>
 						<th>组织名称缩写<span class="required">*</span></th>
 						<td>
-							<input class="inputStyle easyui-validatebox" required="true" maxLen="30" type="text" name="simpleName" />
+							<input v-model="simpleName" class="inputStyle easyui-validatebox" required="true" maxLen="30" type="text" name="simpleName" />
 						</td>
 					</tr>
 					<tr>
@@ -34,17 +39,17 @@
 						</td> -->
 						<th>组织状态<span class="required">*</span></th>
 						<td>
-                       		<input dataDic="ZZZTZD" class="inputStyle easyui-validatebox" required="true" type="text" name="orgStatus" />
+                       		<v-input defValue="orgStatus" dataDic="ZZZTZD" class="inputStyle easyui-validatebox" required="true" type="text" name="orgStatus" ></v-input>
 						</td>
 						<th>组织类型<span class="required">*</span></th>
 						<td>
-							<input dataDic="ZZLXZD" class="inputStyle easyui-validatebox" required="true" type="text" name="orgType"/>
+							<input v-model="orgType" dataDic="ZZLXZD" class="inputStyle easyui-validatebox" required="true" type="text" name="orgType"/>
 						</td>
 					</tr>
 					<tr>
 					    <th>排序序号</th>
 						<td>
-							<input class="inputStyle"  numberbox="true" maxlength="10" type="text" name="orderNum" />
+							<input v-model="orderNum" class="inputStyle"  numberbox="true" maxlength="10" type="text" name="orderNum" />
 						</td>
 						<!-- <th>审核方式<span class="required">*</span></th>
 						<td>

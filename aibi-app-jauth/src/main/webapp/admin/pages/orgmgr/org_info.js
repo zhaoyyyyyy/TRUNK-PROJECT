@@ -35,4 +35,8 @@ window.jauth_onload = function() {
   	$("#btn_creatChild").click(function(){
 		location.href = $.ctx+'/admin/pages/orgmgr/org_new.html?parentOrgCode=' + $("#orgCode").val();
   	});
+  	
+  	$("#btn_updateThis").click(function(){
+  		location.href = $.ctx+'/admin/pages/orgmgr/org_new.html?orgCode=' + $("#orgCode").val();
+  	});
 };
