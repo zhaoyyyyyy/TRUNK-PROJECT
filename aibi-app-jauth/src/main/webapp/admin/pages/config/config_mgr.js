@@ -122,6 +122,7 @@ window.jauth_onload = function() {
 				{
 					autoclose : false,
 					afterClick : function(thi) {
+						model.btn = "";
 						_parentKey = $(thi).attr('id');
 						$("#mainGrid").setGridParam({
 							postData : {
@@ -273,6 +274,7 @@ function fun_to_refresh(){
 					{
 						autoclose : false,
 						afterClick : function(thi) {
+							model.btn = "";
 							_parentKey = $(thi).attr('id');
 							$("#mainGrid").setGridParam({
 								postData : {
