@@ -1,12 +1,5 @@
 package com.asiainfo.biapp.si.coc.jauth.api;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
+import com.asiainfo.biapp.si.coc.jauth.frame.page.Page;
 import com.asiainfo.biapp.si.coc.jauth.security.auth.JwtAuthenticationToken;
 import com.asiainfo.biapp.si.coc.jauth.security.auth.jwt.extractor.TokenExtractor;
 import com.asiainfo.biapp.si.coc.jauth.security.auth.jwt.verifier.TokenVerifier;
@@ -42,7 +37,16 @@ import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Organization;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Resource;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Role;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.User;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.ResourceService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.UserService;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.ResourceVo;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * End-point for retrieving logged-in user details.
@@ -58,6 +62,7 @@ public class JAuthApi {
 	@Autowired private JwtTokenFactory tokenFactory;
 	@Autowired private JwtSettings jwtSettings;
 	@Autowired private UserService userService;
+	@Autowired private ResourceService resourceService;
 	@Autowired private TokenVerifier tokenVerifier;
 	@Autowired @Qualifier("jwtHeaderTokenExtractor") private TokenExtractor tokenExtractor;
 	
@@ -127,32 +132,48 @@ public class JAuthApi {
         Jws<Claims> jwsClaims =  rawToken.parseClaims(jwtSettings.getTokenSigningKey());
         String userName = jwsClaims.getBody().getSubject();
         
+
+        
+        
+        
+        
         //得到用户的组织权限
-        List<Resource> list = new ArrayList<Resource>();
         User user = userService.getUserByName(userName);
-        if(user != null && user.getRoleSet() != null){
-        	for(Role role : user.getRoleSet()){
-        		list.addAll(role.getResourceSet());
-        	}
-        }
-        for (Resource resource : list) {
-            if (resource.getChildren().size()!=0) {
-                resource.setChildren(null);
-            }
-        }
-        List<Resource> list1 = new ArrayList<Resource>();
-        for (Resource resource : list) {
-            if (resource.getType().equals(type)) {
-                if (resource.getChildren().size()!=0) {
-                    resource.setChildren(null);
-                }
-                list1.add(resource);
-            }
-        }
-        if (type!=null) {
-            return list1;
-        }
-        return list;
+        
+        
+        ResourceVo resourceVo = new ResourceVo();
+        resourceVo.setRoleSet(user.getRoleSet());
+        JQGridPage<Resource> page = new JQGridPage<Resource>();
+        page.setPageSize(100);
+        resourceService.findResourceList(page, resourceVo);
+        
+        return page.getData();
+        
+        
+        
+//        if(user != null && user.getRoleSet() != null){
+//        	for(Role role : user.getRoleSet()){
+//        		list.addAll(role.getResourceSet());
+//        	}
+//        }
+//        for (Resource resource : list) {
+//            if (resource.getChildren().size()!=0) {
+//                resource.setChildren(null);
+//            }
+//        }
+//        List<Resource> list1 = new ArrayList<Resource>();
+//        for (Resource resource : list) {
+//            if (resource.getType().equals(type)) {
+//                if (resource.getChildren().size()!=0) {
+//                    resource.setChildren(null);
+//                }
+//                list1.add(resource);
+//            }
+//        }
+//        if (type!=null) {
+//            return list1;
+//        }
+//        return list;
     }
     
     

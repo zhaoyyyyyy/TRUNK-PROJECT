@@ -149,13 +149,13 @@ public class DicDataController extends BaseController<DicData>{
 	})
 	@RequestMapping(value="/dicdatas/query", method=RequestMethod.POST, produces={ MediaType.APPLICATION_JSON_VALUE })
 	public List<DicData> findDicDataByParams(@ApiIgnore DicDataVo dicDataVo){
-	    if (dicDataVo.getDicCode().equals("ALL")) {
+//	    if ("ALL".equals(dicDataVo.getDicCode())) {
             List<DicData> dicDataList = dicDataService.findDicDataList(dicDataVo);
             return dicDataList;
-        }
-		JQGridPage<DicData> page = new JQGridPage<>();
-		JQGridPage<DicData> dicDataList = dicDataService.findDicDataList(page, dicDataVo);
-		return dicDataList.getData();
+//        }
+//		JQGridPage<DicData> page = new JQGridPage<>();
+//		JQGridPage<DicData> dicDataList = dicDataService.findDicDataList(page, dicDataVo);
+//		return dicDataList.getData();
 	}
 	
 	@ApiOperation(value="删除")
