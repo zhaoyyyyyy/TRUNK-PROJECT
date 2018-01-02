@@ -93,6 +93,24 @@ public class DicDataDaoImpl extends BaseDaoImpl<DicData,String> implements DicDa
 	}
 	
 	public List<DicData> findDicDataList(DicDataVo dicDataVo){
-        return this.findListByHql("from DicData where 1=1 ");
+		Map<String,Object> params = new HashMap<>();
+		StringBuilder hql = new StringBuilder("from DicData where 1=1 ");
+		if(StringUtils.isNotBlank(dicDataVo.getDataName())){
+			hql.append(" and dataName like :dataName");
+			params.put("dataName", "%"+dicDataVo.getDataName()+"%");
+		}
+		if(StringUtils.isNotBlank(dicDataVo.getDicCode())){
+			hql.append(" and dicCode = :dicCode");
+			params.put("dicCode", dicDataVo.getDicCode());
+		}
+		if(StringUtils.isNotBlank(dicDataVo.getCode())){
+			hql.append(" and code like :code");
+			params.put("code","%"+ dicDataVo.getCode()+"%");
+		}
+		if(StringUtils.isNotBlank(dicDataVo.getNote())){
+			hql.append(" and note like :note");
+			params.put("note", "%"+dicDataVo.getNote()+"%");
+		}
+        return this.findListByHql(hql.toString(),params);
 	}
 }
