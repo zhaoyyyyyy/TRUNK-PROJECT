@@ -1,6 +1,6 @@
 window.jauth_onload = function(){
 	// 列表
-	var urlShow = $.ctx + '/api/interface/interfacePage/query';
+	var urlShow = $.ctx + '/api/log/interface/interfacePage/query';
 	
 	var colNames = ['时间', '用户名', 'IP地址', 
 	                '接口名称',
