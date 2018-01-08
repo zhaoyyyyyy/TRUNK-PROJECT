@@ -6,9 +6,17 @@ spring:
   datasource:
     primary:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://10.3.232.105:3306/acrm_coc?useUnicode=true&characterEncoding=utf-8
+      url: jdbc:mysql://192.168.248.142:3306/datav?useUnicode=true&characterEncoding=utf-8
       username: coc
       password: 1qaz2wsx
+      maxActive：300
+      maxWait：500
+      maxIdle：30
+      minIdle：10
+      initialSize：10
+      testOnBorrow：false
+      removeAbandoned：true
+      removeAbandonedTimeout:3600
       test-while-idle: true
       validation-query: SELECT 1 FROM DUAL
       time-between-eviction-runs-millis: 180000
@@ -17,9 +25,17 @@ spring:
       url: jdbc:mysql://192.168.200.25:10034/ads_acrm?useUnicode=true&characterEncoding=utf-8
       username: 2SbUQlH7FJKyur9V
       password: WGoQpjLNgTA4VwrHNQBcqe0zDbXZti
+      maxActive：300
+      maxWait：500
+      maxIdle：30
+      minIdle：10
+      initialSize：10
+      testOnBorrow：false
+      removeAbandoned：true
+      removeAbandonedTimeout:3600
       test-while-idle: true
       validation-query: SELECT 1 FROM DUAL
-      time-between-eviction-runs-millis: 180000   
+      time-between-eviction-runs-millis: 180000  
 cache:
   loadDataScope: DimtableInfoDaoImpl
   isDimtableCached: false
