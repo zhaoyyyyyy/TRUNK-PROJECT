@@ -1,6 +1,6 @@
 window.jauth_onload = function(){
 	// 列表
-	var urlShow = $.ctx + '/api/logOperation/logoperPage/query';
+	var urlShow = $.ctx + '/api/log/operation/logoperPage/query';
 	
 	var colNames = ['时间', '用户名', '操作', 
 	                '资源类型',

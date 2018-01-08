@@ -145,7 +145,7 @@ public class LogUtil {
             params.put("interfaceUrl", interfaceUrl + "/" + method);
             params.put("errorMsg", msg);
 
-            //HttpUtil.sendPost(jauthUrl + "/api/monitor/save", params);
+            //HttpUtil.sendPost(jauthUrl + "/api/log/monitor/save", params);
         } catch (Exception e) {
            LogUtil.error("http远程rest调用异常", e);
         }

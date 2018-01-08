@@ -4,9 +4,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
 public class LogUtil {
@@ -52,7 +56,7 @@ public class LogUtil {
         String className = ste.getClassName();
         String method = ste.getMethodName();
         String threadName = Thread.currentThread().getName();
-        saveLog(LEVEL_INFO, threadName,className, method, message);
+        //saveLog(LEVEL_INFO, threadName,className, method, message);
         Logger log = getLogger(className);
         if (log.isInfoEnabled()) {
             log.info(message);
@@ -135,26 +139,44 @@ public class LogUtil {
      * @param msg
      */
     private static void saveLog(String level,String threadName, String interfaceUrl, String method, Object msg) {
-    	try {
-            // 组装http远程调用
-            Map<String, Object> params = new HashMap<>();
+    	 try {
+         	
+         	HttpServletRequest request = null;
+         	String url = "local";
+         	String userId = "loc_sys";
+         	String token = "loc_sys";
+         	try {
+         		request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+         		url = request.getRequestURL()+"/"+ request.getRequestURI();
+         	} catch (Exception e) {
+         		  StackTraceElement ste = getClassName();
+         	      String className = ste.getClassName();
+         	      Logger log = getLogger(className);
+         	      log.info("系统调用无法获取用户信息",e);
+ 			}
+         	
+            
+         	 // 组装http远程调用
+             Map<String, Object> params = new HashMap<>();
 
-            params.put("userId", "admin");
-            params.put("ipAddr", "127.0.0.1");
-            params.put("opTime", new Date());
+             params.put("userId", userId);
+             params.put("ipAddr", url);
+             params.put("token", token);
+             params.put("opTime",DateUtil.date2String(new Date()));
+             params.put("sysId", nodeName);
+             params.put("nodeName", nodeName);
+             params.put("levelId", level);
+             params.put("threadName", threadName);
+             params.put("interfaceUrl", interfaceUrl + "/" + method);
+             params.put("errorMsg", msg);
 
-            params.put("sysId", nodeName);
-            params.put("nodeName", nodeName);
-
-            params.put("levelId", level);
-            params.put("threadName", threadName);
-            params.put("interfaceUrl", interfaceUrl + "/" + method);
-            params.put("errorMsg", msg);
-
-            HttpUtil.sendPost(jauthUrl + "/api/monitor/save", params);
-        } catch (Exception e) {
-        	LogUtil.error("给JAUTH同步日志出错",e);
-        }
+             HttpUtil.sendPost(jauthUrl + "/api/log/monitor/save", params);
+         } catch (Exception e) {
+         	StackTraceElement ste = getClassName();
+   	      	String className = ste.getClassName();
+   	      	Logger log = getLogger(className);
+   	      	log.error("给JAUTH同步日志出错",e);
+         }
     }
 
 }

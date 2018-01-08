@@ -43,7 +43,7 @@ import springfox.documentation.annotations.ApiIgnore;
  * @version 1.0.0.2017年10月24日
  */
 @Api(value="32.03-后台监控日志",description="后台监控日志")
-@RequestMapping("api/monitor")
+@RequestMapping("api/log/monitor")
 @RestController
 public class LogMonitorDetailController  extends BaseController<LogMonitorDetail>{
 

@@ -50,7 +50,7 @@ window.jauth_onload = function() {
 		}
 	});
 
-	var urlShow = $.ctx + '/api/taskexecute/taskexecutePage/query';
+	var urlShow = $.ctx + '/api/log/taskexecute/taskexecutePage/query';
 	var colNames = [ '执行时间', '执行方式', '响应状态', '响应信息', '执行人' ];
 	var colModel = [ {
 		name : 'startTime',

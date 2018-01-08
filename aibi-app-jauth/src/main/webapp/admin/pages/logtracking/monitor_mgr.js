@@ -1,6 +1,6 @@
 window.jauth_onload = function(){
 	// 列表
-	var urlShow = $.ctx + '/api/monitor/monitorPage/query';
+	var urlShow = $.ctx + '/api/log/monitor/monitorPage/query';
 	
 	var colNames = ['timestamp', 'userid', 'host', 
 	                'level',

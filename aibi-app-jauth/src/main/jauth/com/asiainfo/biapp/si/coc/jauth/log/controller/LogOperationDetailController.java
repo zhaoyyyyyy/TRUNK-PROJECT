@@ -45,7 +45,7 @@ import springfox.documentation.annotations.ApiIgnore;
  * @version 1.0.0.2017年10月20日
  */
 @Api(value="32.01-用户操作日志",description="用户操作日志")
-@RequestMapping("api/logOperation")
+@RequestMapping("api/log/operation")
 @RestController
 public class LogOperationDetailController  extends BaseController<LogOperationDetail>{
 
