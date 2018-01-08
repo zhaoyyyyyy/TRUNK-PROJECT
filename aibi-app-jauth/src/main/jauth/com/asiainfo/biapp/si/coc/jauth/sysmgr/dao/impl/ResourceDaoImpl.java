@@ -72,7 +72,7 @@ public class ResourceDaoImpl extends BaseDaoImpl<Resource,String> implements
 		if(StringUtils.isNotBlank(page.getSortCol())){
 			hql.append(" order by r."+page.getSortCol()+" "+page.getSortOrder());
 		}else{
-			hql.append(" order by r.createTime desc");
+			hql.append(" order by r.dispOrder desc");
 		}
 		return (JQGridPage<Resource>) super.findPageByHql(page, hql.toString(),params);
 	}

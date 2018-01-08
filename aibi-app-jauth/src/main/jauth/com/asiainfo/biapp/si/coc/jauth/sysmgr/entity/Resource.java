@@ -108,6 +108,7 @@ public class Resource extends BaseEntity {
 	 */
 	@Column(name="sessionname")
 	private String sessionName;
+	
 	/**
 	 * 
 	 */
@@ -116,10 +117,11 @@ public class Resource extends BaseEntity {
 	@JoinTable(name="LOC_SYS_ROLERESOURCE",  
 	joinColumns={@JoinColumn(name="RESOURCE_ID")},inverseJoinColumns={@JoinColumn(name="ROLE_ID")})  
 	public Set<Role> roleSet = new HashSet<>(0);
-	/** 子组织列表 */
+	
+	/** 子资源列表 */
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="parent_id",insertable=false,updatable=false)
-	@OrderBy(clause = "resourcecode")
+	@OrderBy(clause  = "dispOrder asc")
 	private Set<Resource> children = new HashSet<>(0);
 	
 	@Override

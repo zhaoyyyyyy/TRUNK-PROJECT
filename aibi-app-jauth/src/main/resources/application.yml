@@ -12,8 +12,8 @@ spring:
     show-sql: true
     open-in-view: true
 demo.security.jwt:
-  tokenExpirationTime: 120 # Number of minutes
-  refreshTokenExpTime: 200 # Minutes
+  tokenExpirationTime: 480 # Number of minutes
+  refreshTokenExpTime: 500 # Minutes
   tokenIssuer: http://asiainfo.com
   tokenSigningKey: xm8EV6Hy5RMFK4EEACIDAwQus
 eureka:

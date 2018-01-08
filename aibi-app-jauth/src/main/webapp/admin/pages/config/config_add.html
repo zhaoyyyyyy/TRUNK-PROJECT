@@ -8,17 +8,24 @@
 </head>
 <body>
 	<form id="saveDataForm">
-		<table border="0" width="100%" cellpadding="0" cellspacing="0"
-			class="commTable">
-			<tr>
-				<th>配置路径<span class="req">*</span></th>
-				<td colspan="6"><div id="parentKey">
-						<input name="parentKey" type="text" readonly="readonly"
-							v-model="parentKey" class="read_inputStyle" />
-					</div></td>
-			</tr>
+		<table border="0" width="100%" cellpadding="0" cellspacing="0" class="commTable">
+			<thead>
+				<th>父配置项路径<span class="req">*</span></th>
+				<td colspan="5">
+					<div id="parentKey">
+						<input name="parentKey" type="text" readonly="readonly" v-model="parentKey" class="read_inputStyle" style="width:300px;" />
+					</div>
+				</td>
+			</thead>
 			<tbody id="show" v-html="list">
 			</tbody>
+			
+			<tr><td colspan="6"></td></tr><tr>
+			<tr>
+				<td colspan="6">
+					注：子配置会在父配置路径之后继续编码
+				</td>
+			</tr>
 		</table>
 	</form>
 </body>

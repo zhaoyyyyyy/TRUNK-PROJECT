@@ -250,8 +250,7 @@ public class ResourceController extends BaseController<Resource> {
 		// 如果是管理员能显示所有菜单
 		if (user.getIsAdmin() == 1) {
 			String orgId = null;
-			List<Resource> resourceList = resourceService
-					.findResourceList(orgId);
+			List<Resource> resourceList = resourceService.findResourceList(orgId);
 			for (Resource resourc : resourceList) {
 				list.add(resourc.getId());
 			}
