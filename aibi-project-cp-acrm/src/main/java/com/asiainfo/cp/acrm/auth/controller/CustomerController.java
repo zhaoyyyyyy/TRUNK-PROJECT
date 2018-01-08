@@ -24,9 +24,10 @@ import com.asiainfo.cp.acrm.base.page.Page;
 import com.asiainfo.cp.acrm.base.utils.WebResult;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@Api(value = "客户画像相关接口")
+@Api(value = "02 客户视图接口",description="360客户视图接口,包括1:1及1:N")
 @RequestMapping("api/customer")
 @RestController
 public class CustomerController extends BaseController<User> {
@@ -39,6 +40,7 @@ public class CustomerController extends BaseController<User> {
 	 * @param reqModel
 	 * @return
 	 */
+	@ApiOperation(value="360客户视图接口 1:1")
 	@RequestMapping(value = "/portrayal", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public WebResult<PortrayalResponseModel> portrayal(@ApiParam(name = "", value = "", required = true) @RequestBody PortrayalRequestModel reqModel) {
 		WebResult<PortrayalResponseModel> webResult = new WebResult<PortrayalResponseModel>();
@@ -60,6 +62,7 @@ public class CustomerController extends BaseController<User> {
 	 * @param viewReqModel
 	 * @return
 	 */
+	@ApiOperation(value="360客户视图接口 1:N")
 	@RequestMapping(value = "/view", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public WebResult<ViewResponseModel> view(
 			@ApiParam(name = "", value = "", required = true) @RequestBody ViewRequestModel viewReqModel) {

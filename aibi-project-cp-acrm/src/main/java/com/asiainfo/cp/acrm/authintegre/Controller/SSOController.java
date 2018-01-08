@@ -20,7 +20,7 @@ import static com.ai.sso.util.SessionClient.getSessionId;
 import static com.ai.sso.util.SessionClient.getSign;
 import static com.ai.sso.util.SessionClient.getUserInfo;
 
-@Api(value = "单点登录开放API")
+@Api(value = "03 单点登录开放API",description="包装SSO单点接口并对外提供rest服务")
 @RequestMapping("api/sso")
 @RestController
 public class SSOController extends BaseController {

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 
-@Api(value = "获取用户资源权限")
+@Api(value = "04 获取用户资源权限",description="包装OCRM提供的相关接口并对外提供rest服务")
 @RequestMapping("api/auth")
 @RestController
 public class AuthResourceController extends BaseController {

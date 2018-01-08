@@ -3,7 +3,7 @@ server:
   context-path: /
 spring:
   profiles:
-    active: dev
+    active: cp-dev
   application:
     name: cpacrm
   jpa:

@@ -16,9 +16,10 @@ import com.asiainfo.cp.acrm.base.exception.BaseException;
 import com.asiainfo.cp.acrm.base.utils.WebResult;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@Api(value = "认证相关接口")
+@Api(value = "01 认证及权限",description="应用认证及授权相关接口")
 @RequestMapping("api")
 @RestController
 public class AuthController extends BaseController<User> {
@@ -31,6 +32,7 @@ public class AuthController extends BaseController<User> {
 	 * @param appkey
 	 * @return
 	 */
+	@ApiOperation(value="通过颁发的APPKEY拿到具有时效性的TOKEN")
 	@RequestMapping(value = "/token", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public WebResult<TokenModel> getToken(
 			@ApiParam(value = "认证中心分配的Appkey=EA735FB0554CFB9E6890D4362D7B446F", required = true) @RequestBody TokenRequestModel appkey) {
