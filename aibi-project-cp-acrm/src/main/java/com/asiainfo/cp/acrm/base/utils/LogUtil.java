@@ -40,7 +40,7 @@ public class LogUtil {
         String className = ste.getClassName();
         String method = ste.getMethodName();
         String threadName = Thread.currentThread().getName();
-        saveLog(LEVEL_DEBUG, threadName,className, method, message);
+        //saveLog(LEVEL_DEBUG, threadName,className, method, message);
         Logger log = getLogger(className);
         if (log.isDebugEnabled()) {
             log.debug(message);
@@ -64,7 +64,7 @@ public class LogUtil {
         String className = ste.getClassName();
         String method = ste.getMethodName();
         String threadName = Thread.currentThread().getName();
-        saveLog(LEVEL_WARN, threadName,className, method, message);
+        //saveLog(LEVEL_WARN, threadName,className, method, message);
         Logger log = getLogger(className);
         log.warn(message);
     }
@@ -75,7 +75,7 @@ public class LogUtil {
         String className = ste.getClassName();
         String method = ste.getMethodName();
         String threadName = Thread.currentThread().getName();
-        saveLog(LEVEL_ERROR, threadName,className, method, message);
+       // saveLog(LEVEL_ERROR, threadName,className, method, message);
         Logger log = getLogger(className);
         log.error(message);
     }

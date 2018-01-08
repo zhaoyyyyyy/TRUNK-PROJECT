@@ -37,6 +37,14 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 
 	@Autowired
 	private IDimtableInfoDao dimDao;
+	
+	
+	private String cust_id;
+
+    @Value("${cust_id}")
+	public void setCust_id(String cust_id) {
+		this.cust_id = cust_id;
+	}
 
 	@Override
 	public LabelMetaDataInfo getHorizentalLabelMetaInfo(String labelId) throws BaseException {
@@ -107,7 +115,6 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			throws SqlRunException {
 		final String DIMTABLE_SHORTNAME_DEFAULT = "dimt";
 		final String TABLE_SHORTNAME_DEFAULT = "t";
-		final String DIM_COLUMNVALUE_ALIAS_NAME_DEFAULT = "cc";
 		List<LabelMetaDataInfo> result = new ArrayList<LabelMetaDataInfo>();
 		for (int i = 0; i < columns.size(); i++) {
 			MdaSysTableColumn column = columns.get(i);
@@ -123,7 +130,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			metaDataInfo.setLabelId(labelInfo.getLabelId());
 			metaDataInfo.setTableName(table.getTableName());
 			metaDataInfo.setLabelName(labelInfo.getLabelName());
-			if (column.getDimTransId() != null) {
+			if (StringUtil.isNotEmpty(column.getDimTransId())) {
 				DimtableInfo dimInfo = dimDao.getDimtableInfo(column.getDimTransId());
 				if (dimInfo == null) {
 					LogUtil.error("标签对应表列" + column.getColumnName() + "的维表" + column.getDimTransId() + "未找到");
@@ -133,7 +140,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 				metaDataInfo.setDimCodeCol(dimInfo.getDimCodeCol());
 				metaDataInfo.setDimValueCol(dimInfo.getDimValueCol());
 				metaDataInfo.setDimtableShortName(DIMTABLE_SHORTNAME_DEFAULT + RandomUtils.nextInt());
-				metaDataInfo.setDimValueColAliasName(DIM_COLUMNVALUE_ALIAS_NAME_DEFAULT+RandomUtils.nextInt());
+				metaDataInfo.setDimValueColAliasName(column.getColumnName()+DIM_COLUMNVALUE_ALIAS_NAME_DEFAULT+RandomUtils.nextInt());
 			}
 			result.add(metaDataInfo);
 		}
@@ -163,7 +170,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			LabelMetaDataInfo each = lableMetaDataInfos.get(i);
 			if (i == 0) {
 				fromSQL.append(each.getTableName()).append(" ").append(each.getTableShortName());
-				whereSQL.append(" and cust_Id='").append(userId).append("'");
+				whereSQL.append(" and ").append(this.cust_id).append("='").append(userId).append("'");
 				if (filter!=null && !StringUtil.isEmpty(filter.trim())) {
 					whereSQL.append(" and ").append(filter);
 				}

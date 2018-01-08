@@ -65,7 +65,7 @@ public class CustomerServiceImpl implements ICustomerService{
 			}catch(Exception ex) {
 				String errorMsg="获取宽表数据错误"+ex.getMessage()+",sql:"+sql;
 				LogUtil.error(errorMsg,ex);
-				throw new SqlRunException(errorMsg);
+				throw new RuntimeException(errorMsg);
 			}
 			resultData.addAll(models);
 		}
@@ -121,9 +121,9 @@ public class CustomerServiceImpl implements ICustomerService{
 		    		page=labelTableDataSvc.findVerticalDataList(reqModel.getPageInfo(), sql,result);
 		    	}
 	    	}catch(Exception e) {
-	    		String errorMsg="获取宽表数据错误"+e.getMessage()+",sql:"+sql;
+	    		String errorMsg="获取纵表数据错误"+e.getMessage()+",sql:"+sql;
 			LogUtil.error(errorMsg,e);
-			throw new SqlRunException(errorMsg);
+			throw new RuntimeException(errorMsg);
 	    	}
 	    	return page;
 	}

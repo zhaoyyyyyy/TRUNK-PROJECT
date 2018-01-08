@@ -33,29 +33,19 @@ public class LabelTableDataServiceImpl implements ILabelTableDataService {
 	@Value("${cache.isDimtableCached}")
 	private Boolean isDimtableCached;
 	
-	@Override
-	public LabelModel findHorizentalLabelInfoModel(String sql, LabelMetaDataInfo lableMetaDataInfo)
-			throws BaseException {
-		return dao.getHorizentalLabelInfoModel(sql, lableMetaDataInfo);
-	}
 
 	@Override
 	public Page<Object> findVerticalDataList(PageRequestModel pageModel, String sql,List<LabelMetaDataInfo> lableMetaDataInfos) {
 		Page    page=dao.findVerticalDataList(pageModel, sql);
-		if (page==null||page.getData()==null ||page.getData().size()==0) {
-			return new Page();
-		}
-    		page.setData(dao.getVerticalLabelInfoModel(page.getData(), lableMetaDataInfos));
 		return page;
 	}
 
 	@Override
 	public List findVerticalDataList(String sql,List<LabelMetaDataInfo> lableMetaDataInfos) {
-		List list=dao.findVerticalDataList(sql);
-		if (list==null||list.size()==0) {
+		List result=dao.findVerticalDataList(sql);
+		if (result==null||result.size()==0) {
 			return new ArrayList();
 		}
-		List result=dao.getVerticalLabelInfoModel(list, lableMetaDataInfos);
 		if (isDimtableCached) {
 			List<LabelMetaDataInfo> lableMetaDataInfosWithDim=new ArrayList<>();
 			for (int i=0;i<lableMetaDataInfos.size();i++){

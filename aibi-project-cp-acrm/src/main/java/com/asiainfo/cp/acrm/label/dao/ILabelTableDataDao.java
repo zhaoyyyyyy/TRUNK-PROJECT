@@ -16,7 +16,6 @@ import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
  */
 public interface ILabelTableDataDao {
 
-	public LabelModel getHorizentalLabelInfoModel(String sql,LabelMetaDataInfo lableMetaDataInfo)  throws BaseException;
 
     /**
      * Description: 获取宽表标签数据

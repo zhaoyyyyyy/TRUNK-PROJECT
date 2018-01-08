@@ -14,6 +14,8 @@ import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
  */
 public interface ILabelMetaInfoService {
 	
+	public final String DIM_COLUMNVALUE_ALIAS_NAME_DEFAULT = "cqwerty_dim_asdfghc";
+	
     /**
      * Description:获取宽表元数据
      * 
