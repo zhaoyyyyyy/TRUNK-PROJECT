@@ -39,4 +39,30 @@ window.jauth_onload = function() {
   	$("#btn_updateThis").click(function(){
   		location.href = $.ctx+'/admin/pages/orgmgr/org_new.html?orgCode=' + $("#orgCode").val();
   	});
+  	
+  	$("#btn_deleteThis").click(function(){
+  		$.confirm('删除此节点后,节点数据将全部删除,确定要删除吗？', function() {
+			$.commAjax({
+				url:$.ctx+'/api/organization/get',
+				postData:{"orgCode":orgCode},
+				type:'post',
+				onSuccess:function(data){
+					if(data.organization.children.length !=0){
+						$.alert("当前节点下含有下级节点，不可删除");
+					}else{
+						$.commAjax({
+							url:$.ctx+'/api/organization/delete',
+							postData:{"orgCode":orgCode},
+							type:'post',
+							onSuccess:function(data){
+								$.success('删除成功。',function(){
+									parent.window.location.reload();
+								});
+							}
+						});
+					}
+				}
+			});
+  		});
+  	});
 };

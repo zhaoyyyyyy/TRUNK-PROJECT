@@ -289,10 +289,10 @@ public class OrganizationController extends BaseController<Organization> {
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
     public String updateOrg(Organization organization) {
         Organization organizations = organizationService.getOrgByOrgCode(organization.getOrgCode());
-        if (organizations != null) {// 如果orgCode存在返回orgCode已存在
+        Organization old = organizationService.get(organization.getId());
+        if (!organization.getOrgCode().equals(old.getOrgCode()) && organizations != null){// 如果修改时的orgCode与旧的不同且orgCode存在返回orgCode已存在
             return "orgCodeExist";
-        }else{// orgCode不存在执行修改然后返回success
-            Organization old = organizationService.get(organization.getId());
+        }else{
             if(StringUtil.isNotBlank(organization.getOrgCode())){
                 old.setOrgCode(organization.getOrgCode());
             }
