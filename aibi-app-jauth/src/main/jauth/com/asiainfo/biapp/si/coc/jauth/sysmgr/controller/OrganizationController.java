@@ -275,6 +275,46 @@ public class OrganizationController extends BaseController<Organization> {
             return "success";
         }
     }
+    
+    @ApiOperation(value = "修改组织")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "组织ID", required = true, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "orgCode", value = "组织CODE", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "simpleName", value = "组织名称缩写", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "orderNum", value = "排序序号", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "orgType", value = "组织类型", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "interrogateType", value = "审核方式", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "orgStatus", value = "组织状态", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "parentOrgCode", value = "父组织ID", required = false, paramType = "query", dataType = "string") })
+    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public String updateOrg(Organization organization) {
+        Organization organizations = organizationService.getOrgByOrgCode(organization.getOrgCode());
+        if (organizations != null) {// 如果orgCode存在返回orgCode已存在
+            return "orgCodeExist";
+        }else{// orgCode不存在执行修改然后返回success
+            Organization old = organizationService.get(organization.getId());
+            if(StringUtil.isNotBlank(organization.getOrgCode())){
+                old.setOrgCode(organization.getOrgCode());
+            }
+            if(StringUtil.isNotBlank(organization.getSimpleName())){
+                old.setSimpleName(organization.getSimpleName());
+            }
+            if(null!=organization.getOrderNum()){
+                old.setOrderNum(organization.getOrderNum());
+            }
+            if(StringUtil.isNotBlank(organization.getOrgType())){
+                old.setOrgType(organization.getOrgType());
+            }
+            if(StringUtil.isNotBlank(organization.getInterrogateType())){
+                old.setInterrogateType(organization.getInterrogateType());
+            }
+            if(StringUtil.isNotBlank(organization.getOrgStatus())){
+                old.setOrgStatus(organization.getOrgStatus());
+            }
+            organizationService.saveOrUpdate(old);
+            return "success";
+        }
+    }
 
     /**
      * 删除组织

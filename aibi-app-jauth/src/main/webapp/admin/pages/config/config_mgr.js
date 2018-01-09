@@ -23,26 +23,26 @@ var createConfigurationTemplate = [ {
 	name : '数据库配置',
 	fields : [ {
 		name : '驱动',
-		code : '{PARENT_CODE}_DRIVERCLASS',
+		code : 'DRIVERCLASS',
 		type : 'enum',
 		dimCode : 'driverClass',
 		value : 'http://xxx.xxx.xxx.xxx',
 		flag:''
 	}, {
 		name : '地址',
-		code : '{PARENT_CODE}_URL',
+		code : 'URL',
 		type : 'text',
 		value : 'root',
 		flag:''
 	}, {
 		name : '用户名',
-		code : '{PARENT_CODE}_NAME',
+		code : 'NAME',
 		type : 'text',
 		value : '请输入配置项的值',
 		flag:''
 	}, {
 		name : '密码',
-		code : '{PARENT_CODE}_PW',
+		code : 'PW',
 		type : 'text',
 		value : '请输入配置项的值',
 		flag:''

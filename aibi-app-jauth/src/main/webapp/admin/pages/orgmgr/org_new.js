@@ -12,6 +12,7 @@ window.jauth_onload = function() {
 				new Vue({ 
 					el:'#saveDataForm', 
 					data: {
+						"id":null,
 						"parentName":data.organization.simpleName,
 						"parentId":data.organization.id,
 						"orgCode":null,
@@ -34,6 +35,7 @@ window.jauth_onload = function() {
 				new Vue({ 
 					el:'#saveDataForm', 
 					data: {
+						"id":data.organization.id,
 						"parentName":data.organization.simpleName,
 						"parentId":data.organization.parentId,
 						"orgCode":data.organization.orgCode,
@@ -50,8 +52,15 @@ window.jauth_onload = function() {
 	//保存按钮
 	$("#btn_save").click(function(){
 		if ($('#saveDataForm').validateForm()){
+			var url_ = "";
+			if(parentOrgCode!=null&&parentOrgCode!=""&&parentOrgCode!=undefined){
+				$("#orgid").removeAttr("name");
+				url_ = $.ctx+'/api/organization/add?poc='+parentOrgCode;
+			}else if(orgCode!=null&&orgCode!=""&&orgCode!=undefined){
+				url_ = $.ctx+'/api/organization/update';
+			}
 			$.commAjax({
-				url : $.ctx+'/api/organization/add?poc='+parentOrgCode,
+				url : url_,
 				postData:$('#saveDataForm').formToJson(),
 				onSuccess:function(data){
 					if(data == "success"){

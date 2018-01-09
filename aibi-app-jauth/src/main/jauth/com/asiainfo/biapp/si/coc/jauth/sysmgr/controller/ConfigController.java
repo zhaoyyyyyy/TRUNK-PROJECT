@@ -193,7 +193,7 @@ public class ConfigController extends BaseController<Coconfig> {
 					return "编码已存在";
 				}
 			} else {// 新建
-				coconfig.setConfigKey(conKeys[0]);
+				coconfig.setConfigKey(conKeys[0].toUpperCase());
 				coconfig.setStatus(1);
 				coconfig.setSysId(coconfig.getParentKey());
 				if ("taskConfig".equals(coconfig.getParentKey())) {// 调度任务配置添加到数据字典中
@@ -232,7 +232,7 @@ public class ConfigController extends BaseController<Coconfig> {
 			for (int i = 0; i < conKeys.length; i++) {// 添加新配置
 				Coconfig newCon = new Coconfig();
 				newCon.setConfigName(conNames[i]);
-				newCon.setConfigKey(coconfig.getParentKey()+"_"+conKeys[i]);
+				newCon.setConfigKey((coconfig.getParentKey()+"_"+conKeys[i]).toUpperCase());
 				newCon.setConfigVal(conVals[i]);
 				newCon.setConfigValType(Integer.parseInt(conTypes[i]));
 				newCon.setParentKey(coconfig.getParentKey());

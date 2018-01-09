@@ -14,6 +14,7 @@
 	<body>
 		<form id="saveDataForm" v-cloak>
 			<table border="0" width="100%" cellpadding="0" cellspacing="0" class="commTable" >
+			<input v-model="id" type="hidden" name="id" id="orgid"></input>
 				<tbody> 
 					<tr>
 						<th>父组织名称</th>
@@ -43,7 +44,7 @@
 						</td>
 						<th>组织类型<span class="required">*</span></th>
 						<td>
-							<input v-model="orgType" dataDic="ZZLXZD" class="inputStyle easyui-validatebox" required="true" type="text" name="orgType"/>
+							<v-input defValue="orgType" dataDic="ZZLXZD" class="inputStyle easyui-validatebox" required="true" type="text" name="orgType" ></v-input>
 						</td>
 					</tr>
 					<tr>
@@ -67,7 +68,6 @@
 			<div class="buttonArea operation">
 				<div class="left newButton"><div>	<input type="button" id="btn_rtn" value="返回" title="返回" class="return"/></div></div>
 				<div class="right newButton"><div>	<input type="button" id="btn_save" value="保存" title="保存" class="save" /></div></div>
-				<div class="right newButton"><div>	<input type="reset" name="button" value="重置" title="重置" class="reset" /></div></div>
 				<div class="clear"></div>
 			</div>
 			

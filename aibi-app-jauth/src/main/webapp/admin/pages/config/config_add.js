@@ -68,8 +68,8 @@ window.jauth_onload = function() {
 			
 			for(var i=0;i<obj.length;i++){
 				html+='<tr><td colspan="6"></td></tr><tr>';
-				html+='<th v-show="\'undefined\'!=\''+obj[i].name+'\'">配置名称<span class="req">*</span></th><td v-show="\'undefined\'!=\''+obj[i].name+'\'"><v-input name="configName" defValue="configName" type="text"class="inputStyle easyui-validatebox" required="true"></v-input>'
-				html+='<th v-show="\'undefined\'!=\''+obj[i].code+'\'">配置编码<span class="req">*</span></th><td width="33%" v-show="\'undefined\'!=\''+obj[i].code+'\'"><v-input name="configKey" defValue="configKey"type="text"class="inputStyle easyui-validatebox" required="true"></v-input></td>';
+				html+='<th v-show="\'undefined\'!=\''+obj[i].name+'\'">配置名称<span class="req">*</span></th><td v-show="\'undefined\'!=\''+obj[i].name+'\'"><input value="'+obj[i].name+'" name="configName"  type="text"class="inputStyle easyui-validatebox" required="true" disabled=disabled></input>'
+				html+='<th v-show="\'undefined\'!=\''+obj[i].code+'\'">配置编码<span class="req">*</span></th><td width="33%" v-show="\'undefined\'!=\''+obj[i].code+'\'"><input value="'+obj[i].code+'" name="configKey"  type="text"class="inputStyle easyui-validatebox" required="true" disabled=disabled></input></td>';
 				html+=
 					  '<th v-show="\'undefined\'!=\''+obj[i].type+'\'">配置值<span class="req">*</span></th><td v-show="\'undefined\'!=\''+obj[i].type+'\'">'
 					+'<p v-if="\'enum\'==\''+obj[i].type+'\'"><v-input id="configVal"name="configVal" defValue="configVal" type="text" class="inputStyle easyui-validatebox" required="true" datadic="'+obj[i].dimCode+'"></v-input><input name="configValTypes" type="hidden" value="4" /></p>'
