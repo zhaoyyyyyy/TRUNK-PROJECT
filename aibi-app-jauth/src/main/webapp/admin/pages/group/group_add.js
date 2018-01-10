@@ -18,8 +18,6 @@ window.jauth_onload = function() {
 	var myTree;
 	var dg = frameElement.lhgDG;
 	dg.removeBtn();
-	var _url = $.ctx + "/api/organization/renderOrgTree?orgCode="
-			+ rootOrgCode + "&groupId=" + id;
 	var cascadeParentChecked = true;
 	var cascadeChildrenChecked = true;
 	var filterOrgType = null;

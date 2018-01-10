@@ -123,7 +123,7 @@ public class GroupController extends BaseController<Group> {
 			if (sb.length() > 0) {
 				sb.append(",");
 			}
-			sb.append(g.getId());
+			sb.append(g.getOrgCode());
 		}
 		tree = sb.toString();
 		map.put("group",group);

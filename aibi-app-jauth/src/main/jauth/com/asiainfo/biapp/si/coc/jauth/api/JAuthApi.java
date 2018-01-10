@@ -101,7 +101,6 @@ public class JAuthApi {
         if(user.getGroupSet() != null){
         	for(Group group : user.getGroupSet()){
         	    for(Organization org : group.getOrganizationSet()){
-        	        org.setChildren(null);
         	        if(!list.contains(org)){
         	            list.add(org);
         	        }
