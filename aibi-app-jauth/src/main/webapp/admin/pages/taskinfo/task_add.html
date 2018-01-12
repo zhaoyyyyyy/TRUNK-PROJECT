@@ -24,8 +24,12 @@
 				</tr>
 				<tr>
 					<th>任务选择</th>
-					<td colspan="7"><v-input v-bind:defvalue="taskId" id="taskId" name="taskId"
-							 dataDic="DDRW" class="inputStyle" type="text"></v-input></td>
+					<td colspan="7">
+<!-- 						<v-input v-bind:defvalue="taskId" id="taskId" name="taskId" dataDic="DDRW" class="inputStyle" type="text"></v-input> -->
+					    <select v-model="taskId" class="inputStyle" v-bind:defvalue="taskId" id="taskId" name="taskId">  
+					        <option v-for="item in items" v-bind:value="item.configKey">{{item.configName}}</option>  
+					    </select>
+					</td>
 				</tr>
 				<tr>
 					<th>调度名称<span class="required">*</span></th>
@@ -35,7 +39,11 @@
 				</tr>
 				<tr>
 					<th>调度参数</th>
-					<td colspan="7"><input id="sysId" name="sysId" v-model="sysId" class="inputStyle" /></td>
+<!-- 					<td colspan="7"><input id="sysId" name="sysId" v-model="sysId" class="inputStyle" /></td> -->
+					<td colspan="7">
+						<textarea v-model="sysId" rows="" cols=""id="sysId" name="sysId" class="input_textarea"></textarea>
+						<span>参数格式：{"key1":"value1", "key2":"value2"}</span>
+					</td>
 				</tr>
 				<tr v-show="showChoose">
 					<td colspan="8">
@@ -96,6 +104,16 @@
 					<td><input value="*" readonly="readonly" class="read_inputStyle" size="10" /></td>
 					<td><input value="?" readonly="readonly" class="read_inputStyle" size="10" /></td>
 					<td><a style="text-decoration:none;display:inline-block;cursor:pointer;font-weight:bold" onclick="fun_to_change(3)">使用</a></td>
+				</tr>
+				<tr>
+					<th>每30秒执行一次</th>
+					<td><input value="0/30" readonly="readonly" class="read_inputStyle" size="10" /></td>
+					<td><input value="*" readonly="readonly" class="read_inputStyle" size="10" /></td>
+					<td><input value="*" readonly="readonly" class="read_inputStyle" size="10" /></td>
+					<td><input value="*" readonly="readonly" class="read_inputStyle" size="10" /></td>
+					<td><input value="*" readonly="readonly" class="read_inputStyle" size="10" /></td>
+					<td><input value="?" readonly="readonly" class="read_inputStyle" size="10" /></td>
+					<td><a style="text-decoration:none;display:inline-block;cursor:pointer;font-weight:bold" onclick="fun_to_change(4)">使用</a></td>
 				</tr>
 			</tbody>
 			<tbody v-show="showDelay">

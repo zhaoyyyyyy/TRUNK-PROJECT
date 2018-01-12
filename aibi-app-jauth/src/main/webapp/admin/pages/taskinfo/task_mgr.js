@@ -1,4 +1,20 @@
 window.jauth_onload = function() {
+	
+	var js = {
+		/** 常量 */
+		data:{
+			/** 状态:1：启动; */
+			EXE_STATUS_YES:1,
+			/** 状态:2：停止; */
+			EXE_STATUS_NO:2
+		},
+		method:{
+			isStr:function(any){
+				return any.length==0 || typeof(any)=='string'
+			}
+		}
+	}
+	
 	var parentExeId = '';
 	$.commAjax({
 		url : $.ctx + '/api/schedule/tree',
@@ -37,7 +53,10 @@ window.jauth_onload = function() {
 				name : 'sysId',
 				index : 'sysId',
 				width : 15,
-				align : 'left'
+				align : 'left',
+				formatter : function(value, opts, data) {
+					return js.method.isStr(data.sysId) ? data.sysId : JSON.stringify(data.sysId);
+				}
 			},
 			{
 				name : 'taskExeTime',
@@ -53,7 +72,7 @@ window.jauth_onload = function() {
 				sortable : false,
 				formatter : function(value, opts, data) {
 					var action;
-					if (data.exeStatus == 1) {
+					if (data.exeStatus == js.data.EXE_STATUS_YES) {
 						action = '停止';
 						return "<a href='###' onclick='fun_to_status(\""
 								+ data.taskExeId + "\",\"" + data.status
@@ -63,7 +82,7 @@ window.jauth_onload = function() {
 								+ "</font></a>";
 					} else if (data.exeStatus == 0) {
 						return $.getCodeDesc('RWZT', data.exeStatus);
-					} else {
+					} else if (data.exeStatus == js.data.EXE_STATUS_NO) {
 						action = '启动';
 						return "<a href='###' onclick='fun_to_status(\""
 								+ data.taskExeId + "\",\"" + data.status
@@ -102,7 +121,7 @@ window.jauth_onload = function() {
 								+ "\")' class='s_edit'>修改</a>";
 					}
 					html += "<a onclick='fun_to_up(\"" + data.taskExeId
-							+ "\")' class='s_edit'>手动吊起</a>"
+							+ "\")' class='s_edit'>立即执行</a>"
 							+ "<a onclick='fun_to_detail(\"" + data.taskExeId
 							+ "\")' class='s_edit'>调用明细</a>"
 					if (data.exeStatus == 2) {
@@ -126,7 +145,7 @@ window.jauth_onload = function() {
 			function() {
 				var dg = $.dialog('新增调度', $.ctx
 						+ '/admin/pages/taskinfo/task_add.html?parentExeId='
-						+ parentExeId, 800, 500);
+						+ parentExeId, 800, 530);
 				dg.reload = function() {
 					$("#mainGrid").setGridParam({
 						postData : $("#formSearch").formToJson()
@@ -185,7 +204,11 @@ function fun_to_up(id) {
 			"taskExeId" : id
 		},
 		onSuccess : function(data) {
-			$.alert("吊起成功");
+			if (data.res) {
+				$.alert("执行成功");
+			} else {
+				$.alert("执行失败");
+			}
 		}
 	})
 }

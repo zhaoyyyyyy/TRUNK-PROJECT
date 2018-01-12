@@ -16,13 +16,36 @@ var model = {// 定义Model
 	taskExeName : null,
 	sysId : null,
 	taskExeId : null,
-	taskId : ''
+	taskId : '',
+	items:[]
 
 }
 window.jauth_onload = function() {
 	new Vue({// 定义vue
 		el : '#saveDataForm',
-		data : model
+		data : model,
+		mounted:function(){
+			this.$nextTick(function () {
+				this.taskSelectView();
+			});
+		},
+		methods:{
+			taskSelectView:function(){
+				var _this = this;
+				$.commAjax({
+					url : $.ctx + '/api/schedule/taskExeInfo/getCoconfigByParentKey',
+					isShowMask : false,
+					type : 'POST',
+					async : false,
+					postData : {
+						ParentKey : "LOC_CONFIG_APP_TIMED_TASK"
+					},
+					onSuccess : function(data) {
+						_this.items = data;
+					}
+				});
+			}
+		}
 	});
 	var parentExeId = $.getUrlParam("parentExeId");
 	var taskExeId = $.getUrlParam("taskExeId");
@@ -188,6 +211,14 @@ function fun_to_change(count) {
 	if (count == 3) {
 		document.getElementById('taskExeTime1').value = '0';
 		document.getElementById('taskExeTime2').value = '20/1';
+		document.getElementById('taskExeTime3').value = '*';
+		document.getElementById('taskExeTime4').value = '*';
+		document.getElementById('taskExeTime5').value = '*';
+		document.getElementById('taskExeTime6').value = '?';
+	}
+	if (count == 4) {
+		document.getElementById('taskExeTime1').value = '0/30';
+		document.getElementById('taskExeTime2').value = '*';
 		document.getElementById('taskExeTime3').value = '*';
 		document.getElementById('taskExeTime4').value = '*';
 		document.getElementById('taskExeTime5').value = '*';
