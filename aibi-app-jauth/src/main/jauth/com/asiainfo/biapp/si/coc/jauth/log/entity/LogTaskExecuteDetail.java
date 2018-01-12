@@ -1,3 +1,8 @@
+/*
+ * @(#)LogTaskExecuteDetail.java
+ *
+ * CopyRight (c) 2018 北京亚信智慧数据科技有限公司 保留所有权利。
+ */
 
 package com.asiainfo.biapp.si.coc.jauth.log.entity;
 
@@ -12,6 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.entity.BaseEntity;
+
 /**
  * 
  * Title : LogTaskExecuteDetail
@@ -33,6 +39,7 @@ import com.asiainfo.biapp.si.coc.jauth.frame.entity.BaseEntity;
  * @author  panweiwei
  * @version 1.0.0.2017年10月24日
  */
+
 @Entity
 @Table(name = "loc_log_taskexe_detail")
 public class LogTaskExecuteDetail extends BaseEntity{
@@ -61,6 +68,8 @@ public class LogTaskExecuteDetail extends BaseEntity{
 	
 	@Column(name="start_time")
 	private Date startTime;
+	@Column(name="end_time")
+	private Date endTime;
 	
 	@Column(name="status")
 	private String status;
@@ -71,7 +80,9 @@ public class LogTaskExecuteDetail extends BaseEntity{
 	@Column(name="node_name")
 	private String nodeName;
 
-	public String getLogId() {
+	public LogTaskExecuteDetail() {}
+
+    public String getLogId() {
 		return logId;
 	}
 
@@ -124,10 +135,18 @@ public class LogTaskExecuteDetail extends BaseEntity{
     public Date getStartTime() {
         return startTime;
     }
-
     
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+    
+    
+    public Date getEndTime() {
+        return endTime;
+    }
+    
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public String getStatus() {

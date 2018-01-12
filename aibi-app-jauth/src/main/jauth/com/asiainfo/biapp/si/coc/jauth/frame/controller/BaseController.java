@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.dao.BaseDao;
 import com.asiainfo.biapp.si.coc.jauth.frame.entity.BaseEntity;
+import com.asiainfo.biapp.si.coc.jauth.frame.exception.BaseException;
+import com.asiainfo.biapp.si.coc.jauth.frame.exception.UserAuthException;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.GenericsUtil;
@@ -24,6 +26,9 @@ import net.sf.json.JSONObject;
 public abstract class BaseController<T>  {
 
 	private static final long serialVersionUID = -42856136017302010L;
+    
+    public static final String JWT_TOKEN_REQUSET_PARAM = "token";
+    public static final String JWT_TOKEN_HEADER_PARAM = "X-Authorization";
 
 	
     @Autowired
@@ -221,4 +226,26 @@ public abstract class BaseController<T>  {
 	public Timestamp getSystemTime(){
 		return	this.getBaseService().getSystemTime();
 	}
+	
+
+    /**
+     * 
+     * Description: 获取当前请求的token 票据
+     *
+     * @return String token
+     * @throws BaseException
+     */
+    public String getToken() throws BaseException {
+        String token = request.getParameter(JWT_TOKEN_REQUSET_PARAM);
+        if(StringUtil.isEmpty(token)){
+            token = request.getHeader(JWT_TOKEN_HEADER_PARAM);
+        }
+        if(StringUtil.isEmpty(token)){
+            throw new UserAuthException("请输入token秘钥");
+        }
+        
+        return token;
+    }
+    
+	
 }

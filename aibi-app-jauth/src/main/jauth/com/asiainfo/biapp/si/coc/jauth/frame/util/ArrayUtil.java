@@ -1,3 +1,9 @@
+/*
+ * @(#)ArrayUtil.java
+ *
+ * CopyRight (c) 2018 北京亚信智慧数据科技有限公司 保留所有权利。
+ */
+
 package com.asiainfo.biapp.si.coc.jauth.frame.util;
 
 import java.lang.reflect.Array;
@@ -6,6 +12,27 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
+
+/**
+ * Title : ArrayUtil
+ * <p/>
+ * Description : 数组相关的工具类
+ * <p/>
+ * CopyRight : CopyRight (c) 2018
+ * <p/>
+ * Company : 北京亚信智慧数据科技有限公司
+ * <p/>
+ * JDK Version Used : JDK 7.0 +
+ * <p/>
+ * Modification History :
+ * <p/>
+ * <pre>NO.    Date    Modified By    Why & What is modified</pre>
+ * <pre>1    2018年1月6日    hongfb        Created</pre>
+ * <p/>
+ *
+ * @author  hongfb
+ * @version 1.0.0.2018年1月6日
+ */
 
 public final class ArrayUtil extends ArrayUtils {
 	public static final String[] EMPTY_STRING_ARRAY = new String[0];
@@ -30,6 +57,25 @@ public final class ArrayUtil extends ArrayUtils {
 		return list.toArray();
 	}
 
+	/**
+	 * @description 把数组转化为以分隔符连接的字符串
+	 * @param array 数组
+	 * @param delim 分隔符
+	 * @return 以分隔符连接的字符串
+	 */
+	public static String join(Object[] array, String delim) {
+	    StringBuilder result = new StringBuilder();
+	    if (isEmpty(array)) {
+	        return result.toString();
+	    }
+
+        for (int i = 0; i < array.length; i++) {
+            result.append(array[i]).append(delim);
+        }
+        
+        return result.deleteCharAt(result.length()-1).toString();
+	}
+	
 	public static String[] toString(Object[] array) {
 		String[] result = (String[]) null;
 		if (isEmpty(array)) {
