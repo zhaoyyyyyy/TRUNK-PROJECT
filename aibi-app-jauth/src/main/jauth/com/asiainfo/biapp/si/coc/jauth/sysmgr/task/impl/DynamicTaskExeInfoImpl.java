@@ -4,7 +4,7 @@
  * CopyRight (c) 2018 北京亚信智慧数据科技有限公司 保留所有权利。
  */
 
-package com.asiainfo.biapp.si.coc.jauth.sysmgr.task.service.impl;
+package com.asiainfo.biapp.si.coc.jauth.sysmgr.task.impl;
 
 import java.util.Date;
 import java.util.Map;
@@ -15,7 +15,7 @@ import com.asiainfo.biapp.si.coc.jauth.frame.util.WebResult;
 import com.asiainfo.biapp.si.coc.jauth.log.entity.LogTaskExecuteDetail;
 import com.asiainfo.biapp.si.coc.jauth.log.service.ILogTaskExecuteDetailService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.LocTaskExeInfo;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.task.service.IDynamicTask;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.task.IDynamicTask;
 
 import net.sf.json.JSONObject;
 
@@ -68,6 +68,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
     @Override
     public void run() {
         long s = System.currentTimeMillis();
+        System.out.println("任务("+Thread.currentThread().getName()+")正在执行。。。"+new Date().toLocaleString());
         
         // 发送请求
         if (null != url) {
@@ -107,6 +108,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
         }
         
         LogUtil.debug("DynamicTask.run() end.耗时："+((System.currentTimeMillis()-s)/1000.0)+"秒。");
+        System.out.println("DynamicTask.run() end.耗时："+((System.currentTimeMillis()-s)/1000.0)+"秒。");
     }
     
     

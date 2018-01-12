@@ -1,15 +1,15 @@
 /*
- * @(#)DynamicTaskUtil.java
+ * @(#)IDynamicTask.java
  *
  * CopyRight (c) 2018 北京亚信智慧数据科技有限公司 保留所有权利。
  */
 
-package com.asiainfo.biapp.si.coc.jauth.sysmgr.task.service;
+package com.asiainfo.biapp.si.coc.jauth.sysmgr.task;
 
 import java.util.Map;
 
 /**
- * Title : DynamicTaskUtil
+ * Title : IDynamicTask
  * <p/>
  * Description : 线程池任务调度工具类里的任务接口
  * <p/>

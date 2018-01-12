@@ -1,5 +1,5 @@
 /*
- * @(#)DynamicTaskUtil.java
+ * @(#)ScheduleController.java
  *
  * CopyRight (c) 2018 北京亚信智慧数据科技有限公司 保留所有权利。
  */
@@ -28,12 +28,12 @@ import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
 import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.log.service.ILogTaskExecuteDetailService;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.component.DynamicTaskUtil;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.component.DynamicTaskComponent;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Coconfig;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.LocTaskExeInfo;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.CoconfigService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.LocTaskExeInfoService;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.task.service.impl.DynamicTaskExeInfoImpl;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.task.impl.DynamicTaskExeInfoImpl;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.utils.SessionInfoHolder;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.LocTaskExeInfoVo;
 
@@ -196,7 +196,7 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
         locTaskExeInfoService.delete(taskExeId);
         
         //停止调度任务
-        DynamicTaskUtil dSTaskUtil = (DynamicTaskUtil)SpringContextHolder.getBean("dynamicTaskUtil");
+        DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
         dSTaskUtil.stopTask(String.valueOf(taskExeId));
     }
 
@@ -299,7 +299,7 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
             //按执行时间周期执行
             if (String.valueOf(ServiceConstants.TaskExeInfo.EXE_TYPE_CIRCLE).equals(task.getExeType())) {
                 //停止调度任务
-                DynamicTaskUtil dSTaskUtil = (DynamicTaskUtil)SpringContextHolder.getBean("dynamicTaskUtil");
+                DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
                 dSTaskUtil.stopTask(String.valueOf(task.getTaskExeId()));
             }
         } else if (String.valueOf(ServiceConstants.TaskExeInfo.EXE_STATUS_NO).equals(task.getExeStatus())) {// 原状态停止
@@ -394,18 +394,20 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
                     
                     if (isSchedule) {   //调度任务
                         //启动调度任务
-                        DynamicTaskUtil dSTaskUtil = (DynamicTaskUtil)SpringContextHolder.getBean("dynamicTaskUtil");
+                        DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
                         dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
                         res = true;
                     } else {    //立即/延迟执行任务
                         if (ms > 0) {
                             LogUtil.debug("睡"+(ms/1000.0)+"秒。");
+                            System.out.println("睡"+(ms/1000.0)+"秒。");
                             try {
                                 Thread.sleep(ms);
                             } catch (InterruptedException e) {
                                 LogUtil.error("error in sleep!");
                             }
                             LogUtil.debug("睡醒啦。");
+                            System.out.println("睡醒啦。");
                         }
                         new Thread(task).start();
                         res = true;

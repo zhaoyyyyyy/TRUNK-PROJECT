@@ -1,5 +1,5 @@
 /*
- * @(#)DynamicTaskUtil.java
+ * @(#)DynamicTaskComponent.java
  *
  * CopyRight (c) 2018 北京亚信智慧数据科技有限公司 保留所有权利。
  */
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
 
 /**
- * Title : DynamicTaskUtil
+ * Title : DynamicTaskComponent
  * <p/>
  * Description : 线程池任务调度工具类，能够动态增加/停止调度任务
  * <p/>
@@ -40,7 +40,7 @@ import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
  */
 
 @Component
-public class DynamicTaskUtil {
+public class DynamicTaskComponent {
  
     /** 线程池任务调度类，能够开启线程池进行任务调度 */
     @Autowired
@@ -60,6 +60,7 @@ public class DynamicTaskUtil {
      * @param cron cron表达式
      */ 
     public String startTask(String taskId, Runnable task, String cron) {
+        System.out.println("任务("+taskId+")正加入任务池。。。");
         if (this.isExistsTask(taskId)) {
             this.stopTask(taskId);// 先停止，在开启.
         }
