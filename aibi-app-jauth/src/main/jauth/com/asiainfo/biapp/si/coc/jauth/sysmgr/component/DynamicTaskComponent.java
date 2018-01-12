@@ -60,7 +60,6 @@ public class DynamicTaskComponent {
      * @param cron cron表达式
      */ 
     public String startTask(String taskId, Runnable task, String cron) {
-        System.out.println("任务("+taskId+")正加入任务池。。。");
         if (this.isExistsTask(taskId)) {
             this.stopTask(taskId);// 先停止，在开启.
         }

@@ -399,15 +399,11 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
                         res = true;
                     } else {    //立即/延迟执行任务
                         if (ms > 0) {
-                            LogUtil.debug("睡"+(ms/1000.0)+"秒。");
-                            System.out.println("睡"+(ms/1000.0)+"秒。");
                             try {
                                 Thread.sleep(ms);
                             } catch (InterruptedException e) {
                                 LogUtil.error("error in sleep!");
                             }
-                            LogUtil.debug("睡醒啦。");
-                            System.out.println("睡醒啦。");
                         }
                         new Thread(task).start();
                         res = true;

@@ -68,7 +68,6 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
     @Override
     public void run() {
         long s = System.currentTimeMillis();
-        System.out.println("任务("+Thread.currentThread().getName()+")正在执行。。。"+new Date().toLocaleString());
         
         // 发送请求
         if (null != url) {
@@ -108,7 +107,6 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
         }
         
         LogUtil.debug("DynamicTask.run() end.耗时："+((System.currentTimeMillis()-s)/1000.0)+"秒。");
-        System.out.println("DynamicTask.run() end.耗时："+((System.currentTimeMillis()-s)/1000.0)+"秒。");
     }
     
     
