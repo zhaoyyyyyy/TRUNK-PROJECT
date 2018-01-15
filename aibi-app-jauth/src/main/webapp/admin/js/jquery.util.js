@@ -10,7 +10,18 @@ $.browser.msie = false;
 $.browser.version = '9.0';
 // 第一部分。
 $.extend({
-	
+
+	/** 判断当前的参数是否是字符串 */
+	isStr:function(any){
+		if (!any) {
+			any = "";
+		}
+		return any.length==0 || typeof(any)=='string';
+	},
+	/** 把任意参数toString() */
+	toStr:function(any){
+		return $.isStr(any) ? any : JSON.stringify(any);
+	},
 	//拿到地址栏里面的参数
 	getUrlParam : function(name){
 	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");

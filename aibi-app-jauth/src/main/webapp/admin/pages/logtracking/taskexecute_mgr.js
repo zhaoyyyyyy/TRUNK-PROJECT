@@ -68,14 +68,17 @@ window.jauth_onload = function() {
 	}, {
 		name : 'status',
 		index : 'status',
-		width : 5,
+		width : 6,
 		align : 'center',
 	    formatter:function(v){return $.getCodeDesc('STATUS',v);}
 	}, {
 		name : 'returnMsg',
 		index : 'returnMsg',
 		width : 10,
-		align : 'center'
+		align : 'center',
+		formatter : function(value, opts, data) {
+			return $.toStr(data.returnMsg);
+		}
 	}, {
 		name : 'userId',
 		index : 'userId',
