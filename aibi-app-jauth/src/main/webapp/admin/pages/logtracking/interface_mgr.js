@@ -18,7 +18,7 @@ window.jauth_onload = function(){
 	},{
 		name : 'userId',
 		index : 'userId',
-		width : 10,
+		width : 11,
 		align : 'center',
 	}, {
 		name : 'ipAddr',
