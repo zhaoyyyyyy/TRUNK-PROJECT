@@ -39,13 +39,19 @@ window.jauth_onload = function(){
 		name : 'inputParams',
 		index : 'inputParams',
 		width : 30,
-		align : 'center'
+		align : 'center',
+		formatter : function(value, opts, data) {
+			return $.toStr(data.inputParams);
+		}
 	}, {
 		name : 'outputParams',
 		index : 'outputParams',
 		width : 200,
 		fixed : true,
-		align : 'center'
+		align : 'center',
+		formatter : function(value, opts, data) {
+			return $.toStr(data.outputParams);
+		}
 	}];
 	$("#mainGrid").jqGrid({
 		url : urlShow,

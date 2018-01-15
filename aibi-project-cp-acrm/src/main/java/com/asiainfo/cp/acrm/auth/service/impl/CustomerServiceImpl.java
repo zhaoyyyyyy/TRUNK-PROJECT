@@ -108,7 +108,7 @@ public class CustomerServiceImpl implements ICustomerService{
 		
 		String labelId=reqModel.getLabelId();
 	    	List<LabelMetaDataInfo> result=labelMetaInfoSvc.getVerticalLabelMetaInfo(labelId);
-	    	if (result==null) {
+	    	if (result==null||result.size()==0) {
 	    		return null;
 	    	}
 	    	String sql=labelMetaInfoSvc.getTableSQL(reqModel,result);

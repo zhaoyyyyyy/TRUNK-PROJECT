@@ -1,5 +1,6 @@
+
+
 window.jauth_onload = function() {
-	
 	var js = {
 		/** 常量 */
 		data:{
@@ -7,11 +8,6 @@ window.jauth_onload = function() {
 			EXE_STATUS_YES:1,
 			/** 状态:2：停止; */
 			EXE_STATUS_NO:2
-		},
-		method:{
-			isStr:function(any){
-				return any.length==0 || typeof(any)=='string'
-			}
 		}
 	}
 	
@@ -55,19 +51,19 @@ window.jauth_onload = function() {
 				width : 15,
 				align : 'left',
 				formatter : function(value, opts, data) {
-					return js.method.isStr(data.sysId) ? data.sysId : JSON.stringify(data.sysId);
+					return $.toStr(data.sysId);
 				}
 			},
 			{
 				name : 'taskExeTime',
 				index : 'taskExeTime',
-				width : 20,
+				width : 19,
 				align : 'left'
 			},
 			{
 				name : 'exeStatus',
 				index : 'exeStatus',
-				width : 12,
+				width : 13,
 				align : 'center',
 				sortable : false,
 				formatter : function(value, opts, data) {
@@ -96,7 +92,7 @@ window.jauth_onload = function() {
 			{
 				name : 'exeType',
 				index : 'exeType',
-				width : 20,
+				width : 12,
 				align : 'center',
 				formatter : function(value, opts, data) {
 					return $.getCodeDesc('ZXLX', data.exeType);
