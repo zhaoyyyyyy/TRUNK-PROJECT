@@ -1,6 +1,15 @@
+var jsView = {
+	data:{
+        /** 执行类型:EXE_TYPE:1.延迟执行；2.按执行时间周期执行 */
+        /** 执行类型:EXE_TYPE:1.延迟执行 */
+        EXE_TYPE_DELAY : '1',
+        /** 执行类型:EXE_TYPE:2.按执行时间周期执行 */
+        EXE_TYPE_CIRCLE : '2'
+	}
+}
 var model = {// 定义Model
 	// 前台 timed 定时 delay 延时
-	exeType : '2',
+	exeType : jsView.data.EXE_TYPE_CIRCLE,
 	msgColor : 'black',
 	message : null,
 	showChoose : false,
@@ -235,7 +244,7 @@ function fun_to_qiehuan(i) {
 		model.delayCircle = '○';
 		model.showTimed = true;
 		model.showDelay = false;
-		model.exeType = '2';
+		model.exeType = jsView.data.EXE_TYPE_CIRCLE;
 		$('.exeTime').val('');
 	}
 	if (i == 2) {
@@ -245,7 +254,7 @@ function fun_to_qiehuan(i) {
 		model.delayCircle = '◎';
 		model.showTimed = false;
 		model.showDelay = true;
-		model.exeType = '1';
+		model.exeType = jsView.data.EXE_TYPE_DELAY;
 		$('.exeTime').val('');
 	}
 }
