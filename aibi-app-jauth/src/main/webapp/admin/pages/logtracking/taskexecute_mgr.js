@@ -1,3 +1,15 @@
+var jsView = {
+	data:{
+        /** 执行类型:EXE_TYPE:1.延迟执行；2.按执行时间周期执行 */
+        /** 执行类型:EXE_TYPE:1.延迟执行 */
+        EXE_TYPE_DELAY : '1',
+        EXE_TYPE_DELAY_TEXT : '延迟执行',
+        /** 执行类型:EXE_TYPE:2.按执行时间周期执行 */
+        EXE_TYPE_CIRCLE : '2',
+        	EXE_TYPE_CIRCLE_TEXT : '周期执行'
+	}
+};
+
 var model = {
 	taskExeName : '请从左侧树中选择节点',
 	taskExeTime : '',
@@ -55,7 +67,7 @@ window.jauth_onload = function() {
 	var colModel = [ {
 		name : 'startTime',
 		index : 'startTime',
-		width : 10,
+		width : 4,
 		align : 'center',
 		formatter : function(cellvalue) {  
 			 return cellvalue.substr(0,19);
@@ -63,12 +75,21 @@ window.jauth_onload = function() {
 	}, {
 		name : 'exeType',
 		index : 'exeType',
-		width : 10,
-		align : 'center'
+		width : 3,
+		align : 'center',
+		formatter : function(value, opts, data) {
+			var showVal = "";
+			if (data.exeType==jsView.data.EXE_TYPE_CIRCLE) {
+				showVal = jsView.data.EXE_TYPE_CIRCLE_TEXT;
+			} else if (data.exeType==jsView.data.EXE_TYPE_DELAY) {
+				showVal = jsView.data.EXE_TYPE_DELAY_TEXT
+			}
+			return showVal;
+		}
 	}, {
 		name : 'status',
 		index : 'status',
-		width : 6,
+		width : 4,
 		align : 'center',
 	    formatter:function(v){return $.getCodeDesc('STATUS',v);}
 	}, {
@@ -83,7 +104,7 @@ window.jauth_onload = function() {
 		name : 'userId',
 		index : 'userId',
 		fixed : true,
-		width : 110,
+		width : 66,
 		align : 'center'
 	} ];
 	$("#mainGrid").jqGrid({
