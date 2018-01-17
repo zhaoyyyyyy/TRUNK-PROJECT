@@ -15,16 +15,63 @@ window.jauth_onload = function(){
 			type:'post',
 			cache:false,
 			onSuccess:function(data){
-				console.log(data);
+//				console.log(data);
 				new Vue({ el:'#container', data: data });
 				bindMenuEvent();
 				bindTitleEvent();
+				bindDisEvent();
 			}
 		})
 		
-		
 }
 
+
+/**
+ * 收缩展开事件
+ * hongfb
+ */
+function bindDisEvent(){
+	$('.headerDisplay').click(function(){
+		var $clickEl = $(this);
+		if($clickEl.attr("status") == "1"){  //原状态展开，要收缩
+			$clickEl.prev().slideUp('fast',function(){
+				$clickEl.attr("status","0");
+				$clickEl.css("top", "2px");
+				$(".main").css("top", "0px");
+			});
+		}else{	//原状态收缩,展开
+			$clickEl.prev().slideDown('fast',function(){
+				$clickEl.attr("status","1");
+				$clickEl.css("top", "78px");
+				$(".main").css("top", "88px");
+			});
+		}
+	});
+
+	$('.leftDisplay').click(function(){
+		var $clickEl = $(this);
+		var status = 1;
+		var clickElLeft = "2px";
+		var rightElLeft = "0px";
+		if($clickEl.attr("status") == "1"){  //原状态展开，要收缩
+			$clickEl.prev().hide('fast');
+			
+			status = 0;
+			clickElLeft = "2px";
+			rightElLeft = "0px";
+		}else{	//原状态收缩,展开
+			$clickEl.prev().show('fast');
+			
+			status = 1;
+			clickElLeft = "178px";
+			rightElLeft = "186px";
+		}
+		$clickEl.attr("status",status);
+		$clickEl.css("left", clickElLeft);
+		$("#right").css("left", rightElLeft);
+	});
+	
+}
 
 /**
  * 菜单事件
