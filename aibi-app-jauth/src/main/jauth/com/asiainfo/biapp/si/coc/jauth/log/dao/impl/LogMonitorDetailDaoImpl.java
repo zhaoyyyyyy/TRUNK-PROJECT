@@ -47,6 +47,11 @@ public class LogMonitorDetailDaoImpl extends BaseDaoImpl<LogMonitorDetail,String
             hql.append(" and l.levelId = :levelId");
             params.put("levelId", logMonitorDetailVo.getLevelId());
         }
+        //ipAddr
+        if (StringUtils.isNotBlank(logMonitorDetailVo.getIpAddr())) {
+            hql.append(" and l.ipAddr LIKE :ipAddr");
+            params.put("ipAddr", "%"+logMonitorDetailVo.getIpAddr()+"%");
+        }
         //message
         if (StringUtils.isNotBlank(logMonitorDetailVo.getErrorMsg())) {
             hql.append(" and l.errorMsg LIKE :errorMsg");
