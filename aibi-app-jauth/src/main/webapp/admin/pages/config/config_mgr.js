@@ -19,7 +19,36 @@ var createConfigurationTemplate = [ {
 		desc : '',
 		flag:''
 	} ]
+},  {
+	name : '枚举配置',
+	fields : [ {
+		name : '枚举',
+		code : '{PARENT_CODE}_DRIVERCLASS',
+		type : 'enum',
+		dimCode : 'driverClass',
+		value : 'http://xxx.xxx.xxx.xxx',
+		flag:''
+	} ]
+},{
+	name : '驱动配置',
+	fields : [ {
+		name : '驱动',
+		code : '{PARENT_CODE}_DRIVERCLASS',
+		type : 'driver',
+		dimCode : 'driverClass',
+		value : 'http://xxx.xxx.xxx.xxx',
+		flag:''
+	} ]
 }, {
+	name : '新增目录',
+	fields : [ {
+		name : '请输入名称',
+		code : '请输入编码',
+		type : 'catalog',
+		value : '请输入配置项的值',
+		desc : ''
+	} ]
+},{
 	name : '数据库配置',
 	fields : [ {
 		name : '驱动',
@@ -47,26 +76,7 @@ var createConfigurationTemplate = [ {
 		value : '请输入配置项的值',
 		flag:''
 	} ]
-}, {
-	name : '枚举配置',
-	fields : [ {
-		name : '驱动',
-		code : '{PARENT_CODE}_DRIVERCLASS',
-		type : 'enum',
-		dimCode : 'driverClass',
-		value : 'http://xxx.xxx.xxx.xxx',
-		flag:''
-	} ]
-}, {
-	name : '新增目录',
-	fields : [ {
-		name : '请输入名称',
-		code : '请输入编码',
-		type : 'catalog',
-		value : '请输入配置项的值',
-		desc : ''
-	} ]
-} ]
+}, ]
 
 function fun_add(i, configKey) {
 	var isEdit = 0;

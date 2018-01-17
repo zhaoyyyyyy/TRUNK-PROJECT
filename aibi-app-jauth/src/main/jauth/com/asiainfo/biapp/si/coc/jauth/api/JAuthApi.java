@@ -1,5 +1,12 @@
 package com.asiainfo.biapp.si.coc.jauth.api;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +27,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
-import com.asiainfo.biapp.si.coc.jauth.frame.page.Page;
 import com.asiainfo.biapp.si.coc.jauth.security.auth.JwtAuthenticationToken;
 import com.asiainfo.biapp.si.coc.jauth.security.auth.jwt.extractor.TokenExtractor;
 import com.asiainfo.biapp.si.coc.jauth.security.auth.jwt.verifier.TokenVerifier;
@@ -40,13 +46,6 @@ import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.User;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.ResourceService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.UserService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.ResourceVo;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * End-point for retrieving logged-in user details.

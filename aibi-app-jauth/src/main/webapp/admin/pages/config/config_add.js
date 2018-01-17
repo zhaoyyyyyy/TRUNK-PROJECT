@@ -56,7 +56,8 @@ window.jauth_onload = function() {
 			}	
 			html+=
 				  '<th v-show="\'undefined\'!=\''+obj[0].flag+'\'">配置值<span class="req">*</span></th><td v-show="\'undefined\'!=\''+obj[0].flag+'\'">'
-				+'<p v-if="\'enum\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle easyui-validatebox" required="true" datadic="ALL" ></v-input><input name="configValType" type="hidden" value="4" /></p>'
+				+'<p v-if="\'enum\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle easyui-validatebox" required="true" datadic="ALL" ></v-input><input name="configValType" type="hidden" value="3" /></p>'
+				+'<p v-if="\'driver\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle easyui-validatebox" required="true" datadic="'+obj[0].dimCode+'" ></v-input><input name="configValType" type="hidden" value="4" /></p>'
 				+'<p v-if="\'text\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle easyui-validatebox"  required="true" ></v-input><input name="configValType" type="hidden" value="2" /></p>'
 				+'<p v-if="\'boolean\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle easyui-validatebox"  required="true" datadic="TOF"></v-input><input name="configValType" type="hidden" value="1" /></p>'
 				+'<p v-if="\'catalog\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle easyui-validatebox"  required="true" ></v-input><input name="configValType" type="hidden" value="5" /> </p>'
