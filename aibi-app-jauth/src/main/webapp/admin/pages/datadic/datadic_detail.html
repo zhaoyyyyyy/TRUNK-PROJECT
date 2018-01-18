@@ -29,6 +29,13 @@
 					</td>
 				</tr>
 				<tr>
+					<th>状态<span class="required"></span>
+					</th>
+					<td><v-input defValue="status" name="status" dataDic="ZDZTZD"
+							required="true" maxLen="20" class="inputStyle"></v-input>
+					</td>
+				</tr>
+				<tr>
 					<th>备注</th>
 					<td><textarea v-model="note" rows="" cols="" name="note"
 							class="input_textarea easyui-validatebox" maxLen="50"></textarea>

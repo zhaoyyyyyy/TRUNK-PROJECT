@@ -20,7 +20,8 @@ window.jauth_onload = function() {
 						id : data.dicData.id,
 						code : data.dicData.code,
 						dataName : data.dicData.dataName,
-						note : data.dicData.note
+						note : data.dicData.note,
+						status : data.dicData.status
 					}
 				});
 			}
@@ -40,6 +41,7 @@ window.jauth_onload = function() {
 
 	dg.addBtn("save", "保存", function() {
 		if ($('#saveDataForm').validateForm()) {
+			console.log($('#saveDataForm').formToJson());
 			$.commAjax({
 				url : $.ctx + '/api/datadic/save',
 				postData : $('#saveDataForm').formToJson(),

@@ -15,7 +15,7 @@ window.jauth_onload = function() {
 		}
 	})
 	var urlShow = $.ctx + '/api/datadic/dicdataPage/query?dicCode='+dicCode;
-	var colNames = [ '编码', '名称', '备注', '操作' ];
+	var colNames = [ '编码', '名称', '状态','备注', '操作' ];
 	var colModel = [
 			{
 				name : 'code',
@@ -28,6 +28,15 @@ window.jauth_onload = function() {
 				index : 'dataName',
 				width : 30,
 				align : 'left'
+			},
+			{
+				name : 'status',
+				index : 'status',
+				width : 10,
+				align : 'center',
+				formatter: function(v) {
+	                return $.getCodeDesc('ZDZTZD', v);
+	            }
 			},
 			{
 				name : 'note',

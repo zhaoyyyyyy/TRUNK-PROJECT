@@ -65,6 +65,7 @@ public class DicDataController extends BaseController<DicData>{
 		@ApiImplicitParam(name = "id", value = "字典ID", required = false, paramType = "query" ,dataType = "string"),
 		@ApiImplicitParam(name = "code", value = "编码", required = true, paramType = "query" ,dataType = "string"),
 		@ApiImplicitParam(name = "dataName", value = "名称", required = true, paramType = "query" ,dataType = "string"),
+		@ApiImplicitParam(name = "status", value = "状态", required = true, paramType = "query" ,dataType = "string"),
 		@ApiImplicitParam(name = "note", value = "备注", required = true, paramType = "query" ,dataType = "string"),
 		@ApiImplicitParam(name = "parentId", value = "父字典ID", required = true, paramType = "query" ,dataType = "string")
 	})
@@ -87,7 +88,11 @@ public class DicDataController extends BaseController<DicData>{
 			dicdata.setCode(dicData.getCode());
 			dicdata.setDataName(dicData.getDataName());
 			dicdata.setNote(dicData.getNote());
-			dicdata.setStatus("1");
+			if(StringUtil.isNoneBlank(dicData.getStatus())){
+			    dicdata.setStatus(dicData.getStatus());
+			}else{
+			    dicdata.setStatus("1");
+			}
 			dicDataService.update(dicdata);
 			return "success";
 		}
@@ -107,7 +112,11 @@ public class DicDataController extends BaseController<DicData>{
 		newdata.setCode(dicData.getCode());
 		newdata.setDataName(dicData.getDataName());
 		newdata.setNote(dicData.getNote());
-		newdata.setStatus("1");
+		if(("status").equals(dicData.getStatus())){
+		    newdata.setStatus("1");
+		}else{
+		    newdata.setStatus(dicData.getStatus());
+		}
 		dicDataService.save(newdata);
 		return "success";
 	}
