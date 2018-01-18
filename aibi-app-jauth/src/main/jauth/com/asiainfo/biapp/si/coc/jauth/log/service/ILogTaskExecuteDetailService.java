@@ -7,6 +7,16 @@ import com.asiainfo.biapp.si.coc.jauth.log.entity.LogTaskExecuteDetail;
 import com.asiainfo.biapp.si.coc.jauth.log.vo.LogTaskExecuteDetailVo;
 
 public interface ILogTaskExecuteDetailService extends BaseService<LogTaskExecuteDetail, String> {
+
+
+    /**
+     * @describe 入库
+     * @author hongfb
+     * @param
+     * @date 2018-1-16
+     */
+    public void taskSave();
+    
     /**
      * @describe 根据查询条件查询出用户操作日志
      * @author lilin

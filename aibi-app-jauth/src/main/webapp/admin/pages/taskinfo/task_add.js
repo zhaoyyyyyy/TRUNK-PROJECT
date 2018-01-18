@@ -4,7 +4,10 @@ var jsView = {
         /** 执行类型:EXE_TYPE:1.延迟执行 */
         EXE_TYPE_DELAY : '1',
         /** 执行类型:EXE_TYPE:2.按执行时间周期执行 */
-        EXE_TYPE_CIRCLE : '2'
+        EXE_TYPE_CIRCLE : '2',
+        
+        /** 配置中心的定时任务 */
+        LOC_CONFIG_SYS_TIMED_TASK:"LOC_CONFIG_SYS_TIMED_TASK"
 	}
 }
 var model = {// 定义Model
@@ -47,7 +50,7 @@ window.jauth_onload = function() {
 					type : 'POST',
 					async : false,
 					postData : {
-						ParentKey : "LOC_CONFIG_APP_TIMED_TASK"
+						ParentKey:jsView.data.LOC_CONFIG_SYS_TIMED_TASK
 					},
 					onSuccess : function(data) {
 						_this.items = data;

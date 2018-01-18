@@ -183,7 +183,7 @@ function fun_to_status(id, status, name, action) {
 }
 function fun_to_update(id) {
 	var dg = $.dialog('修改调度', $.ctx
-			+ '/admin/pages/taskinfo/task_add.html?taskExeId=' + id, 800, 500);
+			+ '/admin/pages/taskinfo/task_add.html?taskExeId=' + id, 800, 530);
 	dg.reload = function() {
 		$("#mainGrid").setGridParam({
 			postData : $("#formSearch").formToJson()

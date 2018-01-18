@@ -7,10 +7,12 @@
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.task.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.util.HttpUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.WebResult;
 import com.asiainfo.biapp.si.coc.jauth.log.entity.LogTaskExecuteDetail;
 import com.asiainfo.biapp.si.coc.jauth.log.service.ILogTaskExecuteDetailService;
@@ -68,6 +70,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
     @Override
     public void run() {
         long s = System.currentTimeMillis();
+        System.out.println("任务("+Thread.currentThread().getName()+")正在执行。。。"+new Date().toLocaleString());
         
         // 发送请求
         if (null != url) {
@@ -80,8 +83,11 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
                 log.setSysId(taskExeInfo.getParentExeId());
                 log.setTaskExtId(String.valueOf(taskExeInfo.getTaskExeId()));
                 try {
-                    JSONObject sysId = JSONObject.fromObject(taskExeInfo.getSysId());
-                    Map<String,Object> map = (Map) JSONObject.toBean(sysId, Map.class);
+                    Map<String,Object> map = new HashMap<String, Object>();
+                    if (StringUtil.isNoneBlank(taskExeInfo.getSysId())) {
+                        JSONObject sysId = JSONObject.fromObject(taskExeInfo.getSysId());
+                        map = (Map) JSONObject.toBean(sysId, Map.class);
+                    }
                     map.put("token", token);
                     
                     log.setExeParams(map.toString());
@@ -106,7 +112,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
             LogUtil.error("url不能为空");
         }
         
-        LogUtil.debug("DynamicTask.run() end.耗时："+((System.currentTimeMillis()-s)/1000.0)+"秒。");
+        LogUtil.debug("DynamicTaskExeInfoImpl.run() end.耗时："+((System.currentTimeMillis()-s)/1000.0)+"秒。");
     }
     
     
