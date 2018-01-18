@@ -75,7 +75,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 public class ScheduleController extends BaseController<LocTaskExeInfo> {
 
-    private static final String LOC_CONFIG_APP_TIMED_TASK = "LOC_CONFIG_APP_TIMED_TASK";
+    private static final String LOC_CONFIG_SYS_TIMED_TASK = "LOC_CONFIG_SYS_TIMED_TASK";
 
     @Autowired
     private LocTaskExeInfoService locTaskExeInfoService;
@@ -353,7 +353,7 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
     public List<Coconfig> getCoconfigByParentKey(String ParentKey) {
         String pk = ParentKey;
         if (StringUtils.isBlank(ParentKey)) {
-            pk = LOC_CONFIG_APP_TIMED_TASK;
+            pk = LOC_CONFIG_SYS_TIMED_TASK;
         }
         List<Coconfig> coconfigs = coconfigService.getCoconfigByParentKey(pk);
         
