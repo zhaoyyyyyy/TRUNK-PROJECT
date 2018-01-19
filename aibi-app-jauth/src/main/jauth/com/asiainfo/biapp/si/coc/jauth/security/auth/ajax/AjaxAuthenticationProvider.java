@@ -16,11 +16,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import com.asiainfo.biapp.si.coc.jauth.frame.util.DESUtil;
 import com.asiainfo.biapp.si.coc.jauth.security.model.UserContext;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Role;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.User;
