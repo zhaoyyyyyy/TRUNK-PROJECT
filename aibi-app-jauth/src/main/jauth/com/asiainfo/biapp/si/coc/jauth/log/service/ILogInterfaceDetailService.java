@@ -7,6 +7,15 @@ import com.asiainfo.biapp.si.coc.jauth.log.entity.LogInterfaceDetail;
 import com.asiainfo.biapp.si.coc.jauth.log.vo.LogInterfaceDetailVo;
 
 public interface ILogInterfaceDetailService extends BaseService<LogInterfaceDetail,String>{
+
+    /**
+     * @describe 入库
+     * @author hongfb
+     * @param
+     * @date 2018-1-16
+     */
+    public void taskSave();
+    
     /**
      * @describe 根据条件查询接口调用日志
      * @author lilin

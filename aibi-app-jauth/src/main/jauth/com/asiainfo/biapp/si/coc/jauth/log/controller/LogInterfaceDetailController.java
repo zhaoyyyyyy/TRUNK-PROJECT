@@ -1,6 +1,8 @@
 
 package com.asiainfo.biapp.si.coc.jauth.log.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -69,5 +71,52 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
         loginterfaceService.save(logInterfaceDetail);
         return "success";
     }
+    
 
+
+
+  /**
+   * @describe 入库
+   * @author hongfb
+   * @param
+   * @date 2018-1-16
+   */
+  @ApiOperation(value="保存任务")
+  @RequestMapping(value="/taskSave",method=RequestMethod.POST)
+  public String taskSave() {
+      System.out.println(this.getClass().getSimpleName()+".taskSave()"+ new Date().toLocaleString());
+      System.out.println("5s一次入库开始。。。");
+      loginterfaceService.taskSave();
+      return RETURN_SUCCESS;
+  }
+  /**
+   * @describe 入库
+   * @author hongfb
+   * @param
+   * @date 2018-1-16
+   */
+  @ApiOperation(value="测试保存任务")
+  @RequestMapping(value="/testSave",method=RequestMethod.POST)
+  public String testSave() {
+      System.out.println(this.getClass().getSimpleName()+".save()"+new Date().toLocaleString());
+      System.out.println("一次日志请求开始。。。");
+      
+      long s = System.currentTimeMillis();
+      LogInterfaceDetail log = new LogInterfaceDetail();
+      log.setUserId("admin");
+      log.setInterfaceName(this.getClass().getSimpleName()+".save()");
+      log.setInterfaceUrl("api/log/interface/testSave");
+      log.setOpTime(new Date());
+      log.setIpAddr("localhost");
+      log.setOutputParams(RETURN_SUCCESS);
+      
+      loginterfaceService.save(log);
+      
+      long es = System.currentTimeMillis() - s;
+      System.out.println("es:"+es+"ms");
+
+      return RETURN_SUCCESS;
+  }
+  
+  
 }

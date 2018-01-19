@@ -29,6 +29,8 @@ public abstract class BaseController<T>  {
     
     public static final String JWT_TOKEN_REQUSET_PARAM = "token";
     public static final String JWT_TOKEN_HEADER_PARAM = "X-Authorization";
+    
+    public static final String RETURN_SUCCESS = "success";
 
 	
     @Autowired
