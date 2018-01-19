@@ -1,7 +1,7 @@
 
 package com.asiainfo.biapp.si.coc.jauth.log.service.impl;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -22,7 +22,7 @@ import com.asiainfo.biapp.si.coc.jauth.log.vo.LogInterfaceDetailVo;
 public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceDetail,String> implements ILogInterfaceDetailService {
 
     /** 缓存要入库的实体的池子 */
-    private List<LogInterfaceDetail> savePool = new ArrayList<>();
+    private List<LogInterfaceDetail> savePool = new LinkedList<>();
     
 	@Autowired
 	private ILogInterfaceDetailDao iLogInterfaceDetailDao;
