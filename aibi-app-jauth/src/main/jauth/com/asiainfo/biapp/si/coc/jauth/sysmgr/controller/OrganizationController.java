@@ -137,25 +137,22 @@ public class OrganizationController extends BaseController<Organization> {
 
     /**
      * 组织详情页面
-     * 
      * @author ljs
      * @return
      */
     @ApiOperation(value = "得到组织信息")
     @ApiImplicitParam(name = "orgCode", value = "组织信息主键", required = true, paramType = "query", dataType = "string")
     @RequestMapping(value = "/get", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public Map<String, Object> detail(String orgCode) {
-        Map<String, Object> map = new HashMap<>();
+    public Organization detail(String orgCode) {
         Organization organization = organizationService.getOrgByOrgCode(orgCode);
-        map.put("organization", organization);
-        return map;
+        return organization;
     }
 
     @ApiOperation(value = "得到父组织信息")
     @ApiImplicitParam(name = "orgCode", value = "组织信息主键", required = true, paramType = "query", dataType = "string")
     @RequestMapping(value = "/parentOrg/get", method = RequestMethod.POST, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public Map<String, Object> queryParent(String orgCode) {
+    public Organization queryParent(String orgCode) {
         Map<String, Object> map = new HashMap<>();
         Organization organization = organizationService.getOrgByOrgCode(orgCode);
         Organization parent;
@@ -164,8 +161,7 @@ public class OrganizationController extends BaseController<Organization> {
         } else {
             parent = null;
         }
-        map.put("parent", parent);
-        return map;
+        return parent;
     }
 
     /**

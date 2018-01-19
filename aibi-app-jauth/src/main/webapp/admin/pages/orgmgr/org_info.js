@@ -7,7 +7,7 @@ window.jauth_onload = function() {
 		cache:false,
 		async:false,
 		onSuccess:function(data){
-			if(data.organization.parentId != null && data.organization.parentId != ""){
+			if(data.parentId != null && data.parentId != ""){
 			$.commAjax({
 				url:$.ctx+'/api/organization/parentOrg/get',
 				postData:{"orgCode":orgCode},
@@ -15,17 +15,17 @@ window.jauth_onload = function() {
 				cache:false,
 				async:false,
 				onSuccess:function(data1){
-					data.organization.createTime = (new Date(data.organization.createTime*1000)).toString();
-					data.organization.parentName = data1.parent.simpleName;
-					data.organization.orgType = $.getCodeDesc('ZZLXZD',data.organization.orgType);
-					data.organization.orgStatus = $.getCodeDesc('ZZZTZD',data.organization.orgStatus);
+					data.createTime = (new Date(data.createTime*1000)).toString();
+					data.parentName = data1.simpleName;
+					data.orgType = $.getCodeDesc('ZZLXZD',data.orgType);
+					data.orgStatus = $.getCodeDesc('ZZZTZD',data.orgStatus);
 					new Vue({ el:'#saveDataForm', data: data });
 				}
 			});
 		}else{
-			data.organization.createTime = (new Date(data.organization.createTime*1000)).toString();
-			data.organization.orgType = $.getCodeDesc('ZZLXZD',data.organization.orgType);
-			data.organization.orgStatus = $.getCodeDesc('ZZZTZD',data.organization.orgStatus);
+			data.createTime = (new Date(data.createTime*1000)).toString();
+			data.orgType = $.getCodeDesc('ZZLXZD',data.orgType);
+			data.orgStatus = $.getCodeDesc('ZZZTZD',data.orgStatus);
 			new Vue({ el:'#saveDataForm', data: data });
 		}
 		}
@@ -47,7 +47,7 @@ window.jauth_onload = function() {
 				postData:{"orgCode":orgCode},
 				type:'post',
 				onSuccess:function(data){
-					if(data.organization.children.length !=0){
+					if(data.children.length !=0){
 						$.alert("当前节点下含有下级节点，不可删除");
 					}else{
 						$.commAjax({

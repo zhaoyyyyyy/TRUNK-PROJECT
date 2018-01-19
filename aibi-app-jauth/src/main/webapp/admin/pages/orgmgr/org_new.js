@@ -13,8 +13,8 @@ window.jauth_onload = function() {
 					el:'#saveDataForm', 
 					data: {
 						"id":null,
-						"parentName":data.organization.simpleName,
-						"parentId":data.organization.id,
+						"parentName":data.simpleName,
+						"parentId":data.id,
 						"orgCode":null,
 						"simpleName":null,
 						"orgStatus":null,
@@ -35,14 +35,14 @@ window.jauth_onload = function() {
 				new Vue({ 
 					el:'#saveDataForm', 
 					data: {
-						"id":data.organization.id,
-						"parentName":data.organization.simpleName,
-						"parentId":data.organization.parentId,
-						"orgCode":data.organization.orgCode,
-						"simpleName":data.organization.simpleName,
-						"orgStatus":data.organization.orgStatus,
-						"orgType":data.organization.orgType,
-						"orderNum":data.organization.orderNum
+						"id":data.id,
+						"parentName":data.simpleName,
+						"parentId":data.parentId,
+						"orgCode":data.orgCode,
+						"simpleName":data.simpleName,
+						"orgStatus":data.orgStatus,
+						"orgType":data.orgType,
+						"orderNum":data.orderNum
 					} 
 				});
 			}
