@@ -112,6 +112,7 @@ public class CustomerServiceImpl implements ICustomerService{
 	    		return null;
 	    	}
 	    	String sql=labelMetaInfoSvc.getTableSQL(reqModel,result);
+	    	LogUtil.info("查询原数据表sql:"+sql);
 	    	Page page=new Page();
 	    	try {
 		    	if (reqModel.getPageInfo()==null){
