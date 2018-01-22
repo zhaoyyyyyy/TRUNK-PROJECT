@@ -107,7 +107,7 @@ window.jauth_onload = function() {
 					var html = '';
 					if (data.exeStatus == 0) {
 						return "<a onclick='fun_to_update(\"" + data.taskExeId
-								+ "\")' class='s_edit'>修改</a>"
+								+ "\")' class='s_edit'>修改</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 								+ "<a onclick='fun_to_delete(\""
 								+ data.taskExeId
 								+ "\")' class='s_delete'>删除</a>";
@@ -115,11 +115,13 @@ window.jauth_onload = function() {
 					if (data.exeStatus == 2) {
 						html += "<a onclick='fun_to_update(\"" + data.taskExeId
 								+ "\")' class='s_edit'>修改</a>";
+					}else{
+						html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 					}
 					html += "<a onclick='fun_to_up(\"" + data.taskExeId
-							+ "\")' class='s_edit'>立即执行</a>"
+							+ "\")' class='s_song'>立即执行</a>"
 							+ "<a onclick='fun_to_detail(\"" + data.taskExeId
-							+ "\")' class='s_edit'>调用明细</a>"
+							+ "\")' class='s_bohui'>调用明细</a>"
 					if (data.exeStatus == 2) {
 						html += "<a onclick='fun_to_delete(\"" + data.taskExeId
 								+ "\")' class='s_delete'>删除</a>";
