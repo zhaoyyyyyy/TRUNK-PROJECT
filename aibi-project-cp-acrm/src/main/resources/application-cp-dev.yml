@@ -37,7 +37,6 @@ spring:
       validation-query: SELECT 1 FROM DUAL
       time-between-eviction-runs-millis: 180000
 cache:
-  loadDataScope: DimtableInfoDaoImpl
   isDimtableCached: false
 context:
   listener:
