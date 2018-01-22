@@ -195,7 +195,9 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 				orderbySQL.append(" ").append(sortOrder);
 			}
 		}
-		return selectSQL.toString() + fromSQL + whereSQL+orderbySQL;
+		String result=selectSQL.toString() + fromSQL + whereSQL+orderbySQL;
+		LogUtil.info("查询原数据表sql:"+result);
+		return result;
 	}
 
 	@Override
