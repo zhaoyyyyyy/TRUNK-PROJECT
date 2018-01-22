@@ -55,7 +55,8 @@ window.jauth_onload = function() {
 			{
 				name : 'taskExeTime',
 				index : 'taskExeTime',
-				width : 19,
+				width : 110,
+				fixed:true,
 				align : 'left'
 			},
 			{
@@ -91,7 +92,8 @@ window.jauth_onload = function() {
 			{
 				name : 'exeType',
 				index : 'exeType',
-				width : 12,
+				width : 72,
+				fixed:true,
 				align : 'center',
 				formatter : function(value, opts, data) {
 					return $.getCodeDesc('ZXLX', data.exeType);
