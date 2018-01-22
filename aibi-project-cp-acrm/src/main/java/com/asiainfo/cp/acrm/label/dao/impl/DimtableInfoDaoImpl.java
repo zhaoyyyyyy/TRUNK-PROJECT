@@ -42,15 +42,16 @@ public class DimtableInfoDaoImpl extends BaseDaoImpl<DimtableInfo, String> imple
 	}	
 	
     public DimtableInfo getDimtableInfo(final String dimId) {
-    		DimtableInfo value=(DimtableInfo) iCacheClient.get(this.getKey(dimId));
-		if (value==null) {
-			value=(DimtableInfo) iCacheClient.get(this.getKey(dimId),new DataLoader<String, DimtableInfo>() {
-				public DimtableInfo load(String key) {
-					return DimtableInfoDaoImpl.this.get(dimId);
-				}
-			});
-		}
-		return value;
+//    		DimtableInfo value=(DimtableInfo) iCacheClient.get(this.getKey(dimId));
+//		if (value==null) {
+//			value=(DimtableInfo) iCacheClient.get(this.getKey(dimId),new DataLoader<String, DimtableInfo>() {
+//				public DimtableInfo load(String key) {
+//					return DimtableInfoDaoImpl.this.get(dimId);
+//				}
+//			});
+//		}
+//		return value;
+		return DimtableInfoDaoImpl.this.get(dimId);
     }
     
     private String getKey(String dimId) {
