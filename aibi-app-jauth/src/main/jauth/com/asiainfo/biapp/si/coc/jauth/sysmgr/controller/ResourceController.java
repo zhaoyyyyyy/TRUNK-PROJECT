@@ -179,26 +179,22 @@ public class ResourceController extends BaseController<Resource> {
 	@ApiOperation(value = "通过id得到详细信息")
 	@ApiImplicitParam(name = "id", value = "资源主键", required = true, paramType = "query", dataType = "string")
 	@RequestMapping(value = "/get", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public Map<String, Object> findById(String id) {
+	public Resource findById(String id) {
 		Resource resource = resourceService.get(id);
-		Map<String, Object> map = new HashMap<>();
-		map.put("resource", resource);
-		return map;
+		return resource;
 	}
 
 	@ApiOperation(value = "通过id得到父节点信息")
 	@ApiImplicitParam(name = "id", value = "资源主键", required = true, paramType = "query", dataType = "string")
 	@RequestMapping(value = "/parentResource/get", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public Map<String, Object> queryParent(String id) {
+	public Resource queryParent(String id) {
 		Resource resource = resourceService.get(id);
-		Map<String, Object> pmap = new HashMap<>();
 		String ptid = resource.getParentId();
 		if (null == ptid) {
 			return null;
 		}
 		Resource parent = resourceService.get(ptid);
-		pmap.put("parent", parent);
-		return pmap;
+		return parent;
 	}
 
 	/**

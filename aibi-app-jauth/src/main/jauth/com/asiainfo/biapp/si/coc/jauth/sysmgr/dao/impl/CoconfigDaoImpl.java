@@ -74,7 +74,7 @@ public class CoconfigDaoImpl extends BaseDaoImpl<Coconfig, String> implements Co
 		if(StringUtils.isNotBlank(page.getSortCol())){
 			hql.append(" order by c."+page.getSortCol()+" "+page.getSortOrder());
 		}else{
-			hql.append(" order by c.configKey desc");
+			hql.append(" order by c.configValType asc,c.configKey desc");
 		}
 		return (JQGridPage<Coconfig>) super.findPageByHql(page, hql.toString(), params);
 	}
