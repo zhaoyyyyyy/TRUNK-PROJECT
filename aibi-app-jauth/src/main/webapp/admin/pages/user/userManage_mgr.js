@@ -33,8 +33,8 @@ window.jauth_onload = function(){
 		}
 	}, 
 	{
-		name : 'orgNames',
-		index : 'orgNames',
+		name : 'groupNames',
+		index : 'groupNames',
 		width : 20,
 		align : 'center'
 			
