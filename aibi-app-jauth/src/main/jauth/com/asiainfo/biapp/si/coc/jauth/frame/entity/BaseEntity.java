@@ -1,9 +1,6 @@
 package com.asiainfo.biapp.si.coc.jauth.frame.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 
 /**
  * 
@@ -11,7 +8,7 @@ import javax.persistence.Id;
  *
  * @version 1.0, 2010-8-12
  */
-public abstract class BaseEntity implements java.io.Serializable {
+public abstract class BaseEntity implements java.io.Serializable,Cloneable {
     
 	private static final long serialVersionUID = 2035013017939483936L;
 	
@@ -28,4 +25,18 @@ public abstract class BaseEntity implements java.io.Serializable {
     public String toString() {
 		return super.toString();
     }
+
+	@Override
+	public Object clone(){ 
+	    BaseEntity o = null; 
+	   try{ 
+	       o = (BaseEntity)super.clone(); 
+	   }catch(CloneNotSupportedException e){ 
+	       LogUtil.error(e); 
+	   }
+	   
+	   return o; 
+	} 
+	
+	
 }

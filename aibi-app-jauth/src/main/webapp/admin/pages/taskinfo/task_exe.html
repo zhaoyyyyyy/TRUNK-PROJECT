@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../../common/include.js"></script>
+<script type="text/javascript" src="task_exe.js"></script>
+</head>
+<body>
+	<form id="exeForm">
+		<table border="0" width="10%" cellpadding="0" cellspacing="0" class="commTable">
+			<tbody>
+				<tr style="display:none">
+					<td>
+						<input id="taskExeId" name="taskExeId" v-model="taskExeId" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th style="width:1%">调度参数</th>
+					<td colspan="7">
+						<textarea v-model="sysId" id="sysId" name="sysId" class="input_textarea"></textarea>
+						<span>参数格式：{"key1":"value1", "key2":"value2"}</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>

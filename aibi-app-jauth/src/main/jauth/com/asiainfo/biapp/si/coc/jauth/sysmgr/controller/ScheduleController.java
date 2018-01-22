@@ -329,13 +329,18 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
      * @return
      */
     @ApiOperation(value = "立即执行")
-    @ApiImplicitParam(name = "taskExeId", value = "ID", required = true, paramType = "query", dataType = "int")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "taskExeId", value = "ID", required = true, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "sysId", value = "参数（可选）", paramType = "query", dataType = "string")
+    })
     @RequestMapping(value = "/taskExeInfo/start", method = RequestMethod.POST)
-    public Map<String, Object> exeTaskExeInfo(Integer taskExeId) {
+    public Map<String, Object> exeTaskExeInfo(Integer taskExeId, String sysId) {
         Map<String, Object> resMap = new HashMap<>();
         
         LocTaskExeInfo locTask = locTaskExeInfoService.get(taskExeId);
-        resMap.put("res", this.taskExeInfoSchedule(false, locTask, -1L));
+        LocTaskExeInfo task = (LocTaskExeInfo) locTask.clone();
+        task.setSysId(sysId);
+        resMap.put("res", this.taskExeInfoSchedule(false, task, -1L));
         
         return resMap;
     }

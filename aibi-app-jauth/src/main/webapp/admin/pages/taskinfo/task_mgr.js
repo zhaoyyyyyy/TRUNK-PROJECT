@@ -1,5 +1,3 @@
-
-
 window.jauth_onload = function() {
 	var js = {
 		/** 常量 */
@@ -63,6 +61,7 @@ window.jauth_onload = function() {
 			{
 				name : 'exeStatus',
 				index : 'exeStatus',
+				hidden:true/*,
 				width : 13,
 				align : 'center',
 				sortable : false,
@@ -87,7 +86,7 @@ window.jauth_onload = function() {
 								+ $.getCodeDesc('RWZT', data.exeStatus)
 								+ "</font></a>";
 					}
-				}
+				}*/
 			},
 			{
 				name : 'exeType',
@@ -118,8 +117,26 @@ window.jauth_onload = function() {
 					}else{
 						html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 					}
-					html += "<a onclick='fun_to_up(\"" + data.taskExeId
-							+ "\")' class='s_song'>立即执行</a>"
+
+					//启动停止
+					if (data.exeStatus == js.data.EXE_STATUS_YES) {
+						html += "<a href='javascript:void(0);' onclick='fun_to_status(\""
+							+ data.taskExeId + "\",\"" + data.status
+							+ "\",\"" + data.taskExeName + "\",\"" + '停止'
+							+ "\")' ><font color='green'>"
+							+ $.getCodeDesc('RWZT', data.exeStatus)
+							+ "</font></a>";
+					} else if (data.exeStatus == js.data.EXE_STATUS_NO) {
+						html += "<a href='###' onclick='fun_to_status(\""
+							+ data.taskExeId + "\",\"" + data.status
+							+ "\",\"" + data.taskExeName + "\",\"" + '启动'
+							+ "\")' ><font color='red'>"
+							+ $.getCodeDesc('RWZT', data.exeStatus)
+							+ "</font></a>";
+					}
+					
+					html += "<a onclick='fun_to_up(" + $.toStr(data)
+							+ ")' class='s_song'>立即执行</a>"
 							+ "<a onclick='fun_to_detail(\"" + data.taskExeId
 							+ "\")' class='s_bohui'>调用明细</a>"
 					if (data.exeStatus == 2) {
@@ -195,20 +212,11 @@ function fun_to_update(id) {
 		window.location.reload();
 	}
 }
-function fun_to_up(id) {
-	$.commAjax({
-		url : $.ctx + '/api/schedule/taskExeInfo/start',
-		postData : {
-			"taskExeId" : id
-		},
-		onSuccess : function(data) {
-			if (data.res) {
-				$.alert("执行成功");
-			} else {
-				$.alert("执行失败");
-			}
-		}
-	})
+function fun_to_up(item) {
+	var dg = $.dialog('立即执行-参数', $.ctx + '/admin/pages/taskinfo/task_exe.html', 430, 210);
+	dg.getParam = function () {
+		return item;
+	}
 }
 function fun_to_detail(id) {
 	var dg = $.dialog('调用明细',
