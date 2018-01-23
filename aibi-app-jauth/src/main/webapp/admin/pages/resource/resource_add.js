@@ -49,7 +49,7 @@ window.jauth_onload = function() {
 						el : '#saveDataForm',
 						data : {
 							resourceId : null ,
-							parentId : null ,
+							parentId : parentId ,
 							resourceName : null ,
 							resourceCode : null ,
 							address : null ,
