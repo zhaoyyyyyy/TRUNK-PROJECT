@@ -68,8 +68,12 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
     })
     @RequestMapping(value="/save",method = RequestMethod.POST)
     public String save(@ApiIgnore LogInterfaceDetail logInterfaceDetail){
-        loginterfaceService.save(logInterfaceDetail);
-        return "success";
+        try {
+            loginterfaceService.save(logInterfaceDetail);
+        } catch (Exception e) {
+            return RETURN_FAIL;
+        }
+        return RETURN_SUCCESS;
     }
     
 
@@ -86,7 +90,11 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
   public String taskSave() {
       System.out.println(this.getClass().getSimpleName()+".taskSave()"+ new Date().toLocaleString());
       System.out.println("5s一次入库开始。。。");
-      loginterfaceService.taskSave();
+      try {
+          loginterfaceService.taskSave();
+      } catch (Exception e) {
+          return RETURN_FAIL;
+      }
       return RETURN_SUCCESS;
   }
   /**
