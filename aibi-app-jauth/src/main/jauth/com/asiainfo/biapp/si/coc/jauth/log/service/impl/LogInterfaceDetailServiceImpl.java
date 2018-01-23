@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.asiainfo.biapp.si.coc.jauth.frame.dao.BaseDao;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.impl.BaseServiceImpl;
-import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
 import com.asiainfo.biapp.si.coc.jauth.log.dao.ILogInterfaceDetailDao;
 import com.asiainfo.biapp.si.coc.jauth.log.entity.LogInterfaceDetail;
@@ -36,20 +35,20 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
     
     @Override
     public void save(LogInterfaceDetail model) {
-        LogUtil.debug(this.getClass().getSimpleName()+".save()");
-        LogUtil.debug(model.toString());
+        System.out.println(this.getClass().getSimpleName()+".save()");
         savePool.add(model);    //加入缓存，等待入库
     }
     
     @Override
     public void taskSave() {
-        LogUtil.debug(this.getClass().getSimpleName()+".taskSave()入库,缓存入库实体池子大小："+savePool.size());
+        System.out.println(this.getClass().getSimpleName()+".taskSave()入库,缓存入库实体池子大小："+savePool.size());
         if (null != savePool && !savePool.isEmpty()) {  //入库
             for (LogInterfaceDetail model : savePool) {
                 //解决:org.hibernate.PersistentObjectException: detached entity passed to persist:
                 if (StringUtil.isNotBlank(model.getLogId())) {
                     model.setLogId(null);
                 }
+                System.out.println("入库："+model.toString());
                 super.save(model);
             }
             savePool.clear();

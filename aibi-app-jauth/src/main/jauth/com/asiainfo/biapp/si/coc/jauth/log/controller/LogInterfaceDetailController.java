@@ -68,6 +68,7 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
     })
     @RequestMapping(value="/save",method = RequestMethod.POST)
     public String save(@ApiIgnore LogInterfaceDetail logInterfaceDetail){
+        System.out.println("参数："+logInterfaceDetail.toString());
         try {
             loginterfaceService.save(logInterfaceDetail);
         } catch (Exception e) {
