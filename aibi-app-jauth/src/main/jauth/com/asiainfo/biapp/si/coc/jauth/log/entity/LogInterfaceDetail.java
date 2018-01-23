@@ -119,6 +119,13 @@ public class LogInterfaceDetail extends BaseEntity{
 	public void setInputParams(String inputParams) {
 		this.inputParams = inputParams;
 	}
+
+    @Override
+    public String toString() {
+        return "LogInterfaceDetail [logId=" + logId + ", userId=" + userId + ", sysId=" + sysId + ", interfaceName="
+                + interfaceName + ", interfaceUrl=" + interfaceUrl + ", opTime=" + opTime + ", ipAddr=" + ipAddr
+                + ", outputParams=" + outputParams + ", inputParams=" + inputParams + "]";
+    }
 	
 	
 }
