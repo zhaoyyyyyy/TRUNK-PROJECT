@@ -16,20 +16,20 @@ window.jauth_onload = function() {
 						cache:false,
 						async:false,
 						onSuccess:function(data1){
-							if(data.parentId != null && data.parentId != ""){
-								data.parentName = data1.resourceName;
+							if(data.resource.parentId != null && data.resource.parentId != ""){
+								data.resource.parentName = data1.parent.resourceName;
 							}
 							new Vue({ 
 								el:'#saveDataForm', 
 								data : {
-									resourceId : data.id ,
-									parentId : data.parentId ,
-									resourceName : data.resourceName ,
-									resourceCode : data.resourceCode ,
-									address : data.address ,
-									parentName : data.parentName,
-									dispOrder : data.dispOrder,
-									type : data.type
+									resourceId : data.resource.id ,
+									parentId : data.resource.parentId ,
+									resourceName : data.resource.resourceName ,
+									resourceCode : data.resource.resourceCode ,
+									address : data.resource.address ,
+									parentName : data.resource.parentName,
+									dispOrder : data.resource.dispOrder,
+									type : data.resource.type
 								}
 							});
 						}
@@ -53,8 +53,8 @@ window.jauth_onload = function() {
 							resourceName : null ,
 							resourceCode : null ,
 							address : null ,
-							parentName : data.resourceName ,
-							type : data.type ,
+							parentName : data.resource.resourceName ,
+							type : data.resource.type ,
 							dispOrder : null
 						}
 					});
