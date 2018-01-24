@@ -55,7 +55,7 @@ window.jauth_onload = function() {
 			{
 				name : 'taskExeTime',
 				index : 'taskExeTime',
-				width : 110,
+				width : 170,
 				fixed:true,
 				align : 'left'
 			},
@@ -102,8 +102,9 @@ window.jauth_onload = function() {
 			{
 				name : 'taskExeId',
 				index : 'taskExeId',
-				width : 40,
+				width : 300,
 				align : 'left',
+				fixed : true,
 				formatter : function(value, opts, data) {
 					var html = '';
 					if (data.exeStatus == 0) {
