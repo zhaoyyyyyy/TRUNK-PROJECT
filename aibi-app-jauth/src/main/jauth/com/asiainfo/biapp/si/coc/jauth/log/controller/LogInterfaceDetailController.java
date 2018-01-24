@@ -14,6 +14,7 @@ import com.asiainfo.biapp.si.coc.jauth.frame.controller.BaseController;
 import com.asiainfo.biapp.si.coc.jauth.frame.json.JSONResult;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.log.entity.LogInterfaceDetail;
 import com.asiainfo.biapp.si.coc.jauth.log.service.ILogInterfaceDetailService;
 import com.asiainfo.biapp.si.coc.jauth.log.vo.LogInterfaceDetailVo;
@@ -68,7 +69,7 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
     })
     @RequestMapping(value="/save",method = RequestMethod.POST)
     public String save(@ApiIgnore LogInterfaceDetail logInterfaceDetail){
-        System.out.println("参数："+logInterfaceDetail.toString());
+        LogUtil.debug("参数："+logInterfaceDetail.toString());
         try {
             loginterfaceService.save(logInterfaceDetail);
         } catch (Exception e) {
@@ -89,8 +90,8 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
   @ApiOperation(value="保存任务")
   @RequestMapping(value="/taskSave",method=RequestMethod.POST)
   public String taskSave() {
-      System.out.println(this.getClass().getSimpleName()+".taskSave()"+ new Date().toLocaleString());
-      System.out.println("5s一次入库开始。。。");
+      LogUtil.debug(this.getClass().getSimpleName()+".taskSave()"+ new Date().toLocaleString());
+      LogUtil.debug("5s一次入库开始。。。");
       try {
           loginterfaceService.taskSave();
       } catch (Exception e) {
@@ -107,8 +108,8 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
   @ApiOperation(value="测试保存任务")
   @RequestMapping(value="/testSave",method=RequestMethod.POST)
   public String testSave() {
-      System.out.println(this.getClass().getSimpleName()+".save()"+new Date().toLocaleString());
-      System.out.println("一次日志请求开始。。。");
+      LogUtil.debug(this.getClass().getSimpleName()+".save()"+new Date().toLocaleString());
+      LogUtil.debug("一次日志请求开始。。。");
       
       long s = System.currentTimeMillis();
       LogInterfaceDetail log = new LogInterfaceDetail();
@@ -122,7 +123,7 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
       loginterfaceService.save(log);
       
       long es = System.currentTimeMillis() - s;
-      System.out.println("es:"+es+"ms");
+      LogUtil.debug("es:"+es+"ms");
 
       return RETURN_SUCCESS;
   }

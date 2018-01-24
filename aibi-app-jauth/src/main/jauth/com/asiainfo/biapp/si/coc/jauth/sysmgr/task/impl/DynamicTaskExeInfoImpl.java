@@ -70,7 +70,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
     @Override
     public void run() {
         long s = System.currentTimeMillis();
-        System.out.println("任务("+Thread.currentThread().getName()+")正在执行。。。"+new Date().toLocaleString());
+        LogUtil.debug("任务("+Thread.currentThread().getName()+")正在执行。。。"+new Date().toLocaleString());
         
         // 发送请求
         if (null != url) {

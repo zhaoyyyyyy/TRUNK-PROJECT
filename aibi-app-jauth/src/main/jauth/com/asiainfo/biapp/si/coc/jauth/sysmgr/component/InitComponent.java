@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.log.service.ILogInterfaceDetailService;
 
 /**
@@ -52,7 +53,7 @@ public class InitComponent implements CommandLineRunner {
 		ILogInterfaceDetailService logInterfaceDetailServiceImpl = (ILogInterfaceDetailService) SpringContextHolder.getBean("logInterfaceDetailServiceImpl");
 		logInterfaceDetailServiceImpl.get("1");
 		
-		System.out.println("开始加载配置好的定时任务");
+		LogUtil.debug("开始加载配置好的定时任务");
 		return true;
 	}
 }

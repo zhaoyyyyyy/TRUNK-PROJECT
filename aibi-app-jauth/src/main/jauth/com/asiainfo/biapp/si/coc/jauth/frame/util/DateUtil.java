@@ -383,7 +383,7 @@ public class DateUtil extends DateUtils {
 		try {
 			d = sdf.parse(dStr);
 		} catch (ParseException pe) {
-			System.out.println(pe.getMessage());
+		    LogUtil.debug(pe.getMessage());
 		}
 
 		return dateToString(d, outFormat);

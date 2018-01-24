@@ -78,7 +78,7 @@ public abstract class BeanUtils extends org.springframework.beans.BeanUtils {
 //						throw new FatalBeanException(
 //								"Could not copy properties from source to target",
 //								ex);
-						System.out.println("Could not copy property " + targetPd.getName() + " from source to target");
+						LogUtil.debug("Could not copy property " + targetPd.getName() + " from source to target");
 					}
 				}
 			}
@@ -105,7 +105,7 @@ public abstract class BeanUtils extends org.springframework.beans.BeanUtils {
                   String value = (String) m.invoke(model);    //调用getter方法获取属性值
                   if(value != null){
 
-                      System.out.println("attribute value:"+value);
+                      LogUtil.debug("attribute value:"+value);
                   }
               }*/
               type = type.replace("class ", "");
