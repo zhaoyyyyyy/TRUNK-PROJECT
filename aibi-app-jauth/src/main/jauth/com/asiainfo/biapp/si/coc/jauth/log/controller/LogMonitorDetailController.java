@@ -91,6 +91,9 @@ public class LogMonitorDetailController  extends BaseController<LogMonitorDetail
     })
     @RequestMapping(value="/save",method=RequestMethod.POST)
     public String saveLogMonitorDetail(@ApiIgnore LogMonitorDetail logMonitorDetail){
+    	if(logMonitorDetail != null && logMonitorDetail.getErrorMsg() != null && logMonitorDetail.getErrorMsg().length()>2000 ){
+    		logMonitorDetail.setErrorMsg(logMonitorDetail.getErrorMsg().substring(0, 2000));
+    	}
         logmonitorService.save(logMonitorDetail);
         return "success";
     }
