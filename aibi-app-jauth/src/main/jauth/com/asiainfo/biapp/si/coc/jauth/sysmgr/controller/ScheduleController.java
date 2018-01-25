@@ -27,14 +27,11 @@ import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
 import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
-import com.asiainfo.biapp.si.coc.jauth.log.service.ILogTaskExecuteDetailService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.component.DynamicTaskComponent;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Coconfig;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.LocTaskExeInfo;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.CoconfigService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.LocTaskExeInfoService;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.task.impl.DynamicTaskExeInfoImpl;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.utils.SessionInfoHolder;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.LocTaskExeInfoVo;
 
 import io.swagger.annotations.Api;
@@ -79,12 +76,7 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
 
     @Autowired
     private LocTaskExeInfoService locTaskExeInfoService;
-    
-    @Autowired
-    private ILogTaskExecuteDetailService logTaskExecuteDetailService;
 
-    @Autowired
-    private SessionInfoHolder sessionInfoHolder;
     @Autowired
     private CoconfigService coconfigService;
 
@@ -314,7 +306,13 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
                 isSchedule = false;
                 ms = Integer.parseInt(task.getTaskExeTime().trim()) * 1000L;
             }
-            this.taskExeInfoSchedule(isSchedule, task, ms);
+            String token = null;
+            try {
+                token = this.getToken();
+            } catch (BaseException e) {
+                LogUtil.error("获取当前请求的token出错");
+            }
+            locTaskExeInfoService.taskExeInfoSchedule(token,isSchedule, task, ms);
         }
         locTaskExeInfoService.saveOrUpdate(task);
     }
@@ -340,7 +338,14 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
         LocTaskExeInfo locTask = locTaskExeInfoService.get(taskExeId);
         LocTaskExeInfo task = (LocTaskExeInfo) locTask.clone();
         task.setSysId(sysId);
-        resMap.put("res", this.taskExeInfoSchedule(false, task, -1L));
+
+        String token = null;
+        try {
+            token = this.getToken();
+        } catch (BaseException e) {
+            LogUtil.error("获取当前请求的token出错");
+        }
+        resMap.put("res", locTaskExeInfoService.taskExeInfoSchedule(token,false, task, -1L));
         
         return resMap;
     }
@@ -365,66 +370,6 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
         return coconfigs;
     }
     
-
-    /**
-     * @Description:通过taskExeInfo执行调度任务 
-     * @param isSchedule    是否是调度任务：ture：是；false：不是，请立即/延迟执行
-     * @param locTask   LocTaskExeInfo实体
-     * @param ms   延迟毫秒数
-     * @return 执行成功或失败：并不代表任务线程的成功或失败
-     */
-    private boolean taskExeInfoSchedule(boolean isSchedule, LocTaskExeInfo locTask, Long ms) {
-        boolean res = false;
-
-        if (null != locTask) {
-            Coconfig coconfig = coconfigService.getCoconfigByKey(locTask.getTaskId());
-            if (null != coconfig) {
-                String token = null;
-                try {
-                    token = this.getToken();
-                } catch (BaseException e) {
-                    LogUtil.error("获取当前请求的token出错");
-                }
-                
-                String url = coconfig.getConfigVal();
-                if (null != url) {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("url",url);
-                    map.put("token",token);
-                    map.put("taskExeInfo",locTask);
-                    map.put("userId",sessionInfoHolder.getLoginUser().getUserName());
-                    map.put("logTaskExecuteDetailService",logTaskExecuteDetailService);
-                    
-                    DynamicTaskExeInfoImpl task = new DynamicTaskExeInfoImpl(map);
-                    
-                    if (isSchedule) {   //调度任务
-                        //启动调度任务
-                        DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
-                        dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
-                        res = true;
-                    } else {    //立即/延迟执行任务
-                        if (ms > 0) {
-                            try {
-                                Thread.sleep(ms);
-                            } catch (InterruptedException e) {
-                                LogUtil.error("error in sleep!");
-                            }
-                        }
-                        new Thread(task).start();
-                        res = true;
-                    }
-                } else {
-                    LogUtil.error(locTask.getTaskId()+"的配置项的ConfigVal不能为空");
-                }
-            } else {
-                LogUtil.error(locTask.getTaskId()+"的配置项不能为空");
-            }
-        } else {
-            LogUtil.error("LocTaskExeInfo不能为空");
-        }
-        
-        return res;
-    }
     
     
 }

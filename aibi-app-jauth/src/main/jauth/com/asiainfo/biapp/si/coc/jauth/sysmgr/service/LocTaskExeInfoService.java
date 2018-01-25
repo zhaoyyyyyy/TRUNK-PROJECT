@@ -1,8 +1,17 @@
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.asiainfo.biapp.si.coc.jauth.frame.exception.BaseException;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
+import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.component.DynamicTaskComponent;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Coconfig;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.LocTaskExeInfo;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.task.impl.DynamicTaskExeInfoImpl;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.LocTaskExeInfoVo;
 
 /**
@@ -16,4 +25,15 @@ public interface LocTaskExeInfoService extends BaseService<LocTaskExeInfo, Strin
 	
 	public JQGridPage<LocTaskExeInfo> findLocTaskExeInfoList(JQGridPage<LocTaskExeInfo> page, LocTaskExeInfoVo locTaskExeInfoVo);
 
+    /**
+     * @Description:通过taskExeInfo执行调度任务 
+     * @param token     token
+     * @param isSchedule    是否是调度任务：ture：是；false：不是，请立即/延迟执行
+     * @param locTask   LocTaskExeInfo实体
+     * @param ms   延迟毫秒数
+     * @return 执行成功或失败：并不代表任务线程的成功或失败
+     */
+    public boolean taskExeInfoSchedule(String token,boolean isSchedule, LocTaskExeInfo locTask, Long ms);
+    
+    
 }

@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.scheduling.support.CronTrigger;
+
 import com.asiainfo.biapp.si.coc.jauth.frame.util.HttpUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
@@ -65,6 +67,8 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
         this.taskExeInfo = (LocTaskExeInfo) parameters.get("taskExeInfo");
 
         this.logTaskExecuteDetailService = (ILogTaskExecuteDetailService) parameters.get("logTaskExecuteDetailService");
+        LogUtil.debug("url="+url+"token="+token+"userId="+userId
+            +"taskExeInfo="+taskExeInfo+"logTaskExecuteDetailService="+logTaskExecuteDetailService);
     }
     
     @Override
@@ -74,7 +78,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
         
         // 发送请求
         if (null != url) {
-            if (null != token) {
+            if (null != taskExeInfo) {
                 //记录日志
                 LogTaskExecuteDetail log = new LogTaskExecuteDetail();
                 log.setUserId(userId);
@@ -88,7 +92,12 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
                         JSONObject sysId = JSONObject.fromObject(taskExeInfo.getSysId());
                         map = (Map) JSONObject.toBean(sysId, Map.class);
                     }
-                    map.put("token", token);
+    
+                    if (null != token) {
+                        map.put("token", token);
+                    } else {
+                        LogUtil.warn("token不能为空");
+                    }
                     
                     log.setExeParams(map.toString());
                     
@@ -106,7 +115,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
                     logTaskExecuteDetailService.save(log);
                 }
             } else {
-                LogUtil.error("token不能为空");
+                LogUtil.error("taskExeInfo不能为空");
             }
         } else {
             LogUtil.error("url不能为空");
@@ -114,6 +123,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
         
         LogUtil.debug("DynamicTaskExeInfoImpl.run() end.耗时："+((System.currentTimeMillis()-s)/1000.0)+"秒。");
     }
+    
     
     
 }

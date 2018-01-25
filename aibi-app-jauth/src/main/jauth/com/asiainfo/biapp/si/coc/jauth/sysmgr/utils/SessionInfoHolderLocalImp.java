@@ -43,9 +43,11 @@ public class SessionInfoHolderLocalImp implements SessionInfoHolder{
 	public User getLoginUser() {
 		try {	
 			Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
-			UserContext userContext = (UserContext) authentication.getPrincipal();
-			UserService userService = (UserService)SpringContextHolder.getBean("userServiceImpl");
-			return userService.getUserByName(userContext.getUsername());
+			if (null != authentication) {
+                UserContext userContext = (UserContext) authentication.getPrincipal();
+                UserService userService = (UserService) SpringContextHolder.getBean("userServiceImpl");
+                return userService.getUserByName(userContext.getUsername());
+            }
 		} catch (Exception e) {
 			LOGGER.info("context", e);
 		}
