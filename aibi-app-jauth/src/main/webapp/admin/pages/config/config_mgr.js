@@ -1,6 +1,15 @@
 var _parentKey = '';
 
 var createConfigurationTemplate = [ {
+	name : '新增目录',
+	fields : [ {
+		name : '请输入名称',
+		code : '请输入编码',
+		type : 'catalog',
+		value : '请输入配置项的值',
+		desc : ''
+	} ]
+},{
 	name : '开关配置',
 	fields : [ {
 		name : '请输入配置项名称',
@@ -19,7 +28,7 @@ var createConfigurationTemplate = [ {
 		desc : '',
 		flag:''
 	} ]
-},  {
+}, /** {
 	name : '枚举配置',
 	fields : [ {
 		name : '枚举',
@@ -39,23 +48,21 @@ var createConfigurationTemplate = [ {
 		value : 'http://xxx.xxx.xxx.xxx',
 		flag:''
 	} ]
-}, {
-	name : '新增目录',
-	fields : [ {
-		name : '请输入名称',
-		code : '请输入编码',
-		type : 'catalog',
-		value : '请输入配置项的值',
-		desc : ''
-	} ]
-},{
+}, **/{
 	name : '数据库配置',
 	fields : [ {
+		name : '数据库类型',
+		code : 'TYPE',
+		type : 'enum',
+		dimCode : 'SJKLX',
+		value : '',
+		flag:''
+	},{
 		name : '驱动',
-		code : 'DRIVERCLASS',
+		code : 'DRIVER',
 		type : 'enum',
 		dimCode : 'driverClass',
-		value : 'http://xxx.xxx.xxx.xxx',
+		value : '',
 		flag:''
 	}, {
 		name : '地址',
@@ -65,13 +72,13 @@ var createConfigurationTemplate = [ {
 		flag:''
 	}, {
 		name : '用户名',
-		code : 'NAME',
+		code : 'USERNAME',
 		type : 'text',
 		value : '请输入配置项的值',
 		flag:''
 	}, {
 		name : '密码',
-		code : 'PW',
+		code : 'PASSWORD',
 		type : 'text',
 		value : '请输入配置项的值',
 		flag:''
