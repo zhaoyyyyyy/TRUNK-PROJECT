@@ -10,8 +10,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.scheduling.support.CronTrigger;
-
 import com.asiainfo.biapp.si.coc.jauth.frame.util.HttpUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
@@ -45,6 +43,8 @@ import net.sf.json.JSONObject;
  */
  
 public class DynamicTaskExeInfoImpl implements IDynamicTask {
+    
+    private static final int LOG_FIELD_DEFAULT_LEN = 2000;
 
     private String url;
     private String token;
@@ -101,13 +101,11 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
                     
                     log.setExeParams(map.toString());
                     
-                    String httpRes = HttpUtil.sendPost(url, map);
-                    
-                    log.setReturnMsg(httpRes);
+                    log.setReturnMsg(this.toLen(HttpUtil.sendPost(url, map)));
                     log.setEndTime(new Date());
                     log.setStatus(String.valueOf(WebResult.Code.OK));
                 } catch (Exception e) {
-                    log.setReturnMsg(e.getMessage());
+                    log.setReturnMsg(this.toLen(e.getMessage()));
                     log.setStatus(String.valueOf(WebResult.Code.FAIL));
                     
                     LogUtil.error("请求"+url+"出错", e);
@@ -122,6 +120,17 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
         }
         
         LogUtil.debug("DynamicTaskExeInfoImpl.run() end.耗时："+((System.currentTimeMillis()-s)/1000.0)+"秒。");
+    }
+
+    /** 按日志的最大字符长度截断字符串
+     * @param 原始字符串
+     * @return 截断字符串
+     */
+    private String toLen(String str) {
+        if(str.length() > LOG_FIELD_DEFAULT_LEN){
+            str = str.substring(0, LOG_FIELD_DEFAULT_LEN);
+        }
+        return str;
     }
     
     

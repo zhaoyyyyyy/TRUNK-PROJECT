@@ -53,32 +53,32 @@ public class InitComponent implements CommandLineRunner {
     }
 	  
 	/**
-	 * 开始定时任务进程
-	 * Description: 
+	 * Description: 开始定时任务进程
 	 *
 	 * @return
 	 */
 	public boolean startTaskProcess() {
-		//拿到一个bean
-		ILogInterfaceDetailService logInterfaceDetailServiceImpl = (ILogInterfaceDetailService) SpringContextHolder.getBean("logInterfaceDetailServiceImpl");
-		logInterfaceDetailServiceImpl.get("1");
-		
-		LogUtil.debug("开始加载配置好的定时任务 start...");
+		LogUtil.debug("加载配置好的定时任务 start...");
+		//把调度中心已经配置好的周期性的已启动的任务，随项目启动而启动起来
 		LocTaskExeInfoService taskExeInfoService = (LocTaskExeInfoService) SpringContextHolder.getBean("locTaskExeInfoServiceImpl");
 		
 		JQGridPage<LocTaskExeInfo> page = new JQGridPage<LocTaskExeInfo>(1,Integer.MAX_VALUE);
 		LocTaskExeInfoVo taskExeInfoVo = new LocTaskExeInfoVo();
 		taskExeInfoVo.setExeType(String.valueOf(ServiceConstants.TaskExeInfo.EXE_TYPE_CIRCLE));
+		taskExeInfoVo.setExeStatus(String.valueOf(ServiceConstants.TaskExeInfo.EXE_STATUS_YES));
 		
         JQGridPage<LocTaskExeInfo> taskExeInfos = taskExeInfoService.findLocTaskExeInfoList(page, taskExeInfoVo);
 		if (null != taskExeInfos) {
+		    LogUtil.debug("配置好自启动任务的个数是："+taskExeInfos.getData().size());
 		    String token = null;
+            boolean isSchedule = true;  //按执行时间执行
+            Long delayTime = -1L;   //延迟毫秒数，周期性任务，无延迟
 		    for (LocTaskExeInfo taskExeInfo : taskExeInfos.getData()) {
 		        //启动调度任务
-	            boolean isSchedule = true; //按执行时间执行
-	            locTaskExeInfoService.taskExeInfoSchedule(token,isSchedule, taskExeInfo, -1L);
+	            locTaskExeInfoService.taskExeInfoSchedule(token,isSchedule, taskExeInfo, delayTime);
             }
 		}
+		LogUtil.debug("加载配置好的定时任务 end...");
 		
 		return true;
 	}

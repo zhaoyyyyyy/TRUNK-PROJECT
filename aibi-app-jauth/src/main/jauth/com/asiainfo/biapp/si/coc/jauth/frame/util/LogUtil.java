@@ -1,3 +1,8 @@
+/*
+ * @(#)LogUtil.java
+ *
+ * CopyRight (c) 2018 北京亚信智慧数据科技有限公司 保留所有权利。
+ */
 
 package com.asiainfo.biapp.si.coc.jauth.frame.util;
 
@@ -5,8 +10,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Appender;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.log4j.PatternLayout;
+
 import org.springframework.stereotype.Component;
 
 /**
