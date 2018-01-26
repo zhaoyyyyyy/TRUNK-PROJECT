@@ -62,37 +62,18 @@ window.jauth_onload = function() {
 			{
 				name : 'exeStatus',
 				index : 'exeStatus',
-				hidden:true/*,
-				width : 13,
+				width : 75,
+				fixed:true,
 				align : 'center',
 				sortable : false,
 				formatter : function(value, opts, data) {
-					var action;
-					if (data.exeStatus == js.data.EXE_STATUS_YES) {
-						action = '停止';
-						return "<a href='###' onclick='fun_to_status(\""
-								+ data.taskExeId + "\",\"" + data.status
-								+ "\",\"" + data.taskExeName + "\",\"" + action
-								+ "\")' ><font color='green'>"
-								+ $.getCodeDesc('RWZT', data.exeStatus)
-								+ "</font></a>";
-					} else if (data.exeStatus == 0) {
-						return $.getCodeDesc('RWZT', data.exeStatus);
-					} else if (data.exeStatus == js.data.EXE_STATUS_NO) {
-						action = '启动';
-						return "<a href='###' onclick='fun_to_status(\""
-								+ data.taskExeId + "\",\"" + data.status
-								+ "\",\"" + data.taskExeName + "\",\"" + action
-								+ "\")' ><font color='red'>"
-								+ $.getCodeDesc('RWZT', data.exeStatus)
-								+ "</font></a>";
-					}
-				}*/
+					return $.getCodeDesc('RWZT', data.exeStatus);
+				}
 			},
 			{
 				name : 'exeType',
 				index : 'exeType',
-				width : 72,
+				width : 75,
 				fixed:true,
 				align : 'center',
 				formatter : function(value, opts, data) {
@@ -123,19 +104,15 @@ window.jauth_onload = function() {
 
 					//启动停止
 					if (data.exeStatus == js.data.EXE_STATUS_YES) {
-						html += "<a href='javascript:void(0);' onclick='fun_to_status(\""
+						html += "<a href='javascript:void(0);' class='s_kqzc' onclick='fun_to_status(\""
 							+ data.taskExeId + "\",\"" + data.status
 							+ "\",\"" + data.taskExeName + "\",\"" + '停止'
-							+ "\")' ><font color='green'>"
-							+ $.getCodeDesc('RWZT', data.exeStatus)
-							+ "</font></a>";
+							+ "\")' ><font color='green'>停止</font></a>";
 					} else if (data.exeStatus == js.data.EXE_STATUS_NO) {
-						html += "<a href='###' onclick='fun_to_status(\""
+						html += "<a href='###' class='s_release' onclick='fun_to_status(\""
 							+ data.taskExeId + "\",\"" + data.status
 							+ "\",\"" + data.taskExeName + "\",\"" + '启动'
-							+ "\")' ><font color='red'>"
-							+ $.getCodeDesc('RWZT', data.exeStatus)
-							+ "</font></a>";
+							+ "\")' ><font color='red'>启动</font></a>";
 					}
 					
 					html += "<a onclick='fun_to_up(" + $.toStr(data)
