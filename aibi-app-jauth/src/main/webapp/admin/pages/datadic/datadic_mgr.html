@@ -15,9 +15,13 @@
 		<form id="formSearch">
 			<table class="searchTable">
 				<tr>
-					<th>当前字典</th>
-					<td colspan="7" id="dicName">
-						<span style="font-size:20px;font-weight:bolder">[   {{dic.dicName}}   ]</span>
+					<th>字典编码</th>
+					<td colspan="3" id="dicCode">
+						<span>{{dic.dicCode}}</span>
+					</td>
+					<th>字典名称</th>
+					<td colspan="3" id="dicName">
+						<span>{{dic.dicName}} </span>
 					</td>
 				</tr>
 				<tr>
@@ -53,5 +57,10 @@
 
 	<!-- 分页 -->
 	<div id="mainGridPager"></div>
+	
+	<div class="buttonArea operation">
+				<div class="right newButton"><div>	<input type="button" onclick="window.history.back(-1);" value="返回" title="返回" class="return"/></div></div>
+				<div class="clear"></div>
+	</div>
 </body>
 </html>

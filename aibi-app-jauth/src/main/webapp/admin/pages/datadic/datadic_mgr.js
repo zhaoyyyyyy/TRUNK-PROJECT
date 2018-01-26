@@ -9,6 +9,10 @@ window.jauth_onload = function() {
 		postData:{"id":dicid},
 		onSuccess:function(data){
 			new Vue({
+				el:"#dicCode",
+				data:data
+			})
+			new Vue({
 				el:"#dicName",
 				data:data
 			})
