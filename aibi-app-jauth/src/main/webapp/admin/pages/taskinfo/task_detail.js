@@ -33,7 +33,8 @@ window.jauth_onload = function() {
 		name : 'exeType',
 		index : 'exeType',
 		width : 10,
-		align : 'center'
+		align : 'center',
+		formatter:function(v){return $.getCodeDesc('ZXLX',v);}
 	}, {
 		name : 'status',
 		index : 'status',
