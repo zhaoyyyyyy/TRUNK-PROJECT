@@ -55,7 +55,7 @@ window.jauth_onload = function() {
 			{
 				name : 'taskExeTime',
 				index : 'taskExeTime',
-				width : 170,
+				width : 120,
 				fixed:true,
 				align : 'left'
 			},

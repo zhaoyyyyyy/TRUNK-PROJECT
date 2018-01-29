@@ -18,7 +18,8 @@ window.jauth_onload = function() {
 			{
 				name : 'createTime',
 				index : 'createTime',
-				width : 40,
+				width : 125,
+				fixed:true,
 				align : 'center',
 				formatter : function(cellvalue) {
 					return cellvalue.substr(0, 19);

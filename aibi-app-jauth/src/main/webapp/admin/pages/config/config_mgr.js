@@ -197,7 +197,8 @@ window.jauth_onload = function() {
 			{
 				name : 'configValType',
 				index : 'configValType',
-				width : 20,
+				width : 48,
+				fixed : true,
 				align : 'center',
 				formatter : function(value, opts, data) {
 					return $.getCodeDesc('PZLX', data.configValType);

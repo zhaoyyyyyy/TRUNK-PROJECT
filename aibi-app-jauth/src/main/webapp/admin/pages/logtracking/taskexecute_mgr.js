@@ -67,7 +67,8 @@ window.jauth_onload = function() {
 	var colModel = [ {
 		name : 'startTime',
 		index : 'startTime',
-		width : 4,
+		width : 125,
+		fixed:true,
 		align : 'center',
 		formatter : function(cellvalue) {  
 			 return cellvalue.substr(0,19);
@@ -104,7 +105,7 @@ window.jauth_onload = function() {
 		name : 'userId',
 		index : 'userId',
 		fixed : true,
-		width : 66,
+		width : 86,
 		align : 'center'
 	} ];
 	$("#mainGrid").jqGrid({

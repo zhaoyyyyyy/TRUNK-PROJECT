@@ -11,7 +11,8 @@ window.jauth_onload = function(){
 	var colModel = [{
 		name : 'opTime',
 		index : 'opTime',
-		width : 30,
+		width : 125,
+		fixed:true,
 		align : 'center',
 		formatter : function(cellvalue) {  
 			 return cellvalue.substr(0,19);

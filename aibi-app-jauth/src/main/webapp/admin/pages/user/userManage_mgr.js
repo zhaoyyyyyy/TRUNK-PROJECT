@@ -26,7 +26,8 @@ window.jauth_onload = function(){
 	}, {
 		name : 'sex',
 		index : 'sex',
-		width : 10,
+		width : 48,
+		fixed:true,
 		align : 'center',
 		formatter : function(value, opts, data) {
 			return  $.getCodeDesc('SEX', data.sex) ;
@@ -37,12 +38,12 @@ window.jauth_onload = function(){
 		index : 'groupNames',
 		width : 20,
 		align : 'center'
-			
 	},
 	{
 		name : 'roleNames',
 		index : 'roleNames',
-		width : 20,
+		width : 70,
+		fixed:true,
 		align : 'center'
 	},
 	{
@@ -54,7 +55,8 @@ window.jauth_onload = function(){
 	{
 		name : 'status',
 		index : 'status',
-		width : 10,
+		width : 60,
+		fixed:true,
 		align : 'center',
 		formatter : function(value, opts, data) {
 			if (data.status == 1) {
@@ -71,7 +73,8 @@ window.jauth_onload = function(){
 	{
 		name : 'createTime',
 		index : 'createTime',
-		width : 25,
+		width : 125,
+		fixed:true,
 		align : 'center',
 		formatter : function(cellvalue) {  
 			 return cellvalue.substr(0,19);
