@@ -38,17 +38,7 @@ var createConfigurationTemplate = [ {
 		value : 'http://xxx.xxx.xxx.xxx',
 		flag:''
 	} ]
-},{
-	name : '驱动配置',
-	fields : [ {
-		name : '驱动',
-		code : '{PARENT_CODE}_DRIVERCLASS',
-		type : 'driver',
-		dimCode : 'driverClass',
-		value : 'http://xxx.xxx.xxx.xxx',
-		flag:''
-	} ]
-}, **/{
+},**/{
 	name : '数据库配置',
 	fields : [ {
 		name : '数据库类型',
@@ -83,7 +73,27 @@ var createConfigurationTemplate = [ {
 		value : '请输入配置项的值',
 		flag:''
 	} ]
-}, ]
+},{
+	name : '驱动配置',
+	fields : [ {
+		name : '驱动',
+		code : '{PARENT_CODE}_DRIVERCLASS',
+		type : 'driver',
+		dimCode : 'driverClass',
+		value : 'http://xxx.xxx.xxx.xxx',
+		flag:''
+	} ]
+},{
+	name : '数据库类型',
+	fields : [ {
+		name : '数据库类型',
+		code : '{PARENT_CODE}_DRIVERCLASS',
+		type : 'driver',
+		dimCode : 'SJKLX',
+		value : 'http://xxx.xxx.xxx.xxx',
+		flag:''
+	} ]
+},  ]
 
 function fun_add(i, configKey) {
 	var isEdit = 0;
