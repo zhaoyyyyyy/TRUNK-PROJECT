@@ -79,6 +79,7 @@ var createConfigurationTemplate = [ {
 		name : '驱动',
 		code : '{PARENT_CODE}_DRIVERCLASS',
 		type : 'driver',
+		valueType : 5,
 		dimCode : 'driverClass',
 		value : 'http://xxx.xxx.xxx.xxx',
 		flag:''
@@ -89,6 +90,7 @@ var createConfigurationTemplate = [ {
 		name : '数据库类型',
 		code : '{PARENT_CODE}_DRIVERCLASS',
 		type : 'driver',
+		valueType : 6,
 		dimCode : 'SJKLX',
 		value : 'http://xxx.xxx.xxx.xxx',
 		flag:''
