@@ -15,21 +15,17 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.asiainfo.biapp.si.coc.jauth.frame.Constants;
 import com.asiainfo.biapp.si.coc.jauth.frame.controller.BaseController;
 import com.asiainfo.biapp.si.coc.jauth.frame.json.JSONResult;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Group;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Organization;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Resource;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Role;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.User;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.GroupService;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.OrganizationService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.utils.SessionInfoHolder;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.GroupVo;
 
@@ -56,6 +52,8 @@ public class GroupController extends BaseController<Group> {
 	private GroupService groupService;
 	@Autowired
 	private SessionInfoHolder sessionInfoHolder;
+	@Autowired
+	private OrganizationService organizationService;
 
 
 
@@ -164,9 +162,10 @@ public class GroupController extends BaseController<Group> {
 					for (String t : trees) {
 						// 根据代码查找组织
 						Organization o = groupService.findOrganizationByCode(t);
-						if(!organizationSet.contains(o)){
-							organizationSet.add(o);
-						}
+//						if(!organizationSet.contains(o)){
+//							organizationSet.add(o);
+//						}
+						getOrgset(organizationSet,o);
 						
 					}
 				}
@@ -186,6 +185,17 @@ public class GroupController extends BaseController<Group> {
 			}
 
 	}
+	
+	public Set<Organization> getOrgset(Set<Organization> organizationSet,Organization organization){
+        if (!organizationSet.contains(organization)) {
+            organizationSet.add(organization);
+            if (organization.getParentId() != null && organization.getParentId() != "") {
+                Organization org = organizationService.get(organization.getParentId());
+                getOrgset(organizationSet, org);
+            }
+        }
+        return organizationSet; 
+    }
 
 
 	@Override
