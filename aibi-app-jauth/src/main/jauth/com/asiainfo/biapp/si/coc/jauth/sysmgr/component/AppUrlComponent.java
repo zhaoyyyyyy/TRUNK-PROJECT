@@ -97,4 +97,35 @@ public class AppUrlComponent {
 		}
 		return statusInfo.getInstanceInfo().getHomePageUrl()+statusInfo.getInstanceInfo().getVIPAddress();
 	}
+    
+    /**
+     *  把url替换成真实的地址
+     * @param url   配置中心的地址
+     * @return
+     */
+    public String getRealUrl(String url){
+        String res = null;
+        
+        if (url.contains("JAUTH")) {
+            String jauthUrl = this.getJauthAppUrl();
+            if (null != jauthUrl) {
+                if (jauthUrl.endsWith("/")) {
+                    jauthUrl = jauthUrl.substring(0, jauthUrl.length() - 1);
+                } 
+                res = url.replace("${JAUTH}", jauthUrl);
+            }
+        } else if (url.contains("LOC")) {
+            String locUrl = this.getLocAppUrl();
+            if (null != locUrl) {
+                if (locUrl.endsWith("/")) {
+                    locUrl = locUrl.substring(0, locUrl.length() - 1);
+                } 
+                res = url.replace("${LOC}", locUrl);
+            }
+        }
+        
+        return res;
+    }
+    
+    
 }

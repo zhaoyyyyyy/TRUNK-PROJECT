@@ -16,6 +16,7 @@ import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
 import com.asiainfo.biapp.si.coc.jauth.log.service.ILogTaskExecuteDetailService;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.component.AppUrlComponent;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.component.DynamicTaskComponent;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.dao.LocTaskExeInfoDao;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Coconfig;
@@ -66,36 +67,42 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
             if (null != coconfig) {
                 String url = coconfig.getConfigVal();
                 if (null != url) {
+                    AppUrlComponent appUrlCom = (AppUrlComponent) SpringContextHolder.getBean("appUrlComponent");
+                    url = appUrlCom.getRealUrl(url);
                     Map<String, Object> map = new HashMap<>();
-                    map.put("url",url);
-                    map.put("token",token);
-                    map.put("taskExeInfo",locTask);
-                    if (null != sessionInfoHolder.getLoginUser()) {
-                        map.put("userId", sessionInfoHolder.getLoginUser().getUserName());
-                    }
-                    map.put("logTaskExecuteDetailService",logTaskExecuteDetailService);
+                    if (null != url) {
+                        map.put("url",url);
+                        map.put("token",token);
+                        map.put("taskExeInfo",locTask);
+                        if (null != sessionInfoHolder.getLoginUser()) {
+                            map.put("userId", sessionInfoHolder.getLoginUser().getUserName());
+                        }
+                        map.put("logTaskExecuteDetailService",logTaskExecuteDetailService);
 
-                    if (this.isValidExpression(locTask.getTaskExeTime())) {
-                        DynamicTaskExeInfoImpl task = new DynamicTaskExeInfoImpl(map);
-                        
-                        if (isSchedule) {   //调度任务
-                            //启动调度任务
-                            DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
-                            dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
-                            res = true;
-                        } else {    //立即/延迟执行任务
-                            if (ms > 0) {
-                                try {
-                                    Thread.sleep(ms);
-                                } catch (InterruptedException e) {
-                                    LogUtil.error("error in sleep!");
+                        if (this.isValidExpression(locTask.getTaskExeTime())) {
+                            DynamicTaskExeInfoImpl task = new DynamicTaskExeInfoImpl(map);
+                            
+                            if (isSchedule) {   //调度任务
+                                //启动调度任务
+                                DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
+                                dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
+                                res = true;
+                            } else {    //立即/延迟执行任务
+                                if (ms > 0) {
+                                    try {
+                                        Thread.sleep(ms);
+                                    } catch (InterruptedException e) {
+                                        LogUtil.error("error in sleep!");
+                                    }
                                 }
+                                new Thread(task).start();
+                                res = true;
                             }
-                            new Thread(task).start();
-                            res = true;
+                        } else {
+                            LogUtil.error("执行参数 ["+locTask.getTaskExeTime()+"] 不是Cron表达式！");
                         }
                     } else {
-                        LogUtil.error("执行参数 ["+locTask.getTaskExeTime()+"] 不是Cron表达式！");
+                        LogUtil.error("url不能个为空！");
                     }
                 } else {
                     LogUtil.error(locTask.getTaskId()+"的配置项的ConfigVal不能为空");
