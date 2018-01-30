@@ -10,6 +10,7 @@ import com.asiainfo.cp.acrm.authintegre.vo.AuthResourceResult;
 import com.asiainfo.cp.acrm.authintegre.vo.ReqStaff;
 import com.asiainfo.cp.acrm.base.controller.BaseController;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,13 +36,14 @@ public class AuthResourceController extends BaseController {
     private static final String FAIL_MSG = "失败";
 
 
-    @ApiOperation(value = "根据用户ID获取用户信息")
+    @ApiOperation(value = "根据员工ID获取用户信息")
+    @ApiImplicitParam(name = "staffId", value = "员工ID(数字)", required = true, paramType = "query", dataType = "string")
     @RequestMapping(value = "/userdata", method = RequestMethod.POST)
-    public AuthResourceResult userdata(HttpServletRequest request, @RequestBody ReqStaff staff) {
+    public AuthResourceResult userdata(long staffId) {
 
         AuthResourceResult arresult = new AuthResourceResult();
         try {
-            IBOSecStaffValue value = (BOSecStaffBean)OrgmodelClient.getStaffById(staff.getStaffid());
+            IBOSecStaffValue value = (BOSecStaffBean)OrgmodelClient.getStaffById(staffId);
             Map staffvalue = value.getProperties();
             if(value != null){
                 arresult.setCode(SUCESS_CODE);

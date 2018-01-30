@@ -1,5 +1,20 @@
 var _parentKey = '';
 
+/**【配置类型】跟【模板索引数】对应
+1	开关
+2	文本
+3	枚举
+4	驱动
+5	目录
+6	多项
+**/
+var configTypeAndTemplateIndexMap = {
+		1:1,
+		2:2,
+		4:4,
+		6:5,
+		5:0
+}
 var createConfigurationTemplate = [ {
 	name : '新增目录',
 	fields : [ {
@@ -88,36 +103,35 @@ var createConfigurationTemplate = [ {
 	name : '数据库类型',
 	fields : [ {
 		name : '数据库类型',
-		code : '{PARENT_CODE}_DRIVERCLASS',
+		code : '{PARENT_CODE}_TYPE',
 		type : 'driver',
 		valueType : 6,
 		dimCode : 'SJKLX',
 		value : 'http://xxx.xxx.xxx.xxx',
 		flag:''
 	} ]
-},  ]
+}]
 
 function fun_add(i, configKey) {
 	var isEdit = 0;
 	var dg;
 	if (null != configKey) {
-		i = i - 1;
 		isEdit = 1;
 		dg = $.dialog('编辑  [  ' + configKey + '  ]', $.ctx
 				+ '/admin/pages/config/config_add.html', 1200, 500);
 		dg.getParams = function() {
 			return {
-				'configFields' : createConfigurationTemplate[i].fields,
+				'configFields' : createConfigurationTemplate[configTypeAndTemplateIndexMap[i]].fields,
 				'coKey' : configKey,
 				'isEdit' : isEdit
 			}
 		}
 	} else {
-		dg = $.dialog('新增  [  ' + createConfigurationTemplate[i].name + '  ]',
+		dg = $.dialog('新增  [  ' + createConfigurationTemplate[configTypeAndTemplateIndexMap[i]].name + '  ]',
 				$.ctx + '/admin/pages/config/config_add.html', 800, 500);
 		dg.getParams = function() {
 			return {
-				'configFields' : createConfigurationTemplate[i].fields,
+				'configFields' : createConfigurationTemplate[configTypeAndTemplateIndexMap[i]].fields,
 				'coKey' : _parentKey,
 				'isEdit' : isEdit
 			}

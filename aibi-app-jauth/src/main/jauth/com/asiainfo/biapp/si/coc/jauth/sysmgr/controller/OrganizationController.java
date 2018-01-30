@@ -148,7 +148,7 @@ public class OrganizationController extends BaseController<Organization> {
         return organization;
     }
 
-    @ApiOperation(value = "得到父组织信息")
+    @ApiOperation(value = "得到父组织信息(暂不支持从根开始查询)")
     @ApiImplicitParam(name = "orgCode", value = "组织信息主键", required = true, paramType = "query", dataType = "string")
     @RequestMapping(value = "/parentOrg/get", method = RequestMethod.POST, produces = {
             MediaType.APPLICATION_JSON_VALUE })
