@@ -259,6 +259,7 @@ public class OrganizationController extends BaseController<Organization> {
             @ApiImplicitParam(name = "orgType", value = "组织类型", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "interrogateType", value = "审核方式", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "orgStatus", value = "组织状态", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "levelId", value = "组织层级", required = false, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "parentOrgCode", value = "父组织ID", required = false, paramType = "query", dataType = "string") })
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
     public String createOrg(OrganizationVo organization) {
@@ -306,6 +307,9 @@ public class OrganizationController extends BaseController<Organization> {
             }
             if(StringUtil.isNotBlank(organization.getOrgStatus())){
                 old.setOrgStatus(organization.getOrgStatus());
+            }
+            if(null!=organization.getLevelId()){
+                old.setLevelId(organization.getLevelId());
             }
             organizationService.saveOrUpdate(old);
             return "success";

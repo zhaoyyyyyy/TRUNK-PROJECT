@@ -60,7 +60,16 @@
 						<td>
                        		<input class="inputStyle easyui-validatebox" required="true" type="text" name="orgStatus" value="OPEN" />
 						</td> -->
-						
+						<th>组织层级<span class="required">*</span></th>
+						<td>
+							<select v-model="levelId" name="levelId" class="inputStyle easyui-validatebox">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>	
+						</td>
 					</tr>
 				</tbody>		
 			</table>

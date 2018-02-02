@@ -1,6 +1,8 @@
 window.jauth_onload = function() {
 	var parentOrgCode = $.getUrlParam("parentOrgCode");
 	var orgCode = $.getUrlParam("orgCode");
+	var level = [];
+	level[1]=1;level[2]=2;level[3]=3;level[4]=4;level[5]=5;
 	if(parentOrgCode!=null&&parentOrgCode!=""&&parentOrgCode!=undefined){
 		$.commAjax({
 			url:$.ctx+'/api/organization/get',
@@ -19,7 +21,8 @@ window.jauth_onload = function() {
 						"simpleName":null,
 						"orgStatus":null,
 						"orgType":null,
-						"orderNum":null
+						"orderNum":null,
+						"levelId":1
 					} 
 				});
 			}
@@ -42,7 +45,8 @@ window.jauth_onload = function() {
 						"simpleName":data.simpleName,
 						"orgStatus":data.orgStatus,
 						"orgType":data.orgType,
-						"orderNum":data.orderNum
+						"orderNum":data.orderNum,
+						"levelId":level[data.levelId]
 					} 
 				});
 			}

@@ -359,6 +359,7 @@ public class OrganizationServiceImpl extends BaseServiceImpl<Organization,String
 		organization.setOrgStatus(organizationVo.getOrgStatus());
 		organization.setCreateTime(getSystemTime());
 		organization.setCreater(user.getUserName());
+		organization.setLevelId(organizationVo.getLevelId());
     	
 		return this.createOrganization(organization);
     }
