@@ -128,7 +128,7 @@ window.top.getTitleHtml = function(titleObj,hasreturn){
 		}
 	});
 	
-	var returnhtml = ' <div class="place"> <span>位置：</span> <ul class="placeul"><li><a href="#">首页</a></li>'+html;
+	var returnhtml = ' <div class="place"> <span>位置：</span> <ul class="placeul"><li><a href="../index/workstand_index.html">首页</a></li>'+html;
 	if(hasreturn){
   		 returnhtml += '<li><a href="javascript:history.back(-1);top.titleUrlArray[\''+titleObj.title+'\']=\'~~~~~\';">返回</a></li>';
 	}  
