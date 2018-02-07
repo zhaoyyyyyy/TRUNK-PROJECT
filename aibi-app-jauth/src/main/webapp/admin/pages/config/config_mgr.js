@@ -1,20 +1,6 @@
 var _parentKey = '';
 
-/**【配置类型】跟【模板索引数】对应
-1	开关
-2	文本
-3	枚举
-4	驱动
-5	目录
-6	多项
-**/
-var configTypeAndTemplateIndexMap = {
-		1:1,
-		2:2,
-		4:4,
-		6:5,
-		5:0
-}
+
 var createConfigurationTemplate = [ {
 	name : '新增目录',
 	fields : [ {
@@ -121,19 +107,21 @@ function fun_add(i, configKey) {
 				+ '/admin/pages/config/config_add.html', 1200, 500);
 		dg.getParams = function() {
 			return {
-				'configFields' : createConfigurationTemplate[configTypeAndTemplateIndexMap[i]].fields,
+				'configFields' : createConfigurationTemplate[i].fields,
 				'coKey' : configKey,
-				'isEdit' : isEdit
+				'isEdit' : isEdit,
+				'configValType' : i
 			}
 		}
 	} else {
-		dg = $.dialog('新增  [  ' + createConfigurationTemplate[configTypeAndTemplateIndexMap[i]].name + '  ]',
+		dg = $.dialog('新增  [  ' + createConfigurationTemplate[i].name + '  ]',
 				$.ctx + '/admin/pages/config/config_add.html', 800, 500);
 		dg.getParams = function() {
 			return {
-				'configFields' : createConfigurationTemplate[configTypeAndTemplateIndexMap[i]].fields,
+				'configFields' : createConfigurationTemplate[i].fields,
 				'coKey' : _parentKey,
-				'isEdit' : isEdit
+				'isEdit' : isEdit,
+				'configValType' : i
 			}
 		}
 	}
@@ -174,16 +162,12 @@ window.jauth_onload = function() {
 						}).trigger("reloadGrid", [ {
 							page : 1
 						} ]);
-						$.each(
-							createConfigurationTemplate,
-							function(i) {
+						$.each(createConfigurationTemplate,function(i) {
 								var btnObj = createConfigurationTemplate[i]
 								var btn = '<div class="left newButton"><div>'
 										+ '<input type="button" class="add" value="'
 										+ btnObj.name
-										+ '" onclick="fun_add('
-										+ i
-										+ ')" /></div></div>';
+										+ '" onclick="fun_add('+ i+ ')" /></div></div>';
 								model.btn = model.btn
 										+ btn;
 						})
