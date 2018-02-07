@@ -20,41 +20,47 @@ window.jauth_onload = function(){
 	},{
 		name : 'userId',
 		index : 'userId',
-		width : 20,
+		fixed :true,
+		width : 90,
 		align : 'center',
 	}, {
 		name : 'ipAddr',
 		index : 'ipAddr',
-		width : 35,
+		fixed :true,
+		width : 200,
 		align : 'center'
 	}, {
 		name : 'levelId',
 		index : 'levelId',
-		width : 20,
+		fixed :true,
+		width : 90,
 		align : 'center',
 		formatter:function(v){return $.getCodeDesc('LEVEL',v);}
 	}, {
 		name : 'threadName',
 		index : 'threadName',
 		width : 40,
+		hidden: true,
 		align : 'center'
 	},{
 		name : 'nodeName',
 		index : 'nodeName',
-		width : 25,
+		fixed :true,
+		width : 90,
 		align : 'center'
 	}, {
 		name : 'interfaceUrl',
 		index : 'interfaceUrl',
+		hidden: true,
 		width : 70,
 		align : 'center'
 	},{
 		name : 'errorMsg',
 		index : 'errorMsg',
-		fixed : true,
-		width : 100,
-		align : 'center'
+		align : 'left',
+		width : 100
 	}];
+	
 	$("#mainGrid").jqGrid({
 		url : urlShow,
 		colNames : colNames,
@@ -62,6 +68,8 @@ window.jauth_onload = function(){
 		rownumbers : true,
 		autowidth : true,
 		viewrecords : true,
+		
+		rownumbers :true,
 		pager : '#mainGridPager'
 	});
 	
@@ -74,3 +82,4 @@ window.jauth_onload = function(){
 		}]);
 	});
 }
+

@@ -6,11 +6,12 @@ window.jauth_onload = function(){
 	                '接口名称',
 	                '接口路径', 
 	                '输入参数',
-	                '输出参数'];
+	                '输出参数','操作'];
 	var colModel = [{
 		name : 'opTime',
 		index : 'opTime',
-		width : 20,
+		width : 180,
+		fixed :true,
 		align : 'center',
 		formatter : function(cellvalue) {  
 			 return cellvalue.substr(0,19);
@@ -18,17 +19,20 @@ window.jauth_onload = function(){
 	},{
 		name : 'userId',
 		index : 'userId',
-		width : 11,
+		width : 80,
+		fixed :true,
 		align : 'center',
 	}, {
 		name : 'ipAddr',
 		index : 'ipAddr',
-		width : 20,
+		width : 120,
+		fixed :true,
 		align : 'center'
 	}, {
 		name : 'interfaceName',
 		index : 'interfaceName',
-		width : 20,
+		width : 180,
+		fixed :true,
 		align : 'center'
 	}, {
 		name : 'interfaceUrl',
@@ -52,7 +56,21 @@ window.jauth_onload = function(){
 		formatter : function(value, opts, data) {
 			return $.toStr(data.outputParams);
 		}
+	},{
+		name : 'ipAddr',
+		index : 'ipAddr',
+		fixed : true,
+		width : 70,
+		align : 'center',
+		formatter:function(v,co,data){
+			return  "<a onclick='fun_detail(\"" + co.rowId
+			+ "\")' class='s_ls' >详情</a>";
+		}
 	}];
+	
+	　
+	
+	
 	$("#mainGrid").jqGrid({
 		url : urlShow,
 		colNames : colNames,
@@ -71,4 +89,11 @@ window.jauth_onload = function(){
 			page : 1
 		}]);
 	});
+}
+function fun_detail(rowid){
+	var dg = $.dialog('日志详情', $.ctx + '/admin/pages/logtracking/interface_detail.html',
+			600, 600);
+	dg.getData = function() {
+		return $('#mainGrid').getRowData(rowid);
+	}
 }
