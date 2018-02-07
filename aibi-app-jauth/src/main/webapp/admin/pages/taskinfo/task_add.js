@@ -202,40 +202,47 @@ function fun_jiaoyan(obj) {
 	})
 }
 // 写死的执行时间
-function fun_to_change(count) {
+function fun_to_change(self) {
 	$('.exeTime').val('');
-	if (count == 1) {
-		document.getElementById('taskExeTime1').value = '0';
-		document.getElementById('taskExeTime2').value = '0';
-		document.getElementById('taskExeTime3').value = '1/1';
-		document.getElementById('taskExeTime4').value = '*';
-		document.getElementById('taskExeTime5').value = '*';
-		document.getElementById('taskExeTime6').value = '?';
-	}
-	if (count == 2) {
-		document.getElementById('taskExeTime1').value = '0';
-		document.getElementById('taskExeTime2').value = '0';
-		document.getElementById('taskExeTime3').value = '0';
-		document.getElementById('taskExeTime4').value = '8/1';
-		document.getElementById('taskExeTime5').value = '*';
-		document.getElementById('taskExeTime6').value = '?';
-	}
-	if (count == 3) {
-		document.getElementById('taskExeTime1').value = '0';
-		document.getElementById('taskExeTime2').value = '20/1';
-		document.getElementById('taskExeTime3').value = '*';
-		document.getElementById('taskExeTime4').value = '*';
-		document.getElementById('taskExeTime5').value = '*';
-		document.getElementById('taskExeTime6').value = '?';
-	}
-	if (count == 4) {
-		document.getElementById('taskExeTime1').value = '0/30';
-		document.getElementById('taskExeTime2').value = '*';
-		document.getElementById('taskExeTime3').value = '*';
-		document.getElementById('taskExeTime4').value = '*';
-		document.getElementById('taskExeTime5').value = '*';
-		document.getElementById('taskExeTime6').value = '?';
-	}
+	
+	$(self).parent().parent().find('td').each(function(i){
+		if(i != 6){
+			$('#taskExeTime'+(i+1)).val($('input',this).val());
+		}
+	})
+	
+//	if (count == 1) {
+//		document.getElementById('taskExeTime1').value = '0';
+//		document.getElementById('taskExeTime2').value = '0';
+//		document.getElementById('taskExeTime3').value = '1/1';
+//		document.getElementById('taskExeTime4').value = '*';
+//		document.getElementById('taskExeTime5').value = '*';
+//		document.getElementById('taskExeTime6').value = '?';
+//	}
+//	if (count == 2) {
+//		document.getElementById('taskExeTime1').value = '0';
+//		document.getElementById('taskExeTime2').value = '0';
+//		document.getElementById('taskExeTime3').value = '0';
+//		document.getElementById('taskExeTime4').value = '8/1';
+//		document.getElementById('taskExeTime5').value = '*';
+//		document.getElementById('taskExeTime6').value = '?';
+//	}
+//	if (count == 3) {
+//		document.getElementById('taskExeTime1').value = '0';
+//		document.getElementById('taskExeTime2').value = '20/1';
+//		document.getElementById('taskExeTime3').value = '*';
+//		document.getElementById('taskExeTime4').value = '*';
+//		document.getElementById('taskExeTime5').value = '*';
+//		document.getElementById('taskExeTime6').value = '?';
+//	}
+//	if (count == 4) {
+//		document.getElementById('taskExeTime1').value = '0/30';
+//		document.getElementById('taskExeTime2').value = '*';
+//		document.getElementById('taskExeTime3').value = '*';
+//		document.getElementById('taskExeTime4').value = '*';
+//		document.getElementById('taskExeTime5').value = '*';
+//		document.getElementById('taskExeTime6').value = '?';
+//	}
 
 }
 // 点击切换按时间或延时
