@@ -11,6 +11,9 @@ spring:
       ddl-auto: none
     show-sql: true
     open-in-view: true
+  boot:  
+    admin:  
+      context-path: /sba    # 配置访问路径为：http://localhost:8440/jauth/sba  
 demo.security.jwt:
   tokenExpirationTime: 480 # Number of minutes
   refreshTokenExpTime: 500 # Minutes

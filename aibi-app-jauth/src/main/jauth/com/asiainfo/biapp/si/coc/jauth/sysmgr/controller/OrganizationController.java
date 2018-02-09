@@ -11,14 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.coyote.http11.filters.VoidInputFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.amazonaws.services.securitytoken.model.GetFederationTokenRequest;
 import com.asiainfo.biapp.si.coc.jauth.frame.controller.BaseController;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;

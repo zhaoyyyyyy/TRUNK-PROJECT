@@ -43,8 +43,6 @@ import com.netflix.eureka.util.StatusInfo;
 @Component
 public class AppUrlComponent {
 
-	@Value("${jauth-url}")  
-    private String jauthUrl; 
 	
 	/**
 	 * 
