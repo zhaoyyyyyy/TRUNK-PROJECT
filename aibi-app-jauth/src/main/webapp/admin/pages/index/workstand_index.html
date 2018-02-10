@@ -18,26 +18,31 @@
 		    </ul>
 	    </div>
 	    <div class="boxes">
-	    	<div class="main_box ml mt">
-	        	<!-- 
-	        	
-	        	<ul class="box_list border" >
-	            	<li><a href="#" url="${ctx}/index!removeCache.action">清除所有缓存</a></li>
-	            	<li><a href="#" url="${ctx}/index!removeCache.action?methodName=removeResourceCache">清除菜单缓存</a></li>
-	            	<li><a href="#" url="${ctx}/index!removeCache.action?methodName=removeResourceCache">清除组织缓存</a></li>
-	            	<li><a href="#" url="${ctx}/index!removeCache.action?methodName=removeDataDicCache">清除字段缓存</a></li>
-	            	<li><a href="#" url="${ctx}/index!removeCache.action?methodName=removeWsCache">清除WS缓存</a></li>
-	            	<li><a href="#" url="${ctx}/index!removeCache.action?methodName=removeWcCacheMap">清除WS_MAP缓存</a></li>
-	            	<li><a href="#" url="${ctx}/index!removeCache.action?methodName=removeWsCacheBigscreen">清除大屏缓存</a></li>
-	            </ul>
-	            
-	        	 -->
-	            
-	        </div>
-	        <div class="main_box ml mt">
-	            <ul class="box_list border" id="shenqing_list">
-	            </ul>
-	        </div>
+	    	<div class="extraMarginY extraMarginX">
+					<div id="TabbedPanels" class="TabbedPanels">
+						<ul class="TabbedPanelsTabGroup">
+						<!-- 
+						
+							<li class="TabbedPanelsTab" tabindex="0">
+								首页
+							</li>
+						 -->
+							<li class="TabbedPanelsTab" tabindex="1">
+								服务发现(eureka)
+							</li>
+							<li class="TabbedPanelsTab" tabindex="2">
+								服务监控(sba)
+							</li>
+						</ul>
+						<div class="TabbedPanelsContentGroup">
+							<!-- 
+							<div class="TabbedPanelsContent" index="0" src="./workstand.html"></div>
+							 -->
+							<div class="TabbedPanelsContent" index="1" src="../../../dashborad"></div>
+							<div class="TabbedPanelsContent" index="2" src="../../../sba"></div>
+						</div>
+					</div>
+			</div>
          </div>
          
 	</body>
