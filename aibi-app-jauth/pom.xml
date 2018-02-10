@@ -8,6 +8,10 @@
 		<artifactId>aibi-loc-project</artifactId>
 		<version>1.0.0</version>
 	</parent>
+	
+	<!-- jar/war 具体要打包成什么 -->
+	<packaging>jar</packaging>
+	
 	<groupId>com.asiainfo.prd</groupId>
 	<artifactId>aibi-app-jauth</artifactId>
 	<version>1.0.0</version>
@@ -19,18 +23,35 @@
 	</properties>
 	<dependencies>
 
+		<!-- 如果是打war包开启,打jar包需要注释掉 
+        
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        -->
+        
 		<!-- eureak server -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka-server</artifactId>
 		</dependency>
 
+		<!-- 注册springbootadmin客户端 -->
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+		
 		<!-- spring security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		
+
+				
 	    <!--admin的服务-->
         <dependency>
 			<groupId>de.codecentric</groupId>

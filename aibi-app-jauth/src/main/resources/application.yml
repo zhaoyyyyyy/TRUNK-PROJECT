@@ -13,7 +13,8 @@ spring:
     open-in-view: true
   boot:  
     admin:  
-      context-path: /sba    # 配置访问路径为：http://localhost:8440/jauth/sba  
+      context-path: /sba
+      url: http://localhost:${server.port}${server.context-path}/sba
 demo.security.jwt:
   tokenExpirationTime: 480 # Number of minutes
   refreshTokenExpTime: 500 # Minutes
@@ -30,4 +31,8 @@ eureka:
   server:
     enableSelfPreservation: false
     evictionIntervalTimerInMs: 10000
-
+info:
+  app:  
+    name: "JAUTH"  
+    description: "运维管理/运行监控/配置中心"  
+    version: "1.0.0"
