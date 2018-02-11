@@ -1,0 +1,51 @@
+server:
+  port: 8080
+  context-path: /acrm
+spring:
+  boot:
+    admin:
+      client:
+        serviceUrl: http://192.168.248.169:${server.port}${server.context-path}
+jauth-url: 
+  http://192.168.248.166:8080/jauth
+cust_id:
+  cust_sub_code
+spring:
+  datasource:
+    primary:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.248.142:3306/datav?useUnicode=true&characterEncoding=utf-8
+      username: datav
+      password: 1qaz2wsx
+      maxActive: 300
+      maxWait: 1800
+      maxIdle: 30
+      minIdle: 10
+      initialSize: 10
+      testOnBorrow: false
+      removeAbandoned: true
+      removeAbandonedTimeout: 3600
+      test-while-idle: true
+      validation-query: SELECT 1 FROM DUAL
+      time-between-eviction-runs-millis: 180000
+    secondary:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.200.25:10034/ads_acrm?useUnicode=true&characterEncoding=utf-8
+      username: 2SbUQlH7FJKyur9V
+      password: WGoQpjLNgTA4VwrHNQBcqe0zDbXZti
+      maxActive: 300
+      maxWait: 1800
+      maxIdle: 30
+      minIdle: 10
+      initialSize: 10
+      testOnBorrow: false
+      removeAbandoned: true
+      removeAbandonedTimeout: 3600
+      test-while-idle: true
+      validation-query: SELECT 1 FROM DUAL
+      time-between-eviction-runs-millis: 180000
+cache:
+  isDimtableCached: false
+context:
+  listener:
+    classes: com.asiainfo.cp.acrm.ApplicationStartup

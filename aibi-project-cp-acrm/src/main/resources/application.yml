@@ -3,7 +3,7 @@ server:
   context-path: /
 spring:
   profiles:
-    active: cp-dev
+    active: cp-yw
   application:
     name: cpacrm
   jpa:
@@ -11,6 +11,9 @@ spring:
       ddl-auto: none
     show-sql: true
     open-in-view: true
+  boot:
+    admin:
+      url: "${jauth-url}/sba/"
 security: 
   basic:
     enabled: false

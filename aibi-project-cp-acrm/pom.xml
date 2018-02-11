@@ -25,6 +25,13 @@
 
 	<dependencies>
 
+		<!-- 注册springbootadmin客户端 -->
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+		
 		<!-- eureka client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

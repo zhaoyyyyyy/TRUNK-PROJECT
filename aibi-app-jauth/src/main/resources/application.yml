@@ -11,10 +11,12 @@ spring:
       ddl-auto: none
     show-sql: true
     open-in-view: true
-  boot:  
+  boot:
     admin:  
       context-path: /sba
       url: http://localhost:${server.port}${server.context-path}/sba
+      client:
+        serviceUrl: http://localhost:${server.port}${server.context-path}
 demo.security.jwt:
   tokenExpirationTime: 480 # Number of minutes
   refreshTokenExpTime: 500 # Minutes
