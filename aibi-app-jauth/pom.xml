@@ -23,14 +23,13 @@
 	</properties>
 	<dependencies>
 
-		<!-- 如果是打war包开启,打jar包需要注释掉 
-        
+		<!-- 如果是打war包开启,打jar包需要注释掉  
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
-        -->
+       -->
         
 		<!-- eureak server -->
 		<dependency>

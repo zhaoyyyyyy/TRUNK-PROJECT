@@ -7,7 +7,7 @@ window.jauth_onload = function(){
 	                'thread_name',
 	                'nodename',
 	                'logger_na',
-	                'message'];
+	                'message','opt'];
 	var colModel = [{
 		name : 'opTime',
 		index : 'opTime',
@@ -27,7 +27,7 @@ window.jauth_onload = function(){
 		name : 'ipAddr',
 		index : 'ipAddr',
 		fixed :true,
-		width : 200,
+		width : 150,
 		align : 'center'
 	}, {
 		name : 'levelId',
@@ -51,14 +51,23 @@ window.jauth_onload = function(){
 	}, {
 		name : 'interfaceUrl',
 		index : 'interfaceUrl',
-		hidden: true,
 		width : 70,
-		align : 'center'
+		align : 'left'
 	},{
 		name : 'errorMsg',
 		index : 'errorMsg',
 		align : 'left',
 		width : 100
+	},{
+		name : 'nodeName',
+		index : 'nodeName',
+		fixed : true,
+		width : 70,
+		align : 'center',
+		formatter:function(v,co,data){
+			return  "<a onclick='fun_detail(\"" + co.rowId
+			+ "\")' class='s_ls' >详情</a>";
+		}
 	}];
 	
 	$("#mainGrid").jqGrid({
@@ -83,3 +92,10 @@ window.jauth_onload = function(){
 	});
 }
 
+function fun_detail(rowid){
+	var dg = $.dialog('日志详情', $.ctx + '/admin/pages/logtracking/monitor_detail.html',
+			600, 600);
+	dg.getData = function() {
+		return $('#mainGrid').getRowData(rowid);
+	}
+}

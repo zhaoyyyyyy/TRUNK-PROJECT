@@ -288,7 +288,20 @@ iframe {width: 100%;height: 100%;overflow: auto;}
 	border-bottom: 0px;
 	border-top: 0px;
 }
-
+.inputStyle_300 {
+	width: 300px;
+	height: 22px; *
+	margin-top: 3px;
+	padding-left: 2px;
+	line-height: 22px;
+	color: #000;
+	font-size: 12px;
+	background: url(images/inp_bg.jpg) repeat-x;
+	border-left: 1px solid #7FB0EE;
+	border-right: 1px solid #7FB0EE;
+	border-bottom: 0px;
+	border-top: 0px;
+}
 .read_inputStyle {
 	height: 22px; *
 	margin-top: 3px;
