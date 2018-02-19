@@ -11,8 +11,9 @@ window.jauth_onload = function(){
 	var colModel = [{
 		name : 'userName',
 		index : 'userName',
-		width : 20,
+		width : 200,
 		align : 'center',
+		fixed:true,
 		formatter : function(value, opts, data) {
 			return "<a href='###' onclick='fun_to_information(\"" + data.id
 			+ "\")' ><font color='blue'>" + data.userName
@@ -21,8 +22,9 @@ window.jauth_onload = function(){
 	}, {
 		name : 'realName',
 		index : 'realName',
-		width : 12,
-		align : 'center'
+		width : 200,
+		align : 'center',
+		fixed:true
 	}, {
 		name : 'sex',
 		index : 'sex',
@@ -37,12 +39,13 @@ window.jauth_onload = function(){
 		name : 'groupNames',
 		index : 'groupNames',
 		width : 20,
+		hidden:true,
 		align : 'center'
 	},
 	{
 		name : 'roleNames',
 		index : 'roleNames',
-		width : 70,
+		width : 120,
 		fixed:true,
 		align : 'center'
 	},
