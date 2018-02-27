@@ -1,6 +1,6 @@
 server:
   port: 8442
-  context-path: /
+  context-path: /acrm
 spring:
   profiles:
     active: cp-yw

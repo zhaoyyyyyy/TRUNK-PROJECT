@@ -63,7 +63,8 @@ public class AuthResourceController extends BaseController {
         return arresult;
     }
 
-    @ApiOperation(value = "根据操作员ID，实体ID与行为ID查询操作员是否具有对该实体的操作权限")
+    //暂时屏蔽
+    //@ApiOperation(value = "根据操作员ID，实体ID与行为ID查询操作员是否具有对该实体的操作权限")
     @RequestMapping(value = "/optauth", method = RequestMethod.POST)
     public AuthResourceResult optauth(HttpServletRequest request, @RequestBody ReqStaff staff) {
 
@@ -88,13 +89,14 @@ public class AuthResourceController extends BaseController {
         return arresult;
     }
 
-    @ApiOperation(value = "获取用户的数据权限是通过用户所归属的组织的行政区域和业务类型的属性来获取")
-    @RequestMapping(value = "/userauth", method = RequestMethod.POST)
-    public AuthResourceResult userauth(HttpServletRequest request, @RequestBody ReqStaff staff) {
+    @ApiOperation(value = "通过组织ID获取组织信息")
+    @RequestMapping(value = "/organization", method = RequestMethod.POST)
+    @ApiImplicitParam(name = "orgId", value = "组织ID(数字)", required = true, paramType = "query", dataType = "string")
+    public AuthResourceResult userauth(long orgId) {
 
         AuthResourceResult arresult = new AuthResourceResult();
         try {
-            IBOSecOrganizeValue orgauth = OrgmodelClient.getOrganizeByOrgId (staff.getOrgId());
+            IBOSecOrganizeValue orgauth = OrgmodelClient.getOrganizeByOrgId (orgId);
             Map orginfo = orgauth.getProperties();
 
             if(orgauth != null){
@@ -115,13 +117,14 @@ public class AuthResourceController extends BaseController {
         return arresult;
     }
 
-    @ApiOperation(value = "根据districtId查询区域信息")
-    @RequestMapping(value = "/districtinfo", method = RequestMethod.POST)
-    public AuthResourceResult districtinfo(HttpServletRequest request, @RequestBody ReqStaff staff) {
+    @ApiOperation(value = "根据区域ID查询区域信息")
+    @RequestMapping(value = "/district", method = RequestMethod.POST)
+    @ApiImplicitParam(name = "districtId", value = "区域ID", required = true, paramType = "query", dataType = "string")
+    public AuthResourceResult district(String districtId) {
 
         AuthResourceResult arresult = new AuthResourceResult();
         try {
-            IBOSecDistrictValue value = OrgmodelClient.getDistrictById(staff.getDistrictId());
+            IBOSecDistrictValue value = OrgmodelClient.getDistrictById(districtId);
             Map districtinfo = value.getProperties();
 
             if(value != null){

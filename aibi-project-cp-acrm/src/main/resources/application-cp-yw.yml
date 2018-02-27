@@ -1,16 +1,12 @@
-server:
-  port: 8080
-  context-path: /acrm
-spring:
-  boot:
-    admin:
-      client:
-        serviceUrl: http://192.168.248.169:${server.port}${server.context-path}
 jauth-url: 
-  http://192.168.248.166:8080/jauth
+  http://192.168.248.166:8440/jauth
 cust_id:
   cust_sub_code
 spring:
+#  boot:
+#    admin:
+#      client:
+#        serviceUrl: http://192.168.248.169:${server.port}${server.context-path}
   datasource:
     primary:
       driver-class-name: com.mysql.jdbc.Driver
