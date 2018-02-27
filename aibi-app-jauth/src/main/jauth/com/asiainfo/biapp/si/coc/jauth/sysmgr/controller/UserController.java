@@ -308,6 +308,10 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
     public String newUser(@ApiIgnore User user) {
         User luser = sessionInfoHolder.getLoginUser();
+        User selectUser = userService.getUserByName(user.getUserName());
+        if(selectUser!=null){
+            return "exit";
+        }
         user.setOrginfoId(luser.getOrginfoId());
         user.setCreateOrgId(luser.getOrginfoId());
         user.setCreateUserId(luser.getUserName());

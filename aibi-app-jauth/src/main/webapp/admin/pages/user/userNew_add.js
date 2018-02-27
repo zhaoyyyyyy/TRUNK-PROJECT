@@ -15,6 +15,8 @@ window.jauth_onload = function() {
 							dg.cancel();
 							dg.reload();
 						})
+					}else if(data == 'exit'){
+						$.alert("用户名已存在");
 					}
 				}
 			});

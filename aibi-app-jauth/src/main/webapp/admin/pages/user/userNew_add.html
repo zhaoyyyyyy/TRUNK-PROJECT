@@ -10,14 +10,15 @@
 	<form id="saveDataForm"  method="post" >
 		<table class="searchTable">
 			<tr>
-				<th>用户名</th>
+				<th><span class="req">*</span>用户名</th>
 				<td>
+					<input style="display:none"></input>
 					<input name="userName" type="text" class="inputStyle easyui-validatebox"
 							required="true"/>
 				</td>
 			</tr>
 			<tr>
-				<th>密码</th>
+				<th><span class="req">*</span>密码</th>
 				<td>
 					<input name="password" type="password" class="inputStyle easyui-validatebox"
 							required="true"/>
