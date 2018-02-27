@@ -136,7 +136,7 @@ public class RoleController extends BaseController<Role> {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "角色主键", required = false, paramType = "query", dataType = "string"),
 			@ApiImplicitParam(name = "roleName", value = "角色名称", required = false, paramType = "query", dataType = "string"),
-			@ApiImplicitParam(name = "pictureHome", value = "标志", required = false, paramType = "query", dataType = "string"),
+			@ApiImplicitParam(name = "roleCode", value = "标志", required = false, paramType = "query", dataType = "string"),
 			@ApiImplicitParam(name = "roleDesc", value = "角色描述", required = false, paramType = "query", dataType = "string"),
 			@ApiImplicitParam(name = "tree", value = "角色赋权（前台）", required = false, paramType = "query", dataType = "string"),
 			@ApiImplicitParam(name = "tree2", value = "角色赋权（后台）", required = false, paramType = "query", dataType = "string"),
@@ -146,7 +146,7 @@ public class RoleController extends BaseController<Role> {
 	public String save() {
 		String roleName = request.getParameter("roleName");
 		String id = request.getParameter("id");
-		String pictureHome = request.getParameter("pictureHome");
+		String roleCode = request.getParameter("roleCode");
 		String roleDesc = request.getParameter("roleDesc");
 		String tree = request.getParameter("tree");
 		String tree2 = request.getParameter("tree2");
@@ -315,7 +315,7 @@ public class RoleController extends BaseController<Role> {
 				role = roleService.get(id);
 			}
 			role.setRoleName(roleName);
-			role.setPictureHome(pictureHome);
+			role.setRoleCode(roleCode);
 			role.setRoleDesc(roleDesc);
 			role.setResourceSet(rSet);
 			role.setOrginfoId(user.getOrginfoId());
