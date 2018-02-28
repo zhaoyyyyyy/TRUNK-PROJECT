@@ -14,11 +14,14 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -38,7 +41,7 @@ public class AuthResourceController extends BaseController {
 
     @ApiOperation(value = "根据员工ID获取用户信息")
     @ApiImplicitParam(name = "staffId", value = "员工ID(数字)", required = true, paramType = "query", dataType = "string")
-    @RequestMapping(value = "/userdata", method = RequestMethod.POST)
+    @RequestMapping(value = "/userdata", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
     public AuthResourceResult userdata(long staffId) {
 
         AuthResourceResult arresult = new AuthResourceResult();
@@ -131,6 +134,49 @@ public class AuthResourceController extends BaseController {
                 arresult.setCode(SUCESS_CODE);
                 arresult.setMsg(SUCESS_MSG);
                 arresult.setData(districtinfo);
+            }else{
+                arresult.setCode(NODATA_CODE);
+                arresult.setMsg(NODATA_MSG);
+                arresult.setData(null);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            arresult.setCode(FAIL_CODE);
+            arresult.setMsg(FAIL_MSG);
+            arresult.setData(null);
+        }
+        return arresult;
+    }
+    
+    
+    @ApiOperation(value = "获取用户信息和权限")
+    @ApiImplicitParam(name = "staffId", value = "员工ID(数字)", required = true, paramType = "query", dataType = "string")
+    @RequestMapping(value = "/userinfo", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public AuthResourceResult userinfo(long staffId) {
+
+        AuthResourceResult arresult = new AuthResourceResult();
+        try {
+            Map<String,Object> map = new HashMap<>();
+            //根据员工ID获取用户信息
+            IBOSecStaffValue stafvalue = (BOSecStaffBean)OrgmodelClient.getStaffById(staffId);
+            Map staffvalue = stafvalue.getProperties();
+            //通过组织ID获取组织信息
+            long orgId = Long.valueOf(String.valueOf(staffvalue.get("ORGANIZE_ID"))).longValue();
+            IBOSecOrganizeValue orgauth = OrgmodelClient.getOrganizeByOrgId (orgId);
+            Map orginfo = orgauth.getProperties();
+            //根据区域ID查询区域信息
+            IBOSecDistrictValue disvalue = OrgmodelClient.getDistrictById(orginfo.get("DISTRICT_ID").toString());
+            Map districtinfo = disvalue.getProperties();
+            
+            
+            map.put("staffvalue", staffvalue);
+            map.put("orginfo", orginfo);
+            map.put("districtinfo", districtinfo);
+            
+            if(stafvalue != null){
+                arresult.setCode(SUCESS_CODE);
+                arresult.setMsg(SUCESS_MSG);
+                arresult.setData(map);
             }else{
                 arresult.setCode(NODATA_CODE);
                 arresult.setMsg(NODATA_MSG);
