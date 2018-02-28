@@ -146,7 +146,7 @@ window.jauth_onload = function() {
 		if ($('#saveDataForm').validateForm()) {
 			var id = document.getElementById("id").value;
 			var roleName = document.getElementById("roleName").value;
-			var pictureHome = document.getElementById("pictureHome").value;
+			var roleCode = document.getElementById("roleCode").value;
 			var roleDesc = document.getElementById("roleDesc").value;
 			var valObj = mySimpleTree[0].getSelectionsValue(function(obj) {
 				return !filterOrgType || filterOrgType[$(obj).attr("orgType")];
@@ -170,7 +170,7 @@ window.jauth_onload = function() {
 					postData : {
 						"id" : id,
 						"roleName" : roleName,
-						"pictureHome" : pictureHome,
+						"roleCode" : roleCode,
 						"roleDesc" : roleDesc,
 						"tree" : valObj.value,
 						"tree2" : valObj1.value,
