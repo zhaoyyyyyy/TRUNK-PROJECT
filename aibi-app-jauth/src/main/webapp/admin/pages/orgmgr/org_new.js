@@ -44,7 +44,7 @@ window.jauth_onload = function() {
 						"orgCode":data.orgCode,
 						"simpleName":data.simpleName,
 						"orgStatus":data.orgStatus,
-						"orgType":data.orgType,
+						"orgType":$.getCodeDesc('ZZLXZD',data.orgType),
 						"orderNum":data.orderNum,
 						"levelId":level[data.levelId]
 					} 
