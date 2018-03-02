@@ -4,6 +4,7 @@ import com.ai.secframe.client.OrgmodelClient;
 import com.ai.secframe.client.SecframeClient;
 import com.ai.secframe.orgmodel.bo.BOSecStaffBean;
 import com.ai.secframe.orgmodel.ivalues.IBOSecDistrictValue;
+import com.ai.secframe.orgmodel.ivalues.IBOSecOperatorValue;
 import com.ai.secframe.orgmodel.ivalues.IBOSecOrganizeValue;
 import com.ai.secframe.orgmodel.ivalues.IBOSecStaffValue;
 import com.asiainfo.cp.acrm.authintegre.vo.AuthResourceResult;
@@ -40,13 +41,13 @@ public class AuthResourceController extends BaseController {
 
 
     @ApiOperation(value = "根据员工ID获取用户信息")
-    @ApiImplicitParam(name = "staffId", value = "员工ID(数字)", required = true, paramType = "query", dataType = "string")
+    @ApiImplicitParam(name = "operatorId", value = "操作员ID(数字)", required = true, paramType = "query", dataType = "string")
     @RequestMapping(value = "/userdata", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public AuthResourceResult userdata(long staffId) {
+    public AuthResourceResult userdata(long operatorId) {
 
         AuthResourceResult arresult = new AuthResourceResult();
         try {
-            IBOSecStaffValue value = (BOSecStaffBean)OrgmodelClient.getStaffById(staffId);
+            IBOSecStaffValue value = (BOSecStaffBean)OrgmodelClient.getStaffById(operatorId);
             Map staffvalue = value.getProperties();
             if(value != null){
                 arresult.setCode(SUCESS_CODE);
@@ -150,14 +151,19 @@ public class AuthResourceController extends BaseController {
     
     
     @ApiOperation(value = "获取用户信息和权限")
-    @ApiImplicitParam(name = "staffId", value = "员工ID(数字)", required = true, paramType = "query", dataType = "string")
+    @ApiImplicitParam(name = "operatorId", value = "操作员ID(数字)", required = true, paramType = "query", dataType = "string")
     @RequestMapping(value = "/userinfo", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public AuthResourceResult userinfo(long staffId) {
+    public AuthResourceResult userinfo(long operatorId) {
 
+        long startTime=System.currentTimeMillis();
         AuthResourceResult arresult = new AuthResourceResult();
         try {
             Map<String,Object> map = new HashMap<>();
             //根据员工ID获取用户信息
+            
+            IBOSecOperatorValue operatorvalue =  OrgmodelClient.getOperatorById(operatorId);
+            Map opevalue = operatorvalue.getProperties();
+            long staffId = Long.valueOf(String.valueOf(opevalue.get("STAFF_ID"))).longValue();
             IBOSecStaffValue stafvalue = (BOSecStaffBean)OrgmodelClient.getStaffById(staffId);
             Map staffvalue = stafvalue.getProperties();
             //通过组织ID获取组织信息
@@ -188,6 +194,8 @@ public class AuthResourceController extends BaseController {
             arresult.setMsg(FAIL_MSG);
             arresult.setData(null);
         }
+        long endTime=System.currentTimeMillis();
+        System.out.println("程序运行时间： "+(endTime-startTime)/1000+"s");
         return arresult;
     }
 }
