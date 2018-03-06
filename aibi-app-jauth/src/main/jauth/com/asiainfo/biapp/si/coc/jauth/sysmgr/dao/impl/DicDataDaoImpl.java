@@ -111,6 +111,10 @@ public class DicDataDaoImpl extends BaseDaoImpl<DicData,String> implements DicDa
 			hql.append(" and note like :note");
 			params.put("note", "%"+dicDataVo.getNote()+"%");
 		}
+		if(StringUtils.isNotBlank(dicDataVo.getStatus())){
+		    hql.append(" and status = :status");
+            params.put("status", dicDataVo.getStatus());
+		}
         return this.findListByHql(hql.toString(),params);
 	}
 }

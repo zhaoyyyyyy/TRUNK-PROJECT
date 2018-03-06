@@ -155,6 +155,7 @@ public class DicDataController extends BaseController<DicData>{
 		@ApiImplicitParam(name = "code", value = "字典数据编码", required = false, paramType = "query" ,dataType = "string"),
 		@ApiImplicitParam(name = "dataName", value = "字典数据名称", required = false, paramType = "query" ,dataType = "string"),
 		@ApiImplicitParam(name = "note", value = "备注", required = false, paramType = "query" ,dataType = "string"),
+        @ApiImplicitParam(name = "status", value = "状态", required = false, paramType = "query" ,dataType = "string"),
 	})
 	@RequestMapping(value="/dicdatas/query", method=RequestMethod.POST, produces={ MediaType.APPLICATION_JSON_VALUE })
 	public List<DicData> findDicDataByParams(@ApiIgnore DicDataVo dicDataVo){
