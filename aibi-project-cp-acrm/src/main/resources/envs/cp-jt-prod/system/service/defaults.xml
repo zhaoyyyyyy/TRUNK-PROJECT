@@ -68,11 +68,11 @@
 
         <pool name="base" primary="true" db="pointbase" type="dbcp">
             <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-            <property name="url" value="jdbc:mysql://192.168.248.137:3306/base"/>
+            <property name="url" value="jdbc:mysql://10.3.232.194:3306/base"/>
             <property name="username" value="base"/>
-            <property name="password" value="edasyw_123"/>
-            <property name="initialSize" value="0"/>
-            <property name="maxActive" value="2"/>
+            <property name="password" value="{RC2}BH2L66qHQAbcCudhew=="/>
+            <property name="initialSize" value="5"/>
+            <property name="maxActive" value="20"/>
             <property name="maxIdle" value="2"/>
             <property name="validationQuery" value="select 1"/>
             <property name="testWhileIdle" value="true"/>
@@ -85,8 +85,8 @@
         </pool>
 
         <pool name="sec" db="MYSQL" type="dbcp">
-            <property name="initialSize" value="0"/>
-            <property name="maxActive" value="2"/>
+            <property name="initialSize" value="5"/>
+            <property name="maxActive" value="20"/>
             <property name="maxIdle" value="2"/>
             <property name="validationQuery" value="select 1"/>
             <property name="testWhileIdle" value="true"/>
@@ -99,8 +99,8 @@
         </pool>
 
         <pool name="csf" db="MYSQL" type="dbcp">
-            <property name="initialSize" value="0"/>
-            <property name="maxActive" value="2"/>
+            <property name="initialSize" value="5"/>
+            <property name="maxActive" value="20"/>
             <property name="maxIdle" value="2"/>
             <property name="validationQuery" value="select 1"/>
             <property name="testWhileIdle" value="true"/>

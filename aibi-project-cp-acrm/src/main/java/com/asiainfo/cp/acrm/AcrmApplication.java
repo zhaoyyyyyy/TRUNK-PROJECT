@@ -1,18 +1,14 @@
 package com.asiainfo.cp.acrm;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.Bean;
-
-import com.asiainfo.cp.acrm.authintegre.filter.Test2Filter;
 
 @EnableEurekaClient
 @SpringBootApplication
-@EnableAutoConfiguration
+@EnableCaching
 public class AcrmApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {

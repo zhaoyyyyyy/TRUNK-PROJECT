@@ -68,9 +68,9 @@
 
         <pool name="base" primary="true" db="pointbase" type="dbcp">
             <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-            <property name="url" value="jdbc:mysql://192.168.248.137:3306/base"/>
-            <property name="username" value="base"/>
-            <property name="password" value="edasyw_123"/>
+            <property name="url" value="jdbc:mysql://192.168.248.139:3306/base"/>
+            <property name="username" value="base_kf"/>
+            <property name="password" value="base_kf"/>
             <property name="initialSize" value="0"/>
             <property name="maxActive" value="2"/>
             <property name="maxIdle" value="2"/>

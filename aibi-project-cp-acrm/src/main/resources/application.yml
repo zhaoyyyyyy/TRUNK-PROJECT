@@ -3,7 +3,7 @@ server:
   context-path: /acrm
 spring:
   profiles:
-    active: cp-yw
+    active: @env@
   application:
     name: cpacrm
   jpa:
@@ -26,3 +26,8 @@ eureka:
   instance:
     leaseExpirationDurationInSeconds: 1
     leaseRenewalIntervalInSeconds: 1
+info:
+  app:  
+    name: "cpacrm"  
+    description: "360客户视图接口"  
+version: "1.0.0"  

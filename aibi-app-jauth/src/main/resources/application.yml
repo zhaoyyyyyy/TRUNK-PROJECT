@@ -3,7 +3,7 @@ server:
   context-path: /jauth
 spring:
   profiles:
-    active: dev
+    active: @env@
   application:
     name: jauth
   jpa:
