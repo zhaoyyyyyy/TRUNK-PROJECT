@@ -2,15 +2,19 @@ package com.asiainfo.cp.acrm.auth.model;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Required;
-
 public class PortrayalRequestModel {
 	
-	
+	private String isCustMastCode;
 	private String customerId;
 	private String sceneId;
 	private List<String> labelId;
-
+	
+	public String getIsCustMastCode() {
+		return isCustMastCode;
+	}
+	public void setIsCustMastCode(String isCustMastCode) {
+		this.isCustMastCode = isCustMastCode;
+	}
 	public String getCustomerId() {
 		return customerId;
 	}

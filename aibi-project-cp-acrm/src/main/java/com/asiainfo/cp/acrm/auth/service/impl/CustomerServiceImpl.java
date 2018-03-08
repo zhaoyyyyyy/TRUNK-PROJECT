@@ -28,6 +28,7 @@ import com.asiainfo.cp.acrm.base.utils.StringUtil;
 import com.asiainfo.cp.acrm.label.service.ILabelMetaInfoService;
 import com.asiainfo.cp.acrm.label.service.ILabelTableDataService;
 import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
+import com.asiainfo.cp.acrm.label.vo.SQLAssembleVo;
 
 @Service
 @Transactional
@@ -43,6 +44,13 @@ public class CustomerServiceImpl implements ICustomerService{
 	public List<LabelModel> getLabelModels(PortrayalRequestModel reqModel) throws BaseException {
 		if(StringUtil.isEmpty(reqModel.getCustomerId())){
 			throw new ParamRequiredException("客户Id不能为空");
+		}
+		String isCustMastId=reqModel.getIsCustMastCode();
+		if (StringUtil.isNotEmpty(isCustMastId)) {
+			if (!isCustMastId.equals(SQLAssembleVo.IS_CUST_MAST_CODE_FALSE)
+					&& !isCustMastId.equals(SQLAssembleVo.IS_CUST_MAST_CODE_TRUE)) {
+				throw new ParamRequiredException("是否为客户主码参数值错误，当前值："+isCustMastId);
+			}
 		}
 		if(reqModel.getLabelId()==null ||reqModel.getLabelId().size()==0){
 			throw new ParamRequiredException("标签Id不能为空");
@@ -93,6 +101,13 @@ public class CustomerServiceImpl implements ICustomerService{
 		if(StringUtil.isEmpty(reqModel.getCustomerId())){
 			throw new ParamRequiredException("客户Id不能为空");
 		}
+		String isCustMastId=reqModel.getIsCustMastCode();
+		if (StringUtil.isNotEmpty(isCustMastId)) {
+			if (!isCustMastId.equals(SQLAssembleVo.IS_CUST_MAST_CODE_FALSE)
+					&& !isCustMastId.equals(SQLAssembleVo.IS_CUST_MAST_CODE_TRUE)) {
+				throw new ParamRequiredException("是否为客户主码参数值错误，当前值："+isCustMastId);
+			}
+		}
 		if(StringUtil.isEmpty(reqModel.getLabelId())){
 			throw new ParamRequiredException("标签Id不能为空");
 		}
@@ -105,7 +120,6 @@ public class CustomerServiceImpl implements ICustomerService{
 				throw new ParamRequiredException("pageInfo的pageSize必须为数字");
 			}
 		}
-		
 		String labelId=reqModel.getLabelId();
 	    	List<LabelMetaDataInfo> result=labelMetaInfoSvc.getVerticalLabelMetaInfo(labelId);
 	    	Page page=new Page();

@@ -23,6 +23,7 @@ import com.asiainfo.cp.acrm.label.entity.MdaSysTableColumn;
 import com.asiainfo.cp.acrm.label.service.ILabelMetaInfoService;
 import com.asiainfo.cp.acrm.label.vo.LabelInfoVo;
 import com.asiainfo.cp.acrm.label.vo.LabelMetaDataInfo;
+import com.asiainfo.cp.acrm.label.vo.SQLAssembleVo;
 
 @Service
 public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
@@ -38,10 +39,17 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 	
 	
 	private String cust_id;
+	
+	private String cust_mast_id;
 
     @Value("${cust_id}")
 	public void setCust_id(String cust_id) {
 		this.cust_id = cust_id;
+	}
+    
+    @Value("${cust_mast_id}")
+	public void setCust_mast_id(String cust_mast_id) {
+		this.cust_mast_id = cust_mast_id;
 	}
 
 	@Override
@@ -155,7 +163,12 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 		return getLabelMetaInfo(labelInfo, columns);
 	}
 
-	private String getTableSQL(List<LabelMetaDataInfo> lableMetaDataInfos, String userId, String filter,String sortCol,String sortOrder) {
+	private String getTableSQL(List<LabelMetaDataInfo> lableMetaDataInfos, SQLAssembleVo sqlAssembleVo) {
+		String userId=sqlAssembleVo.getUserId();
+		String filter=sqlAssembleVo.getFilter();
+		String sortCol=sqlAssembleVo.getSortCol();
+		String sortOrder=sqlAssembleVo.getSortOrder();
+		String isMastCode=sqlAssembleVo.getIsCustMastCode();
 		
 		StringBuffer selectSQL = new StringBuffer();
 		StringBuffer fromSQL = new StringBuffer();
@@ -168,7 +181,11 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			LabelMetaDataInfo each = lableMetaDataInfos.get(i);
 			if (i == 0) {
 				fromSQL.append(each.getTableName()).append(" ").append(each.getTableShortName());
-				whereSQL.append(" and ").append(this.cust_id).append("='").append(userId).append("'");
+				if (isMastCode==null ||isMastCode.equals(SQLAssembleVo.IS_CUST_MAST_CODE_FALSE)) {
+					whereSQL.append(" and ").append(this.cust_id).append("='").append(userId).append("'");
+				}else {
+					whereSQL.append(" and ").append(this.cust_mast_id).append("='").append(userId).append("'");
+				}
 				if (filter!=null && !StringUtil.isEmpty(filter.trim())) {
 					whereSQL.append(" and ").append(filter);
 				}
@@ -203,22 +220,32 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 		List<LabelMetaDataInfo> lableMetaDataInfos = new ArrayList<LabelMetaDataInfo>();
 		lableMetaDataInfos.add(lableMetaDataInfo);
 		String userId = reqModel.getCustomerId();
-		return this.getTableSQL(lableMetaDataInfos, userId, null,null,null);
+		SQLAssembleVo sqlAssembelVo=new SQLAssembleVo();
+		sqlAssembelVo.setUserId(userId);
+		sqlAssembelVo.setIsCustMastCode(reqModel.getIsCustMastCode());
+		return this.getTableSQL(lableMetaDataInfos, sqlAssembelVo);
 	}
 	
 	@Override
 	public String getTableSQL(PortrayalRequestModel reqModel,List<LabelMetaDataInfo> lableMetaDataInfos) {
 		String userId = reqModel.getCustomerId();
-		return this.getTableSQL(lableMetaDataInfos, userId, null,null,null);
+		SQLAssembleVo sqlAssembelVo=new SQLAssembleVo();
+		sqlAssembelVo.setUserId(userId);
+		sqlAssembelVo.setIsCustMastCode(reqModel.getIsCustMastCode());
+		return this.getTableSQL(lableMetaDataInfos, sqlAssembelVo);
 	}
 
 	@Override
 	public String getTableSQL(ViewRequestModel reqModel, List<LabelMetaDataInfo> lableMetaDataInfos) {
 		String userId = reqModel.getCustomerId();
+		SQLAssembleVo sqlAssembelVo=new SQLAssembleVo();
+		sqlAssembelVo.setIsCustMastCode(reqModel.getIsCustMastCode());
+		sqlAssembelVo.setUserId(userId);
+		sqlAssembelVo.setFilter(reqModel.getFilter());
 		if (reqModel.getPageInfo()!=null) {
-			return this.getTableSQL(lableMetaDataInfos, userId, reqModel.getFilter(),reqModel.getPageInfo().getSortCol(),reqModel.getPageInfo().getSortOrder());
-		}else {
-			return this.getTableSQL(lableMetaDataInfos, userId, reqModel.getFilter(),null,null);
+			sqlAssembelVo.setSortCol(reqModel.getPageInfo().getSortCol());
+			sqlAssembelVo.setSortOrder(reqModel.getPageInfo().getSortOrder());
 		}
+		return this.getTableSQL(lableMetaDataInfos,sqlAssembelVo);
 	}
 }

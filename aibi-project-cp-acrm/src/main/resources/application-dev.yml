@@ -2,6 +2,8 @@ jauth-url:
   http://localhost:8440/jauth
 cust_id:
   cust_id
+cust_mast_id:
+  cust_mast_id
 spring:
   datasource:
     primary:

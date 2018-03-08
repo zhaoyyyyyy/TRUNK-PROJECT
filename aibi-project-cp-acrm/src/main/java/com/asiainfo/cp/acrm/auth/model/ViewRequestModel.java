@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class ViewRequestModel {
 	
+	private String isCustMastCode;
 	private String customerId;
 	private String sceneId;
 	
@@ -15,6 +16,12 @@ public class ViewRequestModel {
 	
 	private String filter;
 
+	public String getIsCustMastCode() {
+		return isCustMastCode;
+	}
+	public void setIsCustMastCode(String isCustMastCode) {
+		this.isCustMastCode = isCustMastCode;
+	}
 	public String getCustomerId() {
 		return customerId;
 	}
