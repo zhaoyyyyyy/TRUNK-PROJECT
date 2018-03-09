@@ -1,5 +1,7 @@
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.service.impl;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +38,8 @@ import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.LocTaskExeInfoVo;
 @Transactional
 public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, String> implements LocTaskExeInfoService {
 
+	public static final String CONFIG_LOG_TASK_ID = "LOC_CONFIG_SYS_TIMED_TASK_LOG_TASK_SAVE";
+	
     @Autowired
     private ILogTaskExecuteDetailService logTaskExecuteDetailService;
     @Autowired
@@ -84,9 +88,43 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
                             
                             if (isSchedule) {   //调度任务
                                 //启动调度任务
-                                DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
-                                dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
-                                res = true;
+                                String localAddress = null;
+	                    			try {
+	                    				localAddress = InetAddress.getLocalHost().getHostAddress();
+	                    			} catch (UnknownHostException e) {
+	                    				LogUtil.error("获取本机ipv4错误！", e);
+	                    			}
+	                    			//JAUTH是单机吗？true:单机，false:多机
+                            		if ("127.0.0.1".equals(localAddress)) {	//JAUTH是单机部署
+
+	                    				LogUtil.debug("JAUTH是单机部署,启动所有任务。。。");
+	                    			
+                                    //启动调度任务
+                                    DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
+                                    dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
+                                    res = true;
+                            		} else {		//JAUTH是多机部署
+
+	                    				LogUtil.debug("JAUTH是多机部署。。。");
+	                    			
+                            			Coconfig ipConfig = coconfigService.getCoconfigByKey("LOC_CONFIG_APP_JAUTH_MASTER_IP");
+
+    	                    				LogUtil.debug("本机ip:"+localAddress+" | JAUTH主机ip:"+ipConfig.getConfigVal());
+    	                    			
+                            			if (ipConfig.getConfigVal().equals(localAddress)) {	//本机是主机
+                                        //启动调度任务
+                                        DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
+                                        dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
+                                        res = true;
+                            			} else {		//本机是备份机
+                            				if (CONFIG_LOG_TASK_ID.equals(locTask.getTaskId())) {	//自启动日志任务
+                                            //启动调度任务
+                                            DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
+                                            dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
+                                            res = true;
+                            				}
+                            			}
+                            		}
                             } else {    //立即/延迟执行任务
                                 if (ms > 0) {
                                     try {
