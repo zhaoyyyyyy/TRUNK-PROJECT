@@ -21,6 +21,41 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>com.asiainfo.biapp.si.coc.JauthApplication</start-class>
 	</properties>
+	
+	 <!-- 设置现场打包参数 -->
+  	<profiles>
+  		<profile>
+            <id>as-dev</id>    <!-- 亚信-开发（默认）-->
+            <properties>
+                <env>as-dev</env>
+                <port>8440</port>
+            </properties>
+            <activation><activeByDefault>true</activeByDefault></activation>
+        </profile>
+        <profile>
+            <id>as-qa</id>    <!-- 亚信-测试 -->
+            <properties>
+                <env>as-qa</env>
+                <port>8440</port>
+            </properties>
+        </profile>
+        <profile>
+            <id>cp-yw-dev</id> <!-- 中邮-邮务-开发-->
+            <properties>
+                <env>cp-yw-dev</env>
+                <port>8440</port>
+            </properties>
+        </profile>
+        <profile>
+            <id>cp-yw-prod</id><!-- 中邮-邮务-生产-->
+            <properties>
+                <env>cp-yw-prod</env>
+                <port>8440</port>
+            </properties>
+        </profile>
+    </profiles>
+    
+    
 	<dependencies>
 
 		<!-- 如果是打war包开启,打jar包需要注释掉  

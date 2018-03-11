@@ -20,35 +20,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.7</java.version>
 	</properties>
-  
-  <!-- 设置现场打包参数 -->
-  	<profiles>
-  		<profile>
-            <id>as-dev</id>    <!-- 亚信-开发（默认）-->
-            <properties>
-                <env>as-dev</env>
-            </properties>
-            <activation><activeByDefault>true</activeByDefault></activation>
-        </profile>
-        <profile>
-            <id>as-qa</id>    <!-- 亚信-测试 -->
-            <properties>
-                <env>as-qa</env>
-            </properties>
-        </profile>
-        <profile>
-            <id>cp-yw-dev</id> <!-- 中邮-邮务-开发-->
-            <properties>
-                <env>cp-yw-dev</env>
-            </properties>
-        </profile>
-        <profile>
-            <id>cp-yw-prod</id><!-- 中邮-邮务-生产-->
-            <properties>
-                <env>cp-yw-prod</env>
-            </properties>
-        </profile>
-    </profiles>
     
     
   	<dependencies>

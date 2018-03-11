@@ -1,5 +1,5 @@
 server:
-  port: 8440
+  port: @port@
   context-path: /jauth
 spring:
   profiles:

@@ -1,5 +1,5 @@
 server:
-  port: 8442
+  port: @port@
   context-path: /acrm
 spring:
   profiles:

@@ -1,16 +1,18 @@
 jauth-url: 
   http://localhost:8440/jauth
 cust_id:
-  cust_sub_code
+  cust_id
+cust_mast_id:
+  cust_mast_id
 spring:
   datasource:
     primary:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.248.142:3306/datav?useUnicode=true&characterEncoding=utf-8
-      username: datav
-      password: 1qaz2wsx
+      url: jdbc:mysql://10.1.245.175:3306/cocdev?useUnicode=true&characterEncoding=utf-8
+      username: cocdev
+      password: cocdev
       maxActive: 300
-      maxWait: 1800
+      maxWait: 500
       maxIdle: 30
       minIdle: 10
       initialSize: 10
@@ -22,11 +24,11 @@ spring:
       time-between-eviction-runs-millis: 180000
     secondary:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.200.25:10034/ads_acrm?useUnicode=true&characterEncoding=utf-8
-      username: 2SbUQlH7FJKyur9V
-      password: WGoQpjLNgTA4VwrHNQBcqe0zDbXZti
+      url: jdbc:mysql://10.1.245.175:3306/cocdev?useUnicode=true&characterEncoding=utf-8
+      username: cocdev
+      password: cocdev
       maxActive: 300
-      maxWait: 1800
+      maxWait: 500
       maxIdle: 30
       minIdle: 10
       initialSize: 10
@@ -35,9 +37,11 @@ spring:
       removeAbandonedTimeout: 3600
       test-while-idle: true
       validation-query: SELECT 1 FROM DUAL
-      time-between-eviction-runs-millis: 180000
+      time-between-eviction-runs-millis: 180000  
 cache:
-  isDimtableCached: false
+  loadDataScope: DimtableInfoDaoImpl
+  isDimtableCached: true
 context:
   listener:
     classes: com.asiainfo.cp.acrm.ApplicationStartup
+    
