@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.sf.json.JSONObject;
 
-import org.apache.commons.beanutils.PropertyUtils;
+//import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,7 +111,11 @@ public class ClaimedProperties2JsonConverter extends Obj2JsonConverter {
 			for (String complexProp : keySet) {
 				Object complexPropValue = null;
 				try {
-					complexPropValue = PropertyUtils.getProperty(obj, complexProp);
+					//complexPropValue = PropertyUtils.getProperty(obj, complexProp); modify by zhougz 使用反射替代工具类，避免编译问题
+					
+					String methodName= "get"  +complexProp.replaceFirst(complexProp.substring(0, 1),complexProp.substring(0, 1).toUpperCase());
+					complexPropValue = obj.getClass().getMethod(methodName).invoke(obj);
+					
 				} catch (Exception e) {
 					logger.error("从对象{}中，获取属性{}时出错", obj, complexProp);
 				}
