@@ -94,8 +94,12 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
 	                    			} catch (UnknownHostException e) {
 	                    				LogUtil.error("获取本机ipv4错误！", e);
 	                    			}
+	                    			
+                        			Coconfig ipConfig = coconfigService.getCoconfigByKey("LOC_CONFIG_APP_JAUTH_MASTER_IP");
+                    				LogUtil.debug("本机ip:"+localAddress+" | JAUTH主机ip:"+ipConfig.getConfigVal());
+                    				
 	                    			//JAUTH是单机吗？true:单机，false:多机
-                            		if ("127.0.0.1".equals(localAddress)) {	//JAUTH是单机部署
+                            		if (null == ipConfig || (null!=ipConfig.getConfigVal()&&"127.0.0.1".equals(ipConfig.getConfigVal()))) {	
 
 	                    				LogUtil.debug("JAUTH是单机部署,启动所有任务。。。");
 	                    			
@@ -106,10 +110,6 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
                             		} else {		//JAUTH是多机部署
 
 	                    				LogUtil.debug("JAUTH是多机部署。。。");
-	                    			
-                            			Coconfig ipConfig = coconfigService.getCoconfigByKey("LOC_CONFIG_APP_JAUTH_MASTER_IP");
-
-    	                    				LogUtil.debug("本机ip:"+localAddress+" | JAUTH主机ip:"+ipConfig.getConfigVal());
     	                    			
                             			if (ipConfig.getConfigVal().equals(localAddress)) {	//本机是主机
                                         //启动调度任务
