@@ -123,7 +123,6 @@ public class LogAspectAdvice {
         params.put("interfaceUrl", targetName + "/" + method);
         params.put("inputParams", inputParams);
         params.put("outputParams", result);
-        System.out.println("ACRM日志插入");
         try {
         	 HttpUtil.sendPost(jauthUrl + "/api/log/interface/save", params);
 		} catch (Exception e) {
@@ -146,14 +145,11 @@ public class LogAspectAdvice {
         // 获取目标对象的类名(形如：com.action.admin.LoginAction)
         String targetName = pjp.getTarget().getClass().getName();
         // 执行完方法的返回值：调用proceed()方法，就会触发切入点方法执行
+        long startTime = System.currentTimeMillis();  
         Object result = pjp.proceed();// result的值就是被拦截方法的返回值
-        
+        long endTime = System.currentTimeMillis();  
+        LogUtil.debug(method+" time :"+((endTime-startTime)+"ms"));
         if(!"setReqAndRes".equals(method)){
-            
-        	
-        	
-
-        	
         	
         	String inputParams = "";
         	if(args != null  && args.length> 0){

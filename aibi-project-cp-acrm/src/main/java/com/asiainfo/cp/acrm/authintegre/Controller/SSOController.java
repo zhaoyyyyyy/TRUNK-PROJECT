@@ -6,6 +6,7 @@ import com.asiainfo.cp.acrm.authintegre.vo.CnPost;
 import com.asiainfo.cp.acrm.base.controller.BaseController;
 import com.asiainfo.cp.acrm.authintegre.vo.IsLogin;
 import com.asiainfo.cp.acrm.authintegre.vo.UserInfo;
+import com.asiainfo.cp.acrm.base.utils.LogUtil;
 import com.asiainfo.cp.acrm.base.utils.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +31,7 @@ public class SSOController extends BaseController {
 
     @ApiOperation(value = "验证是否已登录")
     @RequestMapping(value = "/islogin", method = RequestMethod.GET)
-    public IsLogin islogin(HttpServletRequest request, HttpServletResponse response) {
+    public boolean islogin(HttpServletRequest request, HttpServletResponse response) {
 
         boolean loginflg = false;
         IsLogin islogin = new IsLogin();
@@ -44,13 +45,13 @@ public class SSOController extends BaseController {
             e.printStackTrace();;
         }
         islogin.setIslogin(loginflg);
-        return islogin;
+        return loginflg;
     }
 
     @ApiOperation(value = "获取登录用户信息")
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     public UserInfo userinfo(HttpServletRequest request) {
-
+        long s = System.currentTimeMillis();
         UserInfo userinfo = new UserInfo();
         try {
             String sessionid = getSessionId(request);
@@ -77,6 +78,7 @@ public class SSOController extends BaseController {
         } catch (Exception e) {
             e.getMessage();
         }
+        LogUtil.debug(new StringBuffer("SSO login:").append(System.currentTimeMillis()-s).append("ms"));
         return userinfo;
     }
 
