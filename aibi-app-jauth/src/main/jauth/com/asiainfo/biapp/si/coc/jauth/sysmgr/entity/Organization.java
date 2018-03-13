@@ -5,7 +5,7 @@
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.entity;
 
 import java.util.Date;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -75,10 +75,10 @@ public class Organization extends BaseEntity {
     private Organization parentOrg;
 
     /** 子组织列表 */
-    @OrderBy(clause = "orgcode")
     @OneToMany
     @JoinColumn(name = "parent_id")
-    private Set<Organization> children = new HashSet<>(0);
+    @OrderBy(clause = "ordernum asc")
+    private Set<Organization> children = new LinkedHashSet<>(0);
 
     /** 创建人姓名 */
     @Column(name = "creatername")

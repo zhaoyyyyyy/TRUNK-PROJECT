@@ -19,6 +19,15 @@ window.jauth_onload = function() {
 					data.parentName = data1.simpleName;
 					data.orgType = $.getCodeDesc('ZZLXZD',data.orgType);
 					data.orgStatus = $.getCodeDesc('ZZZTZD',data.orgStatus);
+					if(data.orgCode == 1 || data.orgCode == 2){
+						data.showadd = true;
+						data.showedit = false;
+						data.showdelete = false; 
+					}else{
+						data.showadd = true;
+						data.showedit = true;
+						data.showdelete = true; 
+					}
 					new Vue({ el:'#saveDataForm', data: data });
 				}
 			});
@@ -26,6 +35,10 @@ window.jauth_onload = function() {
 			data.createTime = (new Date(data.createTime*1000)).toString();
 			data.orgType = $.getCodeDesc('ZZLXZD',data.orgType);
 			data.orgStatus = $.getCodeDesc('ZZZTZD',data.orgStatus);
+			data.parentName = "";
+			data.showadd = true;
+			data.showedit = false;
+			data.showdelete = false; 
 			new Vue({ el:'#saveDataForm', data: data });
 		}
 		}
