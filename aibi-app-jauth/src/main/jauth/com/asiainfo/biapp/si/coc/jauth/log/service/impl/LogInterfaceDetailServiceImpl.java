@@ -51,16 +51,14 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
     @Override
     public void save(LogInterfaceDetail model) {
         LogUtil.debug(this.getClass().getSimpleName()+".save()");
+
+        savePool.add(model);    //加入缓存，等待入库
         
         //当日志数量大于poolSaveSize时，自动入库
         if (null != savePool && savePool.size() > poolSaveSize) {  //入库
-        	
 	        	LogUtil.debug("auto insert DB...");
         		
-	        	savePool.add(model);    //加入缓存，等待入库
             this.taskSave();
-        } else {
-            savePool.add(model);    //加入缓存，等待入库
         }
     }
     
