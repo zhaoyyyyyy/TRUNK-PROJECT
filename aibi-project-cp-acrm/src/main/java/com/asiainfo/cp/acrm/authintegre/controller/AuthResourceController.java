@@ -1,4 +1,4 @@
-package com.asiainfo.cp.acrm.authintegre.Controller;
+package com.asiainfo.cp.acrm.authintegre.controller;
 
 import com.ai.secframe.client.OrgmodelClient;
 import com.ai.secframe.client.SecframeClient;

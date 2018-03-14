@@ -1,4 +1,4 @@
-package com.asiainfo.cp.acrm.authintegre.Controller;
+package com.asiainfo.cp.acrm.authintegre.controller;
 
 import com.ai.sso.external.IPopedom;
 import com.alibaba.fastjson.JSONObject;
