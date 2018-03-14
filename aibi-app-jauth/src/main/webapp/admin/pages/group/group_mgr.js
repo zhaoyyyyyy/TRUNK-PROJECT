@@ -75,7 +75,7 @@ window.jauth_onload = function() {
 		}
 // 删除按钮
 function fun_del(id) {
-	$.confirm('您确定要继续删除么？', function() {
+	$.confirm('数据范围被删除后，分配了该数据权限的用户将不能再切换到属于该业务线的专区或者使用该行政区划的数据', function() {
 				$.commAjax({
 							url : $.ctx + '/api/group/delete',
 							postData : {

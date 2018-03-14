@@ -148,7 +148,6 @@ public class LogAspectAdvice {
         long startTime = System.currentTimeMillis();  
         Object result = pjp.proceed();// result的值就是被拦截方法的返回值
         long endTime = System.currentTimeMillis();  
-        LogUtil.debug(method+" time :"+((endTime-startTime)+"ms"));
         if(!"setReqAndRes".equals(method)){
         	
         	String inputParams = "";
@@ -181,7 +180,7 @@ public class LogAspectAdvice {
         		}
         	}
         	String interfaceName = getbooleanMethod(pjp);
-        	this.saveLog(inputParams, interfaceName,method, targetName, resultStr );
+        	this.saveLog(inputParams, endTime-startTime+"ms：：："+interfaceName,method, targetName, resultStr );
         }
         return result;
     }
