@@ -7,6 +7,15 @@ import com.asiainfo.biapp.si.coc.jauth.log.entity.LogMonitorDetail;
 import com.asiainfo.biapp.si.coc.jauth.log.vo.LogMonitorDetailVo;
 
 public interface ILogMonitorDetailService extends BaseService<LogMonitorDetail,String>{
+
+    /**
+     * @describe 入库
+     * @author hongfb
+     * @param
+     * @date 2018-3-14
+     */
+    public void taskSave();
+    
     /**
      * Description: 根据查询条件查询后台监控日志
      * @author lilin

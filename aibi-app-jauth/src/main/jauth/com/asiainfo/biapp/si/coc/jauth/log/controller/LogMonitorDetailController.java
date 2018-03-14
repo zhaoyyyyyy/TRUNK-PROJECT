@@ -1,6 +1,8 @@
 
 package com.asiainfo.biapp.si.coc.jauth.log.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +14,7 @@ import com.asiainfo.biapp.si.coc.jauth.frame.controller.BaseController;
 import com.asiainfo.biapp.si.coc.jauth.frame.json.JSONResult;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.log.entity.LogMonitorDetail;
 import com.asiainfo.biapp.si.coc.jauth.log.service.ILogMonitorDetailService;
 import com.asiainfo.biapp.si.coc.jauth.log.vo.LogMonitorDetailVo;
@@ -97,4 +100,24 @@ public class LogMonitorDetailController  extends BaseController<LogMonitorDetail
         logmonitorService.save(logMonitorDetail);
         return "success";
     }
+
+    /**
+     * @describe 入库
+     * @author hongfb
+     * @param
+     * @date 2018-3-14
+     */
+    @ApiOperation(value="保存任务")
+    @RequestMapping(value="/taskSave",method=RequestMethod.POST)
+    public String taskSave() {
+        LogUtil.debug(this.getClass().getSimpleName()+".taskSave()"+ new Date().toLocaleString());
+        LogUtil.debug("5s一次入库开始。。。");
+        try {
+        		logmonitorService.taskSave();
+        } catch (Exception e) {
+            return RETURN_FAIL;
+        }
+        return RETURN_SUCCESS;
+    }
+    
 }

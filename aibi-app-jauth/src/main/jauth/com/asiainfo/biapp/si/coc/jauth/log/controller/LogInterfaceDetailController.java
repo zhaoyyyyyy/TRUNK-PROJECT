@@ -102,34 +102,6 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
       }
       return RETURN_SUCCESS;
   }
-  /**
-   * @describe 入库
-   * @author hongfb
-   * @param
-   * @date 2018-1-16
-   */
-  @ApiOperation(value="测试保存任务")
-  @RequestMapping(value="/testSave",method=RequestMethod.POST)
-  public String testSave() {
-      LogUtil.debug(this.getClass().getSimpleName()+".save()"+new Date().toLocaleString());
-      LogUtil.debug("一次日志请求开始。。。");
-      
-      long s = System.currentTimeMillis();
-      LogInterfaceDetail log = new LogInterfaceDetail();
-      log.setUserId("admin");
-      log.setInterfaceName(this.getClass().getSimpleName()+".save()");
-      log.setInterfaceUrl("api/log/interface/testSave");
-      log.setOpTime(new Date());
-      log.setIpAddr("localhost");
-      log.setOutputParams(RETURN_SUCCESS);
-      
-      loginterfaceService.save(log);
-      
-      long es = System.currentTimeMillis() - s;
-      LogUtil.debug("es:"+es+"ms");
-
-      return RETURN_SUCCESS;
-  }
   
   
 }
