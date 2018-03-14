@@ -95,7 +95,7 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
 	                    				LogUtil.error("获取本机ipv4错误！", e);
 	                    			}
 	                    			
-                        			Coconfig ipConfig = coconfigService.getCoconfigByKey("LOC_CONFIG_APP_JAUTH_MASTER_IP");
+                        			Coconfig ipConfig = coconfigService.getCoconfigByKey("LOC_CONFIG_SYS_JAUTH_MASTER_IP");
                     				LogUtil.debug("本机ip:"+localAddress+" | JAUTH主机ip:"+ipConfig.getConfigVal());
                     				
 	                    			//JAUTH是单机吗？true:单机，false:多机
