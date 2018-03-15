@@ -84,17 +84,5 @@ public class LogMonitorDetailServiceImpl extends BaseServiceImpl<LogMonitorDetai
             LogMonitorDetailVo logMonitorDetailVo) {
         return iLogMonitorDetailDao.findLogMonitorList(page, logMonitorDetailVo);
     }
-    public static void main(String[] args) {
-		LogMonitorDetail model = null;
-		LogMonitorDetailServiceImpl logMonitorDetailServiceImpl = new LogMonitorDetailServiceImpl();
-		while (true) {
-			model = new LogMonitorDetail();
-			model.setInterfaceName("hfbTestLog");
-			model.setInterfaceUrl("/hfb/test/log");
-			model.setIpAddr("127.0.0.1");
-			model.setLevelId("hfbtest"+Math.random());
-			logMonitorDetailServiceImpl.save(model);
-		}
-	}
 
 }
