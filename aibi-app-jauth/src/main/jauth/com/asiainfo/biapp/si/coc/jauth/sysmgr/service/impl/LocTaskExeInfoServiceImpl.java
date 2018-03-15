@@ -140,16 +140,16 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
                             LogUtil.error("Execute parameters ["+locTask.getTaskExeTime()+"] is not Cron!");
                         }
                     } else {
-                        LogUtil.error("url is not null!");
+                        LogUtil.error(locTask.getTaskId()+" url is null!");
                     }
                 } else {
-                    LogUtil.error("ConfigVal of "+locTask.getTaskId()+" is not null!");
+                    LogUtil.error("ConfigVal of "+locTask.getTaskId()+" is null!");
                 }
             } else {
                 LogUtil.error("not find task, taskId is "+locTask.getTaskId());
             }
         } else {
-            LogUtil.error("LocTaskExeInfo is not null.");
+            LogUtil.error("LocTaskExeInfo is null!");
         }
         
         return res;
