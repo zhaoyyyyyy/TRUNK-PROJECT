@@ -94,7 +94,6 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
   @RequestMapping(value="/taskSave",method=RequestMethod.POST)
   public String taskSave() {
       LogUtil.debug(this.getClass().getSimpleName()+".taskSave()"+ new Date().toLocaleString());
-      LogUtil.debug("5s一次入库开始。。。");
       try {
           loginterfaceService.taskSave();
       } catch (Exception e) {

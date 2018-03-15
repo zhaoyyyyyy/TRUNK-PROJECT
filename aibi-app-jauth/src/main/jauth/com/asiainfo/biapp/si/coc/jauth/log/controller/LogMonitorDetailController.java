@@ -111,7 +111,6 @@ public class LogMonitorDetailController  extends BaseController<LogMonitorDetail
     @RequestMapping(value="/taskSave",method=RequestMethod.POST)
     public String taskSave() {
         LogUtil.debug(this.getClass().getSimpleName()+".taskSave()"+ new Date().toLocaleString());
-        LogUtil.debug("5s一次入库开始。。。");
         try {
         		logmonitorService.taskSave();
         } catch (Exception e) {
