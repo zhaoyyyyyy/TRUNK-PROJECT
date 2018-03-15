@@ -6,17 +6,14 @@
 
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.component;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.shared.Application;
-import com.netflix.eureka.EurekaServerContextHolder;
-import com.netflix.eureka.registry.PeerAwareInstanceRegistry;
-import com.netflix.eureka.resources.StatusResource;
-import com.netflix.eureka.util.StatusInfo;
+import de.codecentric.boot.admin.model.Application;
+import de.codecentric.boot.admin.registry.ApplicationRegistry;
 
 /**
  * Title : AppUrlComponent
@@ -44,6 +41,12 @@ import com.netflix.eureka.util.StatusInfo;
 public class AppUrlComponent {
 
 	
+	private final ApplicationRegistry registry;
+
+	public AppUrlComponent(ApplicationRegistry registry) {
+		this.registry = registry;
+	}
+	
 	/**
 	 * 
 	 * Description: 如果LOC没有启动成功，会返回空（null），此场景下不应该发送请求给loc
@@ -52,54 +55,13 @@ public class AppUrlComponent {
 	 * @return
 	 */
 	public String getEuarkeAppUrl(String appName){
-		if("JAUTH".equals(appName)){
-			return getJauthAppUrl();
-		}
-		PeerAwareInstanceRegistry PeerAwareInstanceRegistry = EurekaServerContextHolder.getInstance().getServerContext().getRegistry();
-		List<Application> sortedApplications = PeerAwareInstanceRegistry.getSortedApplications();
-		for (Application app : sortedApplications) {
-			List<InstanceInfo> list = app.getInstances();
-			for (InstanceInfo instan : list) {
-				if(appName.equalsIgnoreCase(instan.getAppName())){
-					
-					//TODO 这里要说明的是 从euraka 无法获取到上下文，目前在中邮现场loc是有上下文的，暂时用端口号判断解决
-					if("loc".equalsIgnoreCase(instan.getAppName()) && !"8441".equals(instan.getPort())){
-						 return instan.getHomePageUrl()+"loc";
-					}
-					return instan.getHomePageUrl();
-				}
-			}
+		Collection<Application> applications = registry.getApplicationsByName(appName);
+		for (Application application : applications) {
+			return application.getServiceUrl();
 		}
 		return null;
 	}
 	
-	/**
-	 * 
-	 * Description: 
-	 *
-	 * @param appName
-	 * @return
-	 */
-	public String getLocAppUrl(){
-		return getEuarkeAppUrl("LOC");
-	}
-	
-	/**
-	 * 
-	 * Description: 如果LOC没有启动成功，会返回空（null），此场景下不应该发送请求给loc
-	 *
-	 * @param appName
-	 * @return
-	 */
-	public String getJauthAppUrl(){
-		StatusInfo statusInfo;
-		try {
-			statusInfo = new StatusResource().getStatusInfo();
-		}catch (Exception e) {
-			statusInfo = StatusInfo.Builder.newBuilder().isHealthy(false).build();
-		}
-		return statusInfo.getInstanceInfo().getHomePageUrl()+statusInfo.getInstanceInfo().getVIPAddress();
-	}
     
     /**
      *  把url替换成真实的地址
@@ -107,27 +69,21 @@ public class AppUrlComponent {
      * @return
      */
     public String getRealUrl(String url){
-        String res = null;
+        String realUrl = null;
         
-        if (url.contains("JAUTH")) {
-            String jauthUrl = this.getJauthAppUrl();
-            if (null != jauthUrl) {
-                if (jauthUrl.endsWith("/")) {
-                    jauthUrl = jauthUrl.substring(0, jauthUrl.length() - 1);
-                } 
-                res = url.replace("${JAUTH}", jauthUrl);
-            }
-        } else if (url.contains("LOC")) {
-            String locUrl = this.getLocAppUrl();
-            if (null != locUrl) {
-                if (locUrl.endsWith("/")) {
-                    locUrl = locUrl.substring(0, locUrl.length() - 1);
-                } 
-                res = url.replace("${LOC}", locUrl);
-            }
+        //${LOC}/api/xxxx/refushCache 等地址替换成 spring boot admin 上面注册的地址
+        Pattern r = Pattern.compile("\\{.*\\}");
+        Matcher m = r.matcher(url);
+        while (m.find()){
+        	String appkey = m.group(0);
+        	appkey = appkey.substring(1, appkey.length()-1);
+        	realUrl = url.replaceAll("\\$\\{[^}]*\\}", this.getEuarkeAppUrl(appkey.toLowerCase()));
         }
-        
-        return res;
+        //去掉地址后面的 "/"
+        if (realUrl != null && realUrl.endsWith("/")) {
+        	realUrl = realUrl.substring(0, realUrl.length() - 1);
+        } 
+        return realUrl;
     }
     
     
