@@ -188,7 +188,44 @@ public class LogAspectAdvice {
     // 异常通知
     @AfterThrowing(value = "execution(* com.asiainfo.cp.acrm.*.controller.*.*(..))", throwing = "e")
     public void doThrow(JoinPoint jp, Throwable e) {
-        System.out.println("删除出错啦");
+//        System.out.println("删除出错啦");
+        // 调用方法的参数
+        Object[] args = jp.getArgs();
+        // 调用的方法名
+        String method = jp.getSignature().getName();
+        // 获取目标对象(形如：com.action.admin.LoginAction@1a2467a)
+        Object target = jp.getTarget();
+        // 获取目标对象的类名(形如：com.action.admin.LoginAction)
+        String targetName = jp.getTarget().getClass().getName();
+
+        // 接口名称
+        String interfaceName = "接口名称";
+        try {
+            interfaceName = getbooleanMethod(jp);
+        } catch (Exception e2) {
+            LogUtil.error(e2.toString());
+        }
+        
+        String inputParams = "";
+        if(args != null  && args.length> 0){
+            
+            ObjectMapper mapper = new ObjectMapper();
+            if(args[0] instanceof org.apache.catalina.connector.RequestFacade){
+                inputParams = "请求头";
+            }else{
+                try {
+                    inputParams = mapper.writeValueAsString(args);
+                } catch (Exception e1) {
+                    inputParams = "不能解析的参数";
+                }
+            }
+            if(inputParams.length() > 2000){
+                inputParams = inputParams.substring(0, 2000);
+            }
+        }
+        
+        this.saveLog(inputParams,"异常：：："+ interfaceName,method, targetName, e.toString() );
+
     }
 
 }
