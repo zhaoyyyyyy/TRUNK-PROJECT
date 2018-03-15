@@ -60,7 +60,12 @@ public class AppUrlComponent {
 		for (Application app : sortedApplications) {
 			List<InstanceInfo> list = app.getInstances();
 			for (InstanceInfo instan : list) {
-				if(appName.equals(instan.getAppName())){
+				if(appName.equalsIgnoreCase(instan.getAppName())){
+					
+					//TODO 这里要说明的是 从euraka 无法获取到上下文，目前在中邮现场loc是有上下文的，暂时用端口号判断解决
+					if("loc".equalsIgnoreCase(instan.getAppName()) && !"8441".equals(instan.getPort())){
+						 return instan.getHomePageUrl()+"loc";
+					}
 					return instan.getHomePageUrl();
 				}
 			}
