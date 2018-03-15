@@ -137,19 +137,19 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
                                 res = true;
                             }
                         } else {
-                            LogUtil.error("执行参数 ["+locTask.getTaskExeTime()+"] 不是Cron表达式！");
+                            LogUtil.error("Execute parameters ["+locTask.getTaskExeTime()+"] is not Cron!");
                         }
                     } else {
-                        LogUtil.error("url不能个为空！");
+                        LogUtil.error("url is not null!");
                     }
                 } else {
-                    LogUtil.error(locTask.getTaskId()+"的配置项的ConfigVal不能为空");
+                    LogUtil.error("ConfigVal of "+locTask.getTaskId()+" is not null!");
                 }
             } else {
-                LogUtil.error(locTask.getTaskId()+"的配置项不能为空");
+                LogUtil.error("not find task, taskId is "+locTask.getTaskId());
             }
         } else {
-            LogUtil.error("LocTaskExeInfo不能为空");
+            LogUtil.error("LocTaskExeInfo is not null.");
         }
         
         return res;
