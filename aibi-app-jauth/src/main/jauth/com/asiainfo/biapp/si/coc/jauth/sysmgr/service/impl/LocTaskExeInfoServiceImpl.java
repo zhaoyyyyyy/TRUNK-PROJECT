@@ -92,16 +92,16 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
 	                    			try {
 	                    				localAddress = InetAddress.getLocalHost().getHostAddress();
 	                    			} catch (UnknownHostException e) {
-	                    				LogUtil.error("获取本机ipv4错误！", e);
+	                    				LogUtil.error("get localhost ipv4 error!", e);
 	                    			}
 	                    			
                         			Coconfig ipConfig = coconfigService.getCoconfigByKey("LOC_CONFIG_SYS_JAUTH_MASTER_IP");
-                    				LogUtil.debug("本机ip:"+localAddress+" | JAUTH主机ip:"+ipConfig.getConfigVal());
+                    				LogUtil.debug("localhost ip is :"+localAddress+" | JAUTH host Ip is :"+ipConfig.getConfigVal());
                     				
 	                    			//JAUTH是单机吗？true:单机，false:多机
                             		if (null == ipConfig || (null!=ipConfig.getConfigVal()&&"127.0.0.1".equals(ipConfig.getConfigVal()))) {	
 
-	                    				LogUtil.debug("JAUTH是单机部署,启动所有任务。。。");
+	                    				LogUtil.debug("JAUTH is simple,start all task。。。");
 	                    			
                                     //启动调度任务
                                     DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
@@ -109,7 +109,7 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
                                     res = true;
                             		} else {		//JAUTH是多机部署
 
-	                    				LogUtil.debug("JAUTH是多机部署。。。");
+	                    				LogUtil.debug("JAUTH is Computer cluster。。。");
     	                    			
                             			if (ipConfig.getConfigVal().equals(localAddress)) {	//本机是主机
                                         //启动调度任务
