@@ -7,6 +7,7 @@ var createConfigurationTemplate = [ {
 		name : '请输入名称',
 		code : '请输入编码',
 		type : 'catalog',
+		valueType : 5,
 		value : '请输入配置项的值',
 		desc : ''
 	} ]
@@ -16,6 +17,7 @@ var createConfigurationTemplate = [ {
 		name : '请输入配置项名称',
 		code : '{PARENT_CODE}_请输入',
 		type : 'boolean',
+		valueType : 1,
 		value : '01',
 		flag:''
 	} ]
@@ -25,6 +27,7 @@ var createConfigurationTemplate = [ {
 		name : '请输入名称',
 		code : '请输入编码',
 		type : 'text',
+		valueType : 2,
 		value : '请输入配置项的值',
 		desc : '',
 		flag:''
@@ -45,6 +48,7 @@ var createConfigurationTemplate = [ {
 		name : '数据库类型',
 		code : 'TYPE',
 		type : 'enum',
+		valueType : 6,
 		dimCode : 'SJKLX',
 		value : '',
 		flag:''
@@ -52,6 +56,7 @@ var createConfigurationTemplate = [ {
 		name : '驱动',
 		code : 'DRIVER',
 		type : 'enum',
+		valueType : 4,
 		dimCode : 'driverClass',
 		value : '',
 		flag:''
@@ -59,18 +64,21 @@ var createConfigurationTemplate = [ {
 		name : '地址',
 		code : 'URL',
 		type : 'text',
+		valueType : 2,
 		value : 'root',
 		flag:''
 	}, {
 		name : '用户名',
 		code : 'USERNAME',
 		type : 'text',
+		valueType : 2,
 		value : '请输入配置项的值',
 		flag:''
 	}, {
 		name : '密码',
 		code : 'PASSWORD',
 		type : 'text',
+		valueType : 2,
 		value : '请输入配置项的值',
 		flag:''
 	} ]
@@ -80,7 +88,7 @@ var createConfigurationTemplate = [ {
 		name : '驱动',
 		code : '{PARENT_CODE}_DRIVERCLASS',
 		type : 'driver',
-		valueType : 5,
+		valueType : 4,
 		dimCode : 'driverClass',
 		value : 'http://xxx.xxx.xxx.xxx',
 		flag:''
