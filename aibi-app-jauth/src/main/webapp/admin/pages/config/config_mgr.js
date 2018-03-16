@@ -1,6 +1,12 @@
 var _parentKey = '';
 
-
+var typeAndI = {
+		1:1,
+		2:2,
+		4:4,
+		5:0,
+		6:5
+}
 var createConfigurationTemplate = [ {
 	name : '新增目录',
 	fields : [ {
@@ -8,6 +14,7 @@ var createConfigurationTemplate = [ {
 		code : '请输入编码',
 		type : 'catalog',
 		valueType : 5,
+		value : '请输入配置项的值',
 		desc : ''
 	} ]
 },{
@@ -109,15 +116,15 @@ function fun_add(i, configKey) {
 	var isEdit = 0;
 	var dg;
 	if (null != configKey) {
+		var a = typeAndI[i];
 		isEdit = 1;
 		dg = $.dialog('编辑  [  ' + configKey + '  ]', $.ctx
 				+ '/admin/pages/config/config_add.html', 1200, 500);
 		dg.getParams = function() {
 			return {
-				'configFields' : createConfigurationTemplate[i].fields,
+				'configFields' : createConfigurationTemplate[typeAndI[i]].fields,
 				'coKey' : configKey,
 				'isEdit' : isEdit,
-				'configValType' : i
 			}
 		}
 	} else {
@@ -128,7 +135,6 @@ function fun_add(i, configKey) {
 				'configFields' : createConfigurationTemplate[i].fields,
 				'coKey' : _parentKey,
 				'isEdit' : isEdit,
-				'configValType' : createConfigurationTemplate[i].valueType,
 			}
 		}
 	}
