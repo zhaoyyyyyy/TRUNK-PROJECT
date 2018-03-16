@@ -1,5 +1,6 @@
 var _parentKey = '';
 
+//左侧为类型，右侧为createConfigurationTemplate中的位置
 var typeAndI = {
 		1:1,
 		2:2,
