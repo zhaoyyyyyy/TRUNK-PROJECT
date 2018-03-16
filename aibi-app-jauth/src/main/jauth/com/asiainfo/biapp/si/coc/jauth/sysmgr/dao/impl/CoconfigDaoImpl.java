@@ -64,8 +64,8 @@ public class CoconfigDaoImpl extends BaseDaoImpl<Coconfig, String> implements Co
 			params.put("parentKey", coconfigVo.getParentKey());
 		}
 		if (StringUtils.isNotBlank(coconfigVo.getConfigKey())) {
-			hql.append("and c.configKey = :configKey ");
-			params.put("configKey", coconfigVo.getConfigKey());
+			hql.append("and c.configKey LIKE :configKey ");
+			params.put("configKey","%"+ coconfigVo.getConfigKey() +"%");
 		}
 		if (StringUtils.isNotBlank(coconfigVo.getConfigDesc())) {
 			hql.append("and c.configDesc LIKE :configDesc ");
