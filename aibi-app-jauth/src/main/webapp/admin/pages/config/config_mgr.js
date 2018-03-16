@@ -8,7 +8,6 @@ var createConfigurationTemplate = [ {
 		code : '请输入编码',
 		type : 'catalog',
 		valueType : 5,
-		value : '请输入配置项的值',
 		desc : ''
 	} ]
 },{
@@ -129,7 +128,7 @@ function fun_add(i, configKey) {
 				'configFields' : createConfigurationTemplate[i].fields,
 				'coKey' : _parentKey,
 				'isEdit' : isEdit,
-				'configValType' : i
+				'configValType' : createConfigurationTemplate[i].valueType,
 			}
 		}
 	}
