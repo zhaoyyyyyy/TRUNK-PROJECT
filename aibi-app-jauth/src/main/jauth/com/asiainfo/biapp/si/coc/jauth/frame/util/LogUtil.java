@@ -179,7 +179,7 @@ public class LogUtil {
             }
             params.put("errorMsg", iMsg);
             
-            HttpUtil.sendPost("/api/log/monitor/save", params);
+//            HttpUtil.sendPost(jauthUrl + "/api/log/monitor/save", params);
         } catch (Exception e) {
            LogUtil.error("http远程rest调用异常", e);
         }
