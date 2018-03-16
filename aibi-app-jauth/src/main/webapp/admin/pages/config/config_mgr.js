@@ -10,6 +10,7 @@ var typeAndI = {
 }
 var createConfigurationTemplate = [ {
 	name : '新增目录',
+	show : true,
 	fields : [ {
 		name : '请输入名称',
 		code : '请输入编码',
@@ -20,6 +21,7 @@ var createConfigurationTemplate = [ {
 	} ]
 },{
 	name : '开关配置',
+	show : true,
 	fields : [ {
 		name : '请输入配置项名称',
 		code : '{PARENT_CODE}_请输入',
@@ -30,6 +32,7 @@ var createConfigurationTemplate = [ {
 	} ]
 }, {
 	name : '文本配置',
+	show : true,
 	fields : [ {
 		name : '请输入名称',
 		code : '请输入编码',
@@ -51,6 +54,7 @@ var createConfigurationTemplate = [ {
 	} ]
 },**/{
 	name : '数据库配置',
+	show : true,
 	fields : [ {
 		name : '数据库类型',
 		code : 'TYPE',
@@ -91,6 +95,7 @@ var createConfigurationTemplate = [ {
 	} ]
 },{
 	name : '驱动配置',
+	show : false,
 	fields : [ {
 		name : '驱动',
 		code : '{PARENT_CODE}_DRIVERCLASS',
@@ -102,6 +107,7 @@ var createConfigurationTemplate = [ {
 	} ]
 },{
 	name : '数据库类型',
+	show : false,
 	fields : [ {
 		name : '数据库类型',
 		code : '{PARENT_CODE}_TYPE',
@@ -177,6 +183,7 @@ window.jauth_onload = function() {
 							page : 1
 						} ]);
 						$.each(createConfigurationTemplate,function(i) {
+							if(createConfigurationTemplate[i].show){
 								var btnObj = createConfigurationTemplate[i]
 								var btn = '<div class="left newButton"><div>'
 										+ '<input type="button" class="add" value="'
@@ -184,6 +191,7 @@ window.jauth_onload = function() {
 										+ '" onclick="fun_add('+ i+ ')" /></div></div>';
 								model.btn = model.btn
 										+ btn;
+							}
 						})
 						model.btn = model.btn
 								+ '<div class="clear"></div>';
@@ -272,28 +280,29 @@ function fun_del(configKey) {
 		cache : false,
 		onSuccess : function(data) {
 			if(data.config.children.length != 0){
-				mssssg = "此操作会删除本节点及叶子节点数据，且不可恢复，是否继续？";
+				$.alert("该配置项下有子节点，无法删除",function(){
+					return false;
+				})
 			}else{
-				mssssg = "此操作会删除本叶子节点，确定删除？";
-			}
-			$.confirm(mssssg, function() {
-				$.commAjax({
-					url : $.ctx + '/api/config/delete',
-					postData : {
-						key : configKey
-					},
-					onSuccess : function(data) {
-						$.success('删除成功。', function() {
-							$("#mainGrid").setGridParam({
-								postData : $("#formSearch").formToJson()
-							}).trigger("reloadGrid", [ {
-								page : 1
-							} ]);
-						});
-					    
-					}
+				$.confirm("此操作会删除本叶子节点，确定删除？", function() {
+					$.commAjax({
+						url : $.ctx + '/api/config/delete',
+						postData : {
+							key : configKey
+						},
+						onSuccess : function(data) {
+							$.success('删除成功。', function() {
+								$("#mainGrid").setGridParam({
+									postData : $("#formSearch").formToJson()
+								}).trigger("reloadGrid", [ {
+									page : 1
+								} ]);
+							});
+						    
+						}
+					});
 				});
-			});
+			}
 		}
 	})
 	

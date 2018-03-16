@@ -2,7 +2,7 @@ window.jauth_onload=function() {
 	
 	//列表
 	var urlShow = $.ctx+'/api/datadic/dic/dicPage/query';
-	var colNames = ['字典名称','字典代码','字典类型','备注','操作'];
+	var colNames = ['字典名称','字典编码','字典类型','备注','操作'];
 	var colModel = [
 		{name:'dicName', index:'dicName', width:20, align:'left'},
 		{name:'dicCode', index:'dicCode', width:20,  align:'left'},
