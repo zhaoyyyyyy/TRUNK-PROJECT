@@ -173,9 +173,13 @@ public class LogUtil {
             params.put("levelId", level);
             params.put("threadName", threadName);
             params.put("interfaceUrl", interfaceUrl + "/" + method);
-            params.put("errorMsg", msg);
-            System.out.println(msg);
-            //HttpUtil.sendPost(jauthUrl + "/api/log/monitor/save", params);
+            String iMsg = "";
+            if(msg.toString().length()>2000){
+            	iMsg = msg.toString().substring(0,2000);
+            }
+            params.put("errorMsg", iMsg);
+            
+            HttpUtil.sendPost("/api/log/monitor/save", params);
         } catch (Exception e) {
            LogUtil.error("http远程rest调用异常", e);
         }
