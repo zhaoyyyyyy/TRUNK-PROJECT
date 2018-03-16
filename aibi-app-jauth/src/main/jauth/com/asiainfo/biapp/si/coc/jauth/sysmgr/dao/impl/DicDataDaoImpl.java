@@ -75,8 +75,8 @@ public class DicDataDaoImpl extends BaseDaoImpl<DicData,String> implements DicDa
 			params.put("dataName", "%"+dicDataVo.getDataName()+"%");
 		}
 		if(StringUtils.isNotBlank(dicDataVo.getDicCode())){
-			hql.append(" and dicCode = :dicCode");
-			params.put("dicCode", dicDataVo.getDicCode());
+			hql.append(" and dicCode like :dicCode");
+			params.put("dicCode", "%"+dicDataVo.getDicCode()+"%");
 		}
 		if(StringUtils.isNotBlank(dicDataVo.getCode())){
 			hql.append(" and code like :code");
