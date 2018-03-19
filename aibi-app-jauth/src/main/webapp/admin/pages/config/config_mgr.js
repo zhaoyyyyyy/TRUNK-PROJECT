@@ -280,7 +280,7 @@ function fun_del(configKey) {
 		cache : false,
 		onSuccess : function(data) {
 			if(data.config.children.length != 0){
-				$.alert("该配置项下有子节点，无法删除",function(){
+				$.alert("该配置项下有子节点，不能删除",function(){
 					return false;
 				})
 			}else{
