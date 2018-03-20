@@ -44,13 +44,10 @@ public class LogUtil {
 
     private static Map<String, Logger> loggerMap = new HashMap<>();
 
-    private static final String LEVEL_DEBUG = "DEBUG";
-
-    private static final String LEVEL_INFO = "INFO";
-
-    private static final String LEVEL_WARN = "WARN";
-
-    private static final String LEVEL_ERROR = "ERROR";
+    private static final String LEVEL_DEBUG = "0";
+    private static final String LEVEL_ERROR = "1";
+    private static final String LEVEL_INFO = "2";
+    private static final String LEVEL_WARN = "3";
 
 
 

@@ -17,13 +17,10 @@ public class LogUtil {
 
     private static Map<String, Logger> loggerMap = new HashMap<String, Logger>();
 
-    private static String LEVEL_DEBUG = "DEBUG";
-
-    private static String LEVEL_INFO = "INFO";
-
-    private static String LEVEL_WARN = "WARN";
-
-    private static String LEVEL_ERROR = "ERROR";
+    private static final String LEVEL_DEBUG = "0";
+    private static final String LEVEL_ERROR = "1";
+    private static final String LEVEL_INFO = "2";
+    private static final String LEVEL_WARN = "3";
 
     
     private static String jauthUrl;
@@ -44,7 +41,7 @@ public class LogUtil {
         String className = ste.getClassName();
         String method = ste.getMethodName();
         String threadName = Thread.currentThread().getName();
-        //saveLog(LEVEL_DEBUG, threadName,className, method, message);
+        saveLog(LEVEL_DEBUG, threadName,className, method, message);
         Logger log = getLogger(className);
         if (log.isDebugEnabled()) {
             log.debug(message);
@@ -56,7 +53,7 @@ public class LogUtil {
         String className = ste.getClassName();
         String method = ste.getMethodName();
         String threadName = Thread.currentThread().getName();
-        //saveLog(LEVEL_INFO, threadName,className, method, message);
+        saveLog(LEVEL_INFO, threadName,className, method, message);
         Logger log = getLogger(className);
         if (log.isInfoEnabled()) {
             log.info(message);
@@ -68,7 +65,7 @@ public class LogUtil {
         String className = ste.getClassName();
         String method = ste.getMethodName();
         String threadName = Thread.currentThread().getName();
-        //saveLog(LEVEL_WARN, threadName,className, method, message);
+        saveLog(LEVEL_WARN, threadName,className, method, message);
         Logger log = getLogger(className);
         log.warn(message);
     }
@@ -79,7 +76,7 @@ public class LogUtil {
         String className = ste.getClassName();
         String method = ste.getMethodName();
         String threadName = Thread.currentThread().getName();
-       // saveLog(LEVEL_ERROR, threadName,className, method, message);
+        saveLog(LEVEL_ERROR, threadName,className, method, message);
         Logger log = getLogger(className);
         log.error(message);
     }
@@ -90,7 +87,7 @@ public class LogUtil {
         String className = ste.getClassName();
         String method = ste.getMethodName();
         String threadName = Thread.currentThread().getName();
-        //saveLog(LEVEL_ERROR, threadName,className, method, message+":"+t.getMessage());
+        saveLog(LEVEL_ERROR, threadName,className, method, message+":"+t.getMessage());
         Logger log = getLogger(className);
         log.error(message, t);
     }
