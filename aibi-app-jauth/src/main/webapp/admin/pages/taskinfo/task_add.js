@@ -268,3 +268,17 @@ function fun_to_qiehuan(i) {
 		$('.exeTime').val('');
 	}
 }
+
+function changeSelect(obj){
+	$.commAjax({
+		url : $.ctx + '/api/config/get',
+		postData : {
+			"coKey" : obj.value
+		},
+		type : 'post',
+		cache : false,
+		onSuccess : function(data) {
+			$("#sysId").val(data.config.configDesc);
+		}
+	})
+}
