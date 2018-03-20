@@ -26,7 +26,7 @@
 					<th>任务选择</th>
 					<td colspan="7">
 <!-- 						<v-input v-bind:defvalue="taskId" id="taskId" name="taskId" dataDic="DDRW" class="inputStyle" type="text"></v-input> -->
-					    <select v-model="taskId" class="inputStyle" v-bind:defvalue="taskId" id="taskId" name="taskId">  
+					    <select v-model="taskId" class="inputStyle" v-bind:defvalue="taskId" id="taskId" name="taskId" onchange="changeSelect(this)">  
 					        <option v-for="item in items" v-bind:value="item.configKey">{{item.configName}}</option>  
 					    </select>
 					</td>
