@@ -38,7 +38,7 @@ import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.LocTaskExeInfoVo;
 @Transactional
 public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, String> implements LocTaskExeInfoService {
 
-	public static final String CONFIG_LOG_TASK_ID = "LOC_CONFIG_SYS_TIMED_TASK_LOG_TASK_SAVE";
+	public static final Map<String,String>  CONFIG_LOG_TASK_IDS = new HashMap<>();
 	
     @Autowired
     private ILogTaskExecuteDetailService logTaskExecuteDetailService;
@@ -47,6 +47,12 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
     @Autowired
     private CoconfigService coconfigService;
     
+	public LocTaskExeInfoServiceImpl() {
+		CONFIG_LOG_TASK_IDS.put("LOC_CONFIG_SYS_TIMED_TASK_LOG_TASK_SAVE", "interface");
+		CONFIG_LOG_TASK_IDS.put("LOC_CONFIG_SYS_TIMED_TASK_MONITOR_LOG_TASK_SAVE", "monitor");
+	}
+
+
 	@Autowired
 	private LocTaskExeInfoDao locTaskExeInfoDao;
 	@Override
@@ -117,7 +123,8 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
                                         dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
                                         res = true;
                             			} else {		//本机是备份机
-                            				if (CONFIG_LOG_TASK_ID.equals(locTask.getTaskId())) {	//自启动日志任务
+                            				//自启动日志任务
+                            				if (CONFIG_LOG_TASK_IDS.containsKey(locTask.getTaskId())) {	
                                             //启动调度任务
                                             DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
                                             dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
