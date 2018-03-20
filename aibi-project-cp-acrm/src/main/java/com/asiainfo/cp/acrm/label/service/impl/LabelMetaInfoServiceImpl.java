@@ -136,6 +136,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			metaDataInfo.setLabelId(labelInfo.getLabelId());
 			metaDataInfo.setTableName(table.getTableName());
 			metaDataInfo.setLabelName(labelInfo.getLabelName());
+			metaDataInfo.setLabelSortDesc(labelInfo.getLabelExtInfoCP().getSortDesc());
 			if (StringUtil.isNotEmpty(column.getDimTransId())) {
 				DimtableInfo dimInfo = dimDao.getDimtableInfo(column.getDimTransId());
 				if (dimInfo == null) {
@@ -169,6 +170,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 		String sortCol=sqlAssembleVo.getSortCol();
 		String sortOrder=sqlAssembleVo.getSortOrder();
 		String isMastCode=sqlAssembleVo.getIsCustMastCode();
+		String defaultSortDesc = null;
 		
 		StringBuffer selectSQL = new StringBuffer();
 		StringBuffer fromSQL = new StringBuffer();
@@ -181,6 +183,7 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			LabelMetaDataInfo each = lableMetaDataInfos.get(i);
 			if (i == 0) {
 				fromSQL.append(each.getTableName()).append(" ").append(each.getTableShortName());
+				defaultSortDesc=each.getLabelSortDesc();
 				if (isMastCode==null ||isMastCode.equals(SQLAssembleVo.IS_CUST_MAST_CODE_FALSE)) {
 					whereSQL.append(" and ").append(this.cust_id).append("='").append(userId).append("'");
 				}else {
@@ -209,6 +212,8 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			if (sortOrder!=null && !StringUtil.isEmpty(sortOrder.trim())) {
 				orderbySQL.append(" ").append(sortOrder);
 			}
+		}else if (defaultSortDesc!=null&& !StringUtil.isEmpty(defaultSortDesc.trim())){
+			orderbySQL.append(" order by ").append(defaultSortDesc);
 		}
 		String result=selectSQL.toString() + fromSQL + whereSQL+orderbySQL;
 		LogUtil.info("查询原数据表sql:"+result);

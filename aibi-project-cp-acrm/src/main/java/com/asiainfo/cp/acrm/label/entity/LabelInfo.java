@@ -9,6 +9,7 @@ package com.asiainfo.cp.acrm.label.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -245,6 +247,18 @@ public class LabelInfo extends BaseEntity {
 	joinColumns={@JoinColumn(name="LABEL_ID")},inverseJoinColumns={@JoinColumn(name="COLUMN_ID")})  
     private List<MdaSysTableColumn> vertialColumns;
     
+    @OneToOne(cascade=CascadeType.ALL)  
+    @JoinColumn(name="label_ID")  
+    private LabelExtInfoCP labelExtInfoCP;
+	
+    
+	public LabelExtInfoCP getLabelExtInfoCP() {
+		return labelExtInfoCP;
+	}
+
+	public void setLabelExtInfoCP(LabelExtInfoCP labelExtInfoCP) {
+		this.labelExtInfoCP = labelExtInfoCP;
+	}
 
 	public List<MdaSysTableColumn> getVertialColumns() {
 		return vertialColumns;

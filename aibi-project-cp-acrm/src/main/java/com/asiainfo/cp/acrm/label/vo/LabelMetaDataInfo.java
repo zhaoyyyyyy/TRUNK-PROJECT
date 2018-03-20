@@ -14,7 +14,7 @@ public class LabelMetaDataInfo {
 	private String dimValueColAliasName;
 	private String customerId;
 	private String dimtableId;
-	
+	private String labelSortDesc;
 	
 	public String getCustomerId() {
 		return customerId;
@@ -102,6 +102,12 @@ public class LabelMetaDataInfo {
 	}
 	public void setDimValueColAliasName(String dimValueColAliasName) {
 		this.dimValueColAliasName = dimValueColAliasName;
+	}
+	public String getLabelSortDesc() {
+		return labelSortDesc;
+	}
+	public void setLabelSortDesc(String labelSortDesc) {
+		this.labelSortDesc = labelSortDesc;
 	}
 	
 }
