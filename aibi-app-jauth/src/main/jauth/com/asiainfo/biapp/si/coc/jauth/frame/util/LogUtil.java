@@ -6,18 +6,19 @@
 
 package com.asiainfo.biapp.si.coc.jauth.frame.util;
 
+import java.net.InetAddress;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Appender;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
+import com.asiainfo.biapp.si.coc.jauth.log.entity.LogMonitorDetail;
+import com.asiainfo.biapp.si.coc.jauth.log.service.ILogMonitorDetailService;
 
 /**
  * Title : LogUtil
@@ -44,15 +45,11 @@ public class LogUtil {
 
     private static Map<String, Logger> loggerMap = new HashMap<>();
 
-    private static final String LEVEL_DEBUG = "DEBUG";
-
-    private static final String LEVEL_INFO = "INFO";
-
-    private static final String LEVEL_WARN = "WARN";
-
-    private static final String LEVEL_ERROR = "ERROR";
-
-
+    private static final String LEVEL_DEBUG = "0";
+    private static final String LEVEL_ERROR = "1";
+    private static final String LEVEL_INFO = "2";
+    private static final String LEVEL_WARN = "3";
+    
 
     private LogUtil() {
     }
@@ -67,7 +64,7 @@ public class LogUtil {
         saveLog(LEVEL_DEBUG, threadName, className, method, message);
         Logger log = getLogger(className);
         if (log.isDebugEnabled()) {
-            log.debug(message);
+            log.debug(message.toString());
         }
     }
 
@@ -79,7 +76,7 @@ public class LogUtil {
         saveLog(LEVEL_INFO, threadName, className, method, message);
         Logger log = getLogger(className);
         if (log.isInfoEnabled()) {
-            log.info(message);
+            log.info(message.toString());
         }
     }
 
@@ -90,7 +87,7 @@ public class LogUtil {
         String threadName = Thread.currentThread().getName();
         saveLog(LEVEL_WARN, threadName, className, method, message);
         Logger log = getLogger(className);
-        log.warn(message);
+        log.warn(message.toString());
     }
 
     public static void error(Object message) {
@@ -101,7 +98,7 @@ public class LogUtil {
         String threadName = Thread.currentThread().getName();
         saveLog(LEVEL_ERROR, threadName, className, method, message);
         Logger log = getLogger(className);
-        log.error(message);
+        log.error(message.toString());
     }
 
     public static void error(Object message, Throwable t) {
@@ -112,7 +109,7 @@ public class LogUtil {
         String threadName = Thread.currentThread().getName();
         saveLog(LEVEL_ERROR, threadName, className, method, message + ":" + t.getMessage());
         Logger log = getLogger(className);
-        log.error(message, t);
+        log.error(message.toString(), t);
     }
 
     /**
@@ -137,15 +134,18 @@ public class LogUtil {
      * @return
      */
     private static Logger getLogger(String className) {
-        Logger log = null;
+    	Logger log = null;
         if (loggerMap.containsKey(className)) {
             log = loggerMap.get(className);
         } else {
             try {
-                log = Logger.getLogger(Class.forName(className));
+            	
+            	log = LoggerFactory.getLogger(Class.forName(className));
+                //log = Logger.getLogger(Class.forName(className));
                 loggerMap.put(className, log);
             } catch (ClassNotFoundException e) {
-                LogUtil.error("日志无法通过反射加载类"+className,e);
+//                LogUtil.error("日志无法通过反射加载类"+className,e);
+                e.printStackTrace();
             }
         }
         return log;
@@ -159,33 +159,31 @@ public class LogUtil {
      * @param msg
      */
     private static void saveLog(String level, String threadName, String interfaceUrl, String method, Object msg) {
+    ILogMonitorDetailService logmonitorService = (ILogMonitorDetailService)SpringContextHolder.getBean("logMonitorDetailServiceImpl");
         try {
-            // 组装http远程调用
-            Map<String, Object> params = new HashMap<>();
-
-            params.put("userId", "admin");
-            params.put("ipAddr", "127.0.0.1");
-            params.put("opTime", new Date());
-
-//            params.put("sysId", nodeName);
-//            params.put("nodeName", nodeName);
-
-            params.put("levelId", level);
-            params.put("threadName", threadName);
-            params.put("interfaceUrl", interfaceUrl + "/" + method);
-            String iMsg = "";
-            if(msg.toString().length()>2000){
-            	iMsg = msg.toString().substring(0,2000);
-            }
-            params.put("errorMsg", iMsg);
-            
-//            HttpUtil.sendPost(jauthUrl + "/api/log/monitor/save", params);
+        	String localAddress = InetAddress.getLocalHost().getHostAddress();
+        	LogMonitorDetail ld = new LogMonitorDetail();
+        	ld.setUserId("admin");
+        	ld.setIpAddr(localAddress);
+        	ld.setOpTime(new Date());
+        	ld.setLevelId(level);
+        	ld.setThreadName(threadName);
+        	ld.setInterfaceUrl(interfaceUrl + "/" + method);
+        	String iMsg = "";
+        	if(StringUtils.isNotBlank(msg.toString()) && msg.toString().length()>2000){
+        		iMsg = msg.toString().substring(0,2000);
+        	}else{
+        		iMsg = msg.toString();
+        	}
+        	ld.setErrorMsg(iMsg);
+//            logmonitorService.saveRightNow(ld);
         } catch (Exception e) {
-           LogUtil.error("http远程rest调用异常", e);
+//           LogUtil.error("http远程rest调用异常", e);
+           e.printStackTrace();
         }
     }
     
     public static void main(String[] args) {
-        LogUtil.error("自定义LOG");
+//        LogUtil.error("自定义LOG");
     }
 }
