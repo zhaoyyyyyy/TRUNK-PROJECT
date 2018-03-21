@@ -1,30 +1,43 @@
 var _parentKey = '';
 
-
+//左侧为类型，右侧为createConfigurationTemplate中的位置
+var typeAndI = {
+		1:1,
+		2:2,
+		4:4,
+		5:0,
+		6:5
+}
 var createConfigurationTemplate = [ {
 	name : '新增目录',
+	show : true,
 	fields : [ {
 		name : '请输入名称',
 		code : '请输入编码',
 		type : 'catalog',
+		valueType : 5,
 		value : '请输入配置项的值',
 		desc : ''
 	} ]
 },{
 	name : '开关配置',
+	show : true,
 	fields : [ {
 		name : '请输入配置项名称',
 		code : '{PARENT_CODE}_请输入',
 		type : 'boolean',
+		valueType : 1,
 		value : '01',
 		flag:''
 	} ]
 }, {
 	name : '文本配置',
+	show : true,
 	fields : [ {
 		name : '请输入名称',
 		code : '请输入编码',
 		type : 'text',
+		valueType : 2,
 		value : '请输入配置项的值',
 		desc : '',
 		flag:''
@@ -41,10 +54,12 @@ var createConfigurationTemplate = [ {
 	} ]
 },**/{
 	name : '数据库配置',
+	show : true,
 	fields : [ {
 		name : '数据库类型',
 		code : 'TYPE',
 		type : 'enum',
+		valueType : 6,
 		dimCode : 'SJKLX',
 		value : '',
 		flag:''
@@ -52,6 +67,7 @@ var createConfigurationTemplate = [ {
 		name : '驱动',
 		code : 'DRIVER',
 		type : 'enum',
+		valueType : 4,
 		dimCode : 'driverClass',
 		value : '',
 		flag:''
@@ -59,34 +75,39 @@ var createConfigurationTemplate = [ {
 		name : '地址',
 		code : 'URL',
 		type : 'text',
+		valueType : 2,
 		value : 'root',
 		flag:''
 	}, {
 		name : '用户名',
 		code : 'USERNAME',
 		type : 'text',
+		valueType : 2,
 		value : '请输入配置项的值',
 		flag:''
 	}, {
 		name : '密码',
 		code : 'PASSWORD',
 		type : 'text',
+		valueType : 2,
 		value : '请输入配置项的值',
 		flag:''
 	} ]
 },{
 	name : '驱动配置',
+	show : false,
 	fields : [ {
 		name : '驱动',
 		code : '{PARENT_CODE}_DRIVERCLASS',
 		type : 'driver',
-		valueType : 5,
+		valueType : 4,
 		dimCode : 'driverClass',
 		value : 'http://xxx.xxx.xxx.xxx',
 		flag:''
 	} ]
 },{
 	name : '数据库类型',
+	show : false,
 	fields : [ {
 		name : '数据库类型',
 		code : '{PARENT_CODE}_TYPE',
@@ -102,15 +123,15 @@ function fun_add(i, configKey) {
 	var isEdit = 0;
 	var dg;
 	if (null != configKey) {
+		var a = typeAndI[i];
 		isEdit = 1;
 		dg = $.dialog('编辑  [  ' + configKey + '  ]', $.ctx
 				+ '/admin/pages/config/config_add.html', 1200, 500);
 		dg.getParams = function() {
 			return {
-				'configFields' : createConfigurationTemplate[i].fields,
+				'configFields' : createConfigurationTemplate[typeAndI[i]].fields,
 				'coKey' : configKey,
 				'isEdit' : isEdit,
-				'configValType' : i
 			}
 		}
 	} else {
@@ -121,7 +142,6 @@ function fun_add(i, configKey) {
 				'configFields' : createConfigurationTemplate[i].fields,
 				'coKey' : _parentKey,
 				'isEdit' : isEdit,
-				'configValType' : i
 			}
 		}
 	}
@@ -163,6 +183,7 @@ window.jauth_onload = function() {
 							page : 1
 						} ]);
 						$.each(createConfigurationTemplate,function(i) {
+							if(createConfigurationTemplate[i].show){
 								var btnObj = createConfigurationTemplate[i]
 								var btn = '<div class="left newButton"><div>'
 										+ '<input type="button" class="add" value="'
@@ -170,6 +191,7 @@ window.jauth_onload = function() {
 										+ '" onclick="fun_add('+ i+ ')" /></div></div>';
 								model.btn = model.btn
 										+ btn;
+							}
 						})
 						model.btn = model.btn
 								+ '<div class="clear"></div>';
@@ -258,28 +280,29 @@ function fun_del(configKey) {
 		cache : false,
 		onSuccess : function(data) {
 			if(data.config.children.length != 0){
-				mssssg = "此操作会删除本节点及叶子节点数据，且不可恢复，是否继续？";
+				$.alert("该配置项下有子节点，不能删除",function(){
+					return false;
+				})
 			}else{
-				mssssg = "此操作会删除本叶子节点，确定删除？";
-			}
-			$.confirm(mssssg, function() {
-				$.commAjax({
-					url : $.ctx + '/api/config/delete',
-					postData : {
-						key : configKey
-					},
-					onSuccess : function(data) {
-						$.success('删除成功。', function() {
-							$("#mainGrid").setGridParam({
-								postData : $("#formSearch").formToJson()
-							}).trigger("reloadGrid", [ {
-								page : 1
-							} ]);
-						});
-					    
-					}
+				$.confirm("此操作会删除本叶子节点，确定删除？", function() {
+					$.commAjax({
+						url : $.ctx + '/api/config/delete',
+						postData : {
+							key : configKey
+						},
+						onSuccess : function(data) {
+							$.success('删除成功。', function() {
+								$("#mainGrid").setGridParam({
+									postData : $("#formSearch").formToJson()
+								}).trigger("reloadGrid", [ {
+									page : 1
+								} ]);
+							});
+						    
+						}
+					});
 				});
-			});
+			}
 		}
 	})
 	

@@ -49,7 +49,6 @@ public class LogUtil {
     private static final String LEVEL_ERROR = "1";
     private static final String LEVEL_INFO = "2";
     private static final String LEVEL_WARN = "3";
-    
 
     private LogUtil() {
     }

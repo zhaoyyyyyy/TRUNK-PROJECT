@@ -1,6 +1,9 @@
 
 package com.asiainfo.biapp.si.coc.jauth.log.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -104,6 +107,13 @@ public class LogTaskExecuteDetailController  extends BaseController<LogTaskExecu
         logTaskExecuteDetail.setExeParams(locTaskExeInfo.getSysId());  
         logtaskexecuteService.save(logTaskExecuteDetail);
         return RETURN_SUCCESS;
+    }
+    
+    @ApiOperation(value="清空表数据")
+    @RequestMapping(value="/truncateTaskexeLog",method = RequestMethod.POST)
+    public void truncate(){
+        Map<String, Object> params = new HashMap<>();
+        logtaskexecuteService.excuteSql("truncate table loc_log_taskexe_detail", params);
     }
     
     

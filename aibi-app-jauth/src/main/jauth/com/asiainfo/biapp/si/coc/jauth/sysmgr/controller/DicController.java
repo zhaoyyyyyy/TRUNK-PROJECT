@@ -76,8 +76,8 @@ public class DicController extends BaseController<Dic>{
 			params.put("dicName", "%"+dicName+"%");
 		}
 		if(!StringUtil.isEmpty(dicCode)){
-			hql.append(" and dicCode =:dicCode");
-			params.put("dicCode", dicCode);
+			hql.append(" and dicCode like:dicCode");
+			params.put("dicCode", "%"+dicCode+"%");
 		}
 		if(!StringUtil.isEmpty(dicType)){
 			hql.append(" and dicType = :dicType");
