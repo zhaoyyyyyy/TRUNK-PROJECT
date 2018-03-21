@@ -1,6 +1,9 @@
 
 package com.asiainfo.biapp.si.coc.jauth.log.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -98,6 +101,13 @@ public class LogOperationDetailController  extends BaseController<LogOperationDe
     public String saveLogOperationDetail(@ApiIgnore LogOperationDetail logOperationDetail){
         logoperationService.save(logOperationDetail);
         return "success";
+    }
+    
+    @ApiOperation(value="清空表数据")
+    @RequestMapping(value="/truncateOperationLog",method = RequestMethod.POST)
+    public void truncate(){
+        Map<String, Object> params = new HashMap<>();
+        logoperationService.excuteSql("truncate table LOC_LOG_OPERATION_DETAIL", params);
     }
    
 }

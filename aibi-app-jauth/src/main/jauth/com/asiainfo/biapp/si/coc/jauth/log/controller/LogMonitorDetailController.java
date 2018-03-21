@@ -2,6 +2,8 @@
 package com.asiainfo.biapp.si.coc.jauth.log.controller;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -99,6 +101,13 @@ public class LogMonitorDetailController  extends BaseController<LogMonitorDetail
     	}
         logmonitorService.save(logMonitorDetail);
         return "success";
+    }
+    
+    @ApiOperation(value="清空表数据")
+    @RequestMapping(value="/truncateMonitorLog",method = RequestMethod.POST)
+    public void truncate(){
+        Map<String, Object> params = new HashMap<>();
+        logmonitorService.excuteSql("truncate table loc_log_monitor_detail", params);
     }
 
     /**
