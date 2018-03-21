@@ -175,7 +175,7 @@ public class LogUtil {
         		iMsg = msg.toString();
         	}
         	ld.setErrorMsg(iMsg);
-//            logmonitorService.saveRightNow(ld);
+            logmonitorService.saveRightNow(ld);
         } catch (Exception e) {
 //           LogUtil.error("http远程rest调用异常", e);
            e.printStackTrace();

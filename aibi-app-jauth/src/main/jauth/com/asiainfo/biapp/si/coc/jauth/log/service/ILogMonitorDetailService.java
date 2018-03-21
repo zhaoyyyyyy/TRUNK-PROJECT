@@ -16,6 +16,8 @@ public interface ILogMonitorDetailService extends BaseService<LogMonitorDetail,S
      */
     public void taskSave();
     
+    public void saveRightNow(LogMonitorDetail model);
+    
     /**
      * Description: 根据查询条件查询后台监控日志
      * @author lilin

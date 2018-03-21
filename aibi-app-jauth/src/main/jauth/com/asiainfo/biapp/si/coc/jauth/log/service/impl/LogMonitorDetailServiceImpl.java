@@ -63,6 +63,11 @@ public class LogMonitorDetailServiceImpl extends BaseServiceImpl<LogMonitorDetai
         }
     }
     
+    public void saveRightNow(LogMonitorDetail model){
+//    	LogUtil.debug(this.getClass().getSimpleName()+".saveRightNow()");
+    	super.save(model);
+    }
+    
     @Override
     public void taskSave() {
 //        LogUtil.debug(this.getClass().getSimpleName()+".taskSave()入库,缓存入库实体池子大小："+savePool.size());
