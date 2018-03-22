@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.HttpUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
@@ -65,10 +66,9 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
         this.token = String.valueOf(parameters.get("token"));
         this.userId = String.valueOf(parameters.get("userId"));
         this.taskExeInfo = (LocTaskExeInfo) parameters.get("taskExeInfo");
-
-        this.logTaskExecuteDetailService = (ILogTaskExecuteDetailService) parameters.get("logTaskExecuteDetailService");
+        this.logTaskExecuteDetailService = (ILogTaskExecuteDetailService)SpringContextHolder.getBean("logTaskExecuteDetailServiceImpl");
         LogUtil.debug("url="+url+"token="+token+"userId="+userId
-            +"taskExeInfo="+taskExeInfo+"logTaskExecuteDetailService="+logTaskExecuteDetailService);
+            +"taskExeInfo="+taskExeInfo);
     }
     
     @Override

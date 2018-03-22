@@ -87,7 +87,6 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
                         if (null != sessionInfoHolder.getLoginUser()) {
                             map.put("userId", sessionInfoHolder.getLoginUser().getUserName());
                         }
-                        map.put("logTaskExecuteDetailService",logTaskExecuteDetailService);
 
                         if (this.isValidExpression(locTask.getTaskExeTime())) {
                             DynamicTaskExeInfoImpl task = new DynamicTaskExeInfoImpl(map);
