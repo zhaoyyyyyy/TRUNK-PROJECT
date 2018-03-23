@@ -1,8 +1,13 @@
 
 package com.asiainfo.biapp.si.coc.jauth.log.service.impl;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -13,6 +18,8 @@ import com.asiainfo.biapp.si.coc.jauth.frame.dao.BaseDao;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.impl.BaseServiceImpl;
 import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.DateUtil;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.FileUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
 import com.asiainfo.biapp.si.coc.jauth.log.dao.ILogMonitorDetailDao;
@@ -30,7 +37,7 @@ public class LogMonitorDetailServiceImpl extends BaseServiceImpl<LogMonitorDetai
     private List<LogMonitorDetail> savePool = new LinkedList<>();
 
     private int poolSaveSize = 200;
-    private static final String BEAN2TABEL_NAME = "loc_log_monitor_detail";
+    private int bufferedRowSize = 10000;    //每次读取数据的条数
     
 	@Autowired
 	private ILogMonitorDetailDao iLogMonitorDetailDao;
@@ -42,6 +49,14 @@ public class LogMonitorDetailServiceImpl extends BaseServiceImpl<LogMonitorDetai
 	        		poolSaveSize = Integer.parseInt(poolSaveSizeConf.getConfigVal());
 	        	}
         }
+        
+        Coconfig pageSzieConf = configService.getCoconfigByKey("EXPORT_TO_FILE_PAGESIZE"); // 查询每页大小
+        if (null != pageSzieConf) {
+	        	if (StringUtil.isNotEmpty(pageSzieConf.getConfigVal())) {
+	        		bufferedRowSize = Integer.parseInt(pageSzieConf.getConfigVal());
+	        	}
+	    }
+        
 	}
 	
     @Override
@@ -90,5 +105,6 @@ public class LogMonitorDetailServiceImpl extends BaseServiceImpl<LogMonitorDetai
             LogMonitorDetailVo logMonitorDetailVo) {
         return iLogMonitorDetailDao.findLogMonitorList(page, logMonitorDetailVo);
     }
-
+    
+    
 }

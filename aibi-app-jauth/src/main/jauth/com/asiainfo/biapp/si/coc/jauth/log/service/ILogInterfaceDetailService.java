@@ -17,6 +17,14 @@ public interface ILogInterfaceDetailService extends BaseService<LogInterfaceDeta
     public void taskSave();
     
     /**
+     * @describe 日志备份
+     * @author hongfb
+     * @param
+     * @date 2018-3-19
+     */
+    public boolean taskWriteLog();
+    
+    /**
      * @describe 根据条件查询接口调用日志
      * @author lilin
      * @param

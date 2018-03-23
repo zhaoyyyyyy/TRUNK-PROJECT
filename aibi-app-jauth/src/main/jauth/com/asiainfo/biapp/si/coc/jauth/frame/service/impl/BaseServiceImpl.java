@@ -1,6 +1,5 @@
 package com.asiainfo.biapp.si.coc.jauth.frame.service.impl;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -8,14 +7,10 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.asiainfo.biapp.si.coc.jauth.frame.Constants;
 import com.asiainfo.biapp.si.coc.jauth.frame.dao.BaseDao;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.Page;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
-import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
 
 public abstract class BaseServiceImpl<M,ID> implements BaseService<M,String> {
 	
@@ -49,8 +44,12 @@ public abstract class BaseServiceImpl<M,ID> implements BaseService<M,String> {
     	return getBaseDao().get(id);
     }
     @Override
-    public void excuteSql(String sql,Object... params) {
-    	getBaseDao().excuteSql(sql,params);
+    public Integer excuteSql(String sql,Object... params) {
+    		return getBaseDao().excuteSql(sql,params);
+    }
+    @Override
+    public Integer getCountSql(String sql,Object... params) {
+    	return getBaseDao().getCountSql(sql,params);
     }
     
     /**
@@ -168,5 +167,33 @@ public abstract class BaseServiceImpl<M,ID> implements BaseService<M,String> {
 	public String getRealPath(String path){
 		return path;
 	}
+
+	/**
+	 * @describe 备份表
+	 * 
+	 * @param String oldTableName 旧表名
+	 * @param String newTableName 新表名
+	 * @param String isHasData 是否包含数据（true：包含,false:不包含（默认））
+	 * @return
+	 * 
+	 * @author hongfb
+	 * @date 2018-3-19
+	 */
+	public Integer CreateTable(String oldTableName, String newTabelName, boolean isHasData){
+		return getBaseDao().CreateTable(oldTableName, newTabelName, isHasData);
+	}
+	
+	/**
+	 * @describe 清空表
+	 * 
+	 * @param String tableName 表名
+	 * 
+	 * @author hongfb
+	 * @date 2018-3-19
+	 */
+	public Integer truncateTable(String tableName){
+		return getBaseDao().truncateTable(tableName);
+	}
+	
 	
 }

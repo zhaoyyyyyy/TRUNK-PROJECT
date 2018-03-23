@@ -56,7 +56,12 @@ public interface BaseService<T,String> {
      * 执行SQL
      * @param sql
      */
-    public void excuteSql(String sql,Object... params);
+    public Integer excuteSql(String sql,Object... params);
+    /**
+     * 执行SQL
+     * @param sql
+     */
+    public Integer getCountSql(String sql,Object... params);
     
     /**
      * 通过HQL查询集合
@@ -144,6 +149,28 @@ public interface BaseService<T,String> {
 	 */
 	public List<T> getAll();
 	
+	/**
+	 * 
+	 * @describe 获取所有实体
+	 * 
+	 * @param String oldTableName 旧表名
+	 * @param String newTableName 新表名
+	 * @param String isHasData 是否包含数据（true：包含,false:不包含（默认））
+	 * @return
+	 * 
+	 * @author hongfb
+	 * @date 2018-3-19
+	 */
+	public Integer CreateTable(String oldTableName, String newTabelName, boolean isHasData);
 	
+	/**
+	 * @describe 清空表
+	 * 
+	 * @param String tableName 表名
+	 * 
+	 * @author hongfb
+	 * @date 2018-3-19
+	 */
+	public Integer truncateTable(String tableName);
 	
 }

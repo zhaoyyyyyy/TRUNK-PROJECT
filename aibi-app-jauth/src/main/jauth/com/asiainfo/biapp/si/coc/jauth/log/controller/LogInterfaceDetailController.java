@@ -111,5 +111,21 @@ public class LogInterfaceDetailController extends BaseController<LogInterfaceDet
       return RETURN_SUCCESS;
   }
   
+  /**
+   * @describe 日志备份
+   * @author hongfb
+   * @param
+   * @date 2018-3-19
+   */
+  @ApiOperation(value="日志备份")
+  @RequestMapping(value="/taskWriteLog",method=RequestMethod.POST)
+  public String taskWriteLog() {
+	    	try {
+	    		return String.valueOf(loginterfaceService.taskWriteLog());
+	    	} catch (Exception e) {
+	    		return RETURN_FAIL;
+	    	}
+  }
+  
   
 }

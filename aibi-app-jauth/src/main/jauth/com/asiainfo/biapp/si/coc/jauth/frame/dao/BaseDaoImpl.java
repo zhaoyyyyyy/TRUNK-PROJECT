@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.page.Page;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 
 /**
  * @describe Hibernate持久层实现类
@@ -81,10 +82,18 @@ public class BaseDaoImpl<T, ID extends Serializable>  implements BaseDao<T,ID> {
 
 	
 	@Override
-	public void excuteSql(String sql,Object...params) {
+	public Integer excuteSql(String sql,Object...params) {
 		Query query = em.createNativeQuery(sql.toString()); 
 		query = addParametersForArr(query, params);
-		query.executeUpdate();
+		return query.executeUpdate();
+	}
+	@Override
+	public Integer getCountSql(String sql,Object...params) {
+		Query query = em.createNativeQuery(sql.toString()); 
+		query = addParametersForArr(query, params);
+		
+		return sql.contains("COUNT") || sql.contains("count") 
+				? Integer.parseInt(String.valueOf(query.getSingleResult())) : query.getResultList().size();
 	}
 
 //	@Override
@@ -317,5 +326,24 @@ public class BaseDaoImpl<T, ID extends Serializable>  implements BaseDao<T,ID> {
 		return null;
 	}
 
+	
+	public Integer CreateTable(String oldTableName, String newTabelName, boolean isHasData) {
+//		CREATE TABLE 新表 SELECT * FROM 旧表
+		String sql = new StringBuilder().append("CREATE TABLE ").append(newTabelName).append(" SELECT * FROM ")
+				.append(oldTableName).append(isHasData ? "" : " where 1=2").toString();  
+		
+		LogUtil.debug("CreateTable sql:" + sql);
+		
+		return this.excuteSql(sql, new Object[0]);
+	}
 
+	public Integer truncateTable(String tableName) {
+//		truncate table 表名
+		String sql = new StringBuilder().append("truncate table ").append(tableName).toString();  
+		
+		LogUtil.debug("truncateTable sql:" + sql);
+		
+		return this.excuteSql(sql, new Object[0]);
+	}
+	
 }
