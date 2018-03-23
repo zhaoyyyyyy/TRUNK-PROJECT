@@ -201,7 +201,7 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 				LogUtil.debug("sql:" + sqlb);
 				countNO = logInterService.excuteSql(sqlb.toString(), new Object[0]);
 				
-				LogUtil.debug("Monitor log bak end:" + flag + ",cost:"+((System.currentTimeMillis()-s)/1000L) + " s.");
+				LogUtil.debug("Interface log bak end:" + flag + ",cost:"+((System.currentTimeMillis()-s)/1000L) + " s.");
 			}
 		}).start();
         
