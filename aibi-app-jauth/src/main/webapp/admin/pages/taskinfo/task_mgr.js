@@ -140,7 +140,7 @@ window.jauth_onload = function() {
 			function() {
 				var dg = $.dialog('新增调度', $.ctx
 						+ '/admin/pages/taskinfo/task_add.html?parentExeId='
-						+ parentExeId, 800, 530);
+						+ parentExeId, 1000, 530);
 				dg.reload = function() {
 					$("#mainGrid").setGridParam({
 						postData : $("#formSearch").formToJson()
