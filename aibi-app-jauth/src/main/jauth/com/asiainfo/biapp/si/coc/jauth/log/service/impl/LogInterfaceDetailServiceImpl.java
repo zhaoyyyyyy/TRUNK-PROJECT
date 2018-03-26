@@ -110,8 +110,8 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		StringBuffer sqlb = new StringBuffer();
         sqlb.append("SELECT COUNT(1) from ").append(newTabelName);
         no = this.getCountSql(sqlb.toString(), new Object[0]);
-        LogUtil.debug(newTabelName + " 表的总条数：" + no);
-        LogUtil.debug(newTabelName + " 表的总条数sql："+sqlb.toString()+",cost:"+(System.currentTimeMillis()-s1) + " ms.");
+        LogUtil.debug(newTabelName + " COUNT number is：" + no);
+        LogUtil.debug(newTabelName + " COUNT number sql："+sqlb.toString()+",cost:"+(System.currentTimeMillis()-s1) + " ms.");
 		/*
         if (no == 0) {	//防止数据没进备份表
 		//INSERT INTO aa SELECT * FROM a;
@@ -139,9 +139,9 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 				StringBuffer sqlb = new StringBuffer();
 				//2.1 统计总条数
 				sqlb.append("SELECT COUNT(1) from ").append(newTabelNameF).append(" o ");
-		        LogUtil.debug(newTabelNameF + " 表的总条数sql："+sqlb.toString());
+		        LogUtil.debug(newTabelNameF + " COUNT number sql："+sqlb.toString());
 				Integer countNO = logInterService.getCountSql(sqlb.toString(), new Object[0]);
-				LogUtil.debug(newTabelNameF + " 表的总条数：" + countNO);
+				LogUtil.debug(newTabelNameF + " COUNT number is：" + countNO);
 				if (null != countNO && countNO > 0) {  //写文件
 		    			CoconfigService configService = (CoconfigService) SpringContextHolder.getBean("coconfigServiceImpl");
 		            String fileName = "";  
@@ -163,7 +163,7 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		        		if (countNO > bufferedRowSize) {
 		        			pageNO = (int) Math.ceil(countNO / bufferedRowSize);
 		        		}
-		        		LogUtil.debug("读取数据库次数：" + pageNO);
+		        		LogUtil.debug("page size is：" + pageNO);
 		        		List<Map<String, String>> dataList = new ArrayList<Map<String, String>>();
 		        		List<?> page = new ArrayList<>();
 		        		Map<String, String> objMap = null;
@@ -178,7 +178,7 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		        				sqlb = new StringBuffer(sqlb.toString().replace(((i-1)*bufferedRowSize)+",", i*bufferedRowSize+","));
 		        			}
 
-		    		        LogUtil.debug(newTabelNameF + "的第"+(i+1)+"页数据sql："+sqlb.toString());
+		    		        LogUtil.debug("page number: "+(i+1)+" sql："+sqlb.toString());
 		        	        page = logInterService.findListBySql(sqlb.toString(), new Object[0]);
 		        	        //数据结构转换
 		        	        for (Object obj : page) {
@@ -203,7 +203,7 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		        }
 				//2.6 删除备份表
 				sqlb.delete(0, sqlb.length()).append("drop table if exists ").append(newTabelNameF);
-				LogUtil.debug("删除备份表sql:"+sqlb.toString());
+				LogUtil.debug("drop bak table sql:"+sqlb.toString());
 				countNO = logInterService.excuteSql(sqlb.toString(), new Object[0]);
 				
 				LogUtil.debug("Interface log bak end:" + flag + ",cost:"+((System.currentTimeMillis()-s)/1000L) + " s.");
