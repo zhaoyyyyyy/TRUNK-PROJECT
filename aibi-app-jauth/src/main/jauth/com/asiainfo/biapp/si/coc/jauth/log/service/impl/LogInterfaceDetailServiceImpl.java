@@ -154,7 +154,7 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		        		if (countNO > bufferedRowSize) {
 		        			pageNO = (int) Math.ceil(countNO / bufferedRowSize);
 		        		}
-		        		LogUtil.debug("page size is:" + pageNO);
+		        		LogUtil.debug("page size is:" +bufferedRowSize+",page number is:"+ (pageNO+1));
 		        		List<Map<String, String>> dataList = new ArrayList<Map<String, String>>();
 		        		List<?> page = new ArrayList<>();
 		        		Map<String, String> objMap = null;
@@ -164,7 +164,7 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		            		.append(" limit 0,")	.append(bufferedRowSize);
         	        		Object[] log = null;
         	        		//2.5 写数据
-		        		for (int i = 0; i < pageNO; i++) {
+		        		for (int i = 0; i <= pageNO; i++) {
 		        			if (i != 0) {
 		        				sqlb = new StringBuffer(sqlb.toString().replace(((i-1)*bufferedRowSize)+",", i*bufferedRowSize+","));
 		        			}
