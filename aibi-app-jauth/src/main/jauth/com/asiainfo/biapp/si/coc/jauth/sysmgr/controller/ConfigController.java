@@ -74,7 +74,11 @@ public class ConfigController extends BaseController<Coconfig> {
 
 	// 子节点
 	private String getTree(Coconfig coconfig, StringBuffer html) {
-	    if (coconfig.getConfigValType()==5) {
+	    boolean show = true;
+        if(null != coconfig.getIsShowPage() && coconfig.getIsShowPage() == 0){
+            show = false;
+        }
+        if (coconfig.getConfigValType()==5 && show) {
 	        html.append("<li id='").append(coconfig.getConfigKey()).append("' name='").append(coconfig.getConfigKey())
                 .append("' selectable='true'><span class='text'>").append(coconfig.getConfigName()).append("</span>");
             html.append("</span><ul  class='ajax'>");
