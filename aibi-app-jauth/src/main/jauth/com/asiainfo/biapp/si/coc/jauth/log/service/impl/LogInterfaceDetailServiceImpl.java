@@ -4,7 +4,7 @@ package com.asiainfo.biapp.si.coc.jauth.log.service.impl;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -103,28 +103,29 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		String newTabelName = BEAN2TABEL_NAME + "_" + DateUtil.format(nowdate,DateUtil.FMT_DATE_YYYYMMDD);
 		final String newTabelNameF = newTabelName;	//供线程使用
 		Integer no = this.CreateTable(oldTableName, newTabelName, true);
+		LogUtil.debug(oldTableName+"———bak———>"+newTabelName+" end,cost:"+((System.currentTimeMillis()-s)/1000L) + " s.");
 		
         //1.2 计算总条数，清空表
+		long s1 = System.currentTimeMillis();
 		StringBuffer sqlb = new StringBuffer();
         sqlb.append("SELECT COUNT(1) from ").append(newTabelName);
-        LogUtil.debug(newTabelName + " 表的总条数sql：");
         no = this.getCountSql(sqlb.toString(), new Object[0]);
         LogUtil.debug(newTabelName + " 表的总条数：" + no);
-        LogUtil.debug(oldTableName+"———bak———>"+newTabelName+" end,cost:"+((System.currentTimeMillis()-s)/1000L) + " s.");
+        LogUtil.debug(newTabelName + " 表的总条数sql："+sqlb.toString()+",cost:"+(System.currentTimeMillis()-s1) + " ms.");
 		/*
         if (no == 0) {	//防止数据没进备份表
 		//INSERT INTO aa SELECT * FROM a;
 			sqlb.delete(0, sqlb.length()).append("INSERT INTO ").append(newTabelName).append(" select ")
 				.append("* from ").append(oldTableName);
-			LogUtil.debug("插入数据sql：");
+			LogUtil.debug("插入数据sql："+sqlb.toString());
 			no = this.excuteSql(sqlb.toString(), new Object[0]);
 			LogUtil.debug("插入数据总条数：" + no);
 		}*/
         
         //清空表
-        long s1 = System.currentTimeMillis();
+        s1 = System.currentTimeMillis();
 		no = this.truncateTable(oldTableName);	
-		LogUtil.debug("truncate Table "+oldTableName+" end,cost:"+((System.currentTimeMillis()-s1)/1000L) + " s.");
+		LogUtil.debug("truncate Table "+oldTableName+" end,cost:"+(System.currentTimeMillis()-s1) + " ms.");
 		
 		//2. 写文件
 		new Thread(new Runnable() {
@@ -136,15 +137,15 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 				ILogInterfaceDetailService logInterService = (ILogInterfaceDetailService) SpringContextHolder.getBean("logInterfaceDetailServiceImpl");
 				
 				StringBuffer sqlb = new StringBuffer();
-				//统计总条数
+				//2.1 统计总条数
 				sqlb.append("SELECT COUNT(1) from ").append(newTabelNameF).append(" o ");
-		        LogUtil.debug(newTabelNameF + " 表的总条数sql：");
+		        LogUtil.debug(newTabelNameF + " 表的总条数sql："+sqlb.toString());
 				Integer countNO = logInterService.getCountSql(sqlb.toString(), new Object[0]);
 				LogUtil.debug(newTabelNameF + " 表的总条数：" + countNO);
 				if (null != countNO && countNO > 0) {  //写文件
 		    			CoconfigService configService = (CoconfigService) SpringContextHolder.getBean("coconfigServiceImpl");
 		            String fileName = "";  
-		    			//本地缓冲目录
+		    			//2.2 本地缓冲目录
 		            Coconfig localPathConf = configService.getCoconfigByKey("LOC_CONFIG_SYS_TEMP_PATH"); // 本地缓冲目录
 		            if (null != localPathConf) {
 			            if (StringUtil.isNotBlank(localPathConf.getConfigVal())) {//以缓冲目录为准
@@ -157,28 +158,32 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		            fileName += FILE_PATH + newTabelNameF + ".csv";
 		        		LogUtil.debug(newTabelNameF+" bak file：" + fileName);
 		            
-		        		//页数，循环次数
-		        		int pageNO = (int) Math.ceil(countNO / bufferedRowSize);
+		        		//2.3 页数，循环次数
+		        		int pageNO = 1;
+		        		if (countNO > bufferedRowSize) {
+		        			pageNO = (int) Math.ceil(countNO / bufferedRowSize);
+		        		}
 		        		LogUtil.debug("读取数据库次数：" + pageNO);
 		        		List<Map<String, String>> dataList = new ArrayList<Map<String, String>>();
 		        		List<?> page = new ArrayList<>();
 		        		Map<String, String> objMap = null;
-		        		//写表头
+		        		//2.4 写表头
 		            flag = FileUtil.writeToTextFile1(dataList, BEAN2FIELD, fileName, encode);
 		            sqlb = new StringBuffer(sqlb.toString().replace("COUNT(1)", "*")).append("ORDER BY o.OP_TIME asc")
 		            		.append(" limit 0,")	.append(bufferedRowSize);
         	        		Object[] log = null;
+        	        		//2.5 写数据
 		        		for (int i = 0; i < pageNO; i++) {
 		        			if (i != 0) {
 		        				sqlb = new StringBuffer(sqlb.toString().replace(((i-1)*bufferedRowSize)+",", i*bufferedRowSize+","));
 		        			}
 
-		    		        LogUtil.debug(newTabelNameF + "的第"+(i+1)+"页数据sql：");
+		    		        LogUtil.debug(newTabelNameF + "的第"+(i+1)+"页数据sql："+sqlb.toString());
 		        	        page = logInterService.findListBySql(sqlb.toString(), new Object[0]);
 		        	        //数据结构转换
 		        	        for (Object obj : page) {
 		        	        		log = (Object[]) obj;
-		        	        		objMap = new HashMap<>();
+		        	        		objMap = new LinkedHashMap<>();	//此处有序写表结构
 			        	        	objMap.put("logId", String.valueOf(log[0]));
 			        	        	objMap.put("userId", String.valueOf(log[1]));
 			        	        	objMap.put("sysId", String.valueOf(log[2]));
@@ -196,9 +201,9 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		        	        dataList.clear();
 					}
 		        }
-				//删除备份表
+				//2.6 删除备份表
 				sqlb.delete(0, sqlb.length()).append("drop table if exists ").append(newTabelNameF);
-				LogUtil.debug("sql:" + sqlb);
+				LogUtil.debug("删除备份表sql:"+sqlb.toString());
 				countNO = logInterService.excuteSql(sqlb.toString(), new Object[0]);
 				
 				LogUtil.debug("Interface log bak end:" + flag + ",cost:"+((System.currentTimeMillis()-s)/1000L) + " s.");
