@@ -110,17 +110,8 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		StringBuffer sqlb = new StringBuffer();
         sqlb.append("SELECT COUNT(1) from ").append(newTabelName);
         no = this.getCountSql(sqlb.toString(), new Object[0]);
-        LogUtil.debug(newTabelName + " COUNT number is：" + no);
-        LogUtil.debug(newTabelName + " COUNT number sql："+sqlb.toString()+",cost:"+(System.currentTimeMillis()-s1) + " ms.");
-		/*
-        if (no == 0) {	//防止数据没进备份表
-		//INSERT INTO aa SELECT * FROM a;
-			sqlb.delete(0, sqlb.length()).append("INSERT INTO ").append(newTabelName).append(" select ")
-				.append("* from ").append(oldTableName);
-			LogUtil.debug("插入数据sql："+sqlb.toString());
-			no = this.excuteSql(sqlb.toString(), new Object[0]);
-			LogUtil.debug("插入数据总条数：" + no);
-		}*/
+        LogUtil.debug(newTabelName + " COUNT number is:" + no);
+        LogUtil.debug(newTabelName + " COUNT number sql:"+sqlb.toString()+",cost:"+(System.currentTimeMillis()-s1) + " ms.");
         
         //清空表
         s1 = System.currentTimeMillis();
@@ -139,9 +130,9 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 				StringBuffer sqlb = new StringBuffer();
 				//2.1 统计总条数
 				sqlb.append("SELECT COUNT(1) from ").append(newTabelNameF).append(" o ");
-		        LogUtil.debug(newTabelNameF + " COUNT number sql："+sqlb.toString());
+		        LogUtil.debug(newTabelNameF + " COUNT number sql:"+sqlb.toString());
 				Integer countNO = logInterService.getCountSql(sqlb.toString(), new Object[0]);
-				LogUtil.debug(newTabelNameF + " COUNT number is：" + countNO);
+				LogUtil.debug(newTabelNameF + " COUNT number is:" + countNO);
 				if (null != countNO && countNO > 0) {  //写文件
 		    			CoconfigService configService = (CoconfigService) SpringContextHolder.getBean("coconfigServiceImpl");
 		            String fileName = "";  
@@ -156,14 +147,14 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 			            }
 		            }
 		            fileName += FILE_PATH + newTabelNameF + ".csv";
-		        		LogUtil.debug(newTabelNameF+" bak file：" + fileName);
+		        		LogUtil.debug(newTabelNameF+" bak file:" + fileName);
 		            
 		        		//2.3 页数，循环次数
 		        		int pageNO = 1;
 		        		if (countNO > bufferedRowSize) {
 		        			pageNO = (int) Math.ceil(countNO / bufferedRowSize);
 		        		}
-		        		LogUtil.debug("page size is：" + pageNO);
+		        		LogUtil.debug("page size is:" + pageNO);
 		        		List<Map<String, String>> dataList = new ArrayList<Map<String, String>>();
 		        		List<?> page = new ArrayList<>();
 		        		Map<String, String> objMap = null;
@@ -178,7 +169,7 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		        				sqlb = new StringBuffer(sqlb.toString().replace(((i-1)*bufferedRowSize)+",", i*bufferedRowSize+","));
 		        			}
 
-		    		        LogUtil.debug("page number: "+(i+1)+" sql："+sqlb.toString());
+		    		        LogUtil.debug("page number:"+(i+1)+" sql:"+sqlb.toString());
 		        	        page = logInterService.findListBySql(sqlb.toString(), new Object[0]);
 		        	        //数据结构转换
 		        	        for (Object obj : page) {
