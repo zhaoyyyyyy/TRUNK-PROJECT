@@ -58,7 +58,7 @@ public class CoconfigDaoImpl extends BaseDaoImpl<Coconfig, String> implements Co
 	@Override
 	public JQGridPage<Coconfig> findCoconfigList(JQGridPage<Coconfig> page, CoconfigVo coconfigVo) {
 		Map<String, Object> params = new HashMap<>();
-		StringBuffer hql = new StringBuffer("from Coconfig c where 1=1 and c.isShowPage = 1 ");
+		StringBuffer hql = new StringBuffer("from Coconfig c where 1=1 and (c.isShowPage = 1 or c.isShowPage is null) ");
 		if (StringUtils.isNotBlank(coconfigVo.getParentKey())) {
 			hql.append("and c.parentKey = :parentKey ");
 			params.put("parentKey", coconfigVo.getParentKey());
