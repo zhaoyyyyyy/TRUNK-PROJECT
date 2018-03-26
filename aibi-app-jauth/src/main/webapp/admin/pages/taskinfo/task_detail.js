@@ -55,6 +55,7 @@ window.jauth_onload = function() {
 	} ];
 	$("#mainGrid").jqGrid({
 		url : urlShow,
+        postData:{'taskExtId':taskExeId},
 		colNames : colNames,
 		colModel : colModel,
 		rownumbers : true,
