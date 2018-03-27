@@ -120,7 +120,7 @@ public class LabelTableDataDaoImpl  implements ILabelTableDataDao{
 	public Page<Object> findPageBySql(Page<Object> page, String sql, Map<String,Object> params) {
 		final Map param = params;
 		final String hqlF = sql;
-		final int start = page.getStart();
+		final int start = page.getStart()+1;
 		final int max = page.getPageSize();
 		
 		List dataList = secondaryJdbcTemplate.queryForList(sql+" limit "+start+ ","+max);

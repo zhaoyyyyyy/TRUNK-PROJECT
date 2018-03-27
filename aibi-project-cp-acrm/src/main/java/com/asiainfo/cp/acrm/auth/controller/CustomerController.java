@@ -82,12 +82,14 @@ public class CustomerController extends BaseController<User> {
 		}else{
 			respData.setAmount("0");
 			respData.setDataList(new ArrayList());
+			respData.setPageInfo(null);
+			return webResult.success("分页查询成功", respData);
 		}
 		if (viewReqModel.getPageInfo()!=null){
 			PageResponseModel respModel=new PageResponseModel();
 			respData.setPageInfo(respModel);
 			respModel.setCurrentPage(""+viewReqModel.getPageInfo().getCurrentPage());
-			respModel.setPageSize(""+page.getPageSize());
+			respModel.setPageSize(""+viewReqModel.getPageInfo().getPageSize());
 			respModel.setTotalCount(""+page.getTotalCount());
 		}
 		return  webResult.success("分页查询成功", respData);

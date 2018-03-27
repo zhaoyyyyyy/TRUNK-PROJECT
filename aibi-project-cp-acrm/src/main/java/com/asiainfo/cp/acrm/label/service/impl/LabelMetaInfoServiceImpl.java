@@ -136,7 +136,9 @@ public class LabelMetaInfoServiceImpl implements ILabelMetaInfoService {
 			metaDataInfo.setLabelId(labelInfo.getLabelId());
 			metaDataInfo.setTableName(table.getTableName());
 			metaDataInfo.setLabelName(labelInfo.getLabelName());
-			metaDataInfo.setLabelSortDesc(labelInfo.getLabelExtInfoCP().getSortDesc());
+			if (labelInfo.getLabelExtInfoCP()!=null) {
+				metaDataInfo.setLabelSortDesc(labelInfo.getLabelExtInfoCP().getSortDesc());
+			}
 			if (StringUtil.isNotEmpty(column.getDimTransId())) {
 				DimtableInfo dimInfo = dimDao.getDimtableInfo(column.getDimTransId());
 				if (dimInfo == null) {
