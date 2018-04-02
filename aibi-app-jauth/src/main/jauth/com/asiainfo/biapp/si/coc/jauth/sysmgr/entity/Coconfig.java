@@ -93,8 +93,19 @@ public class Coconfig extends BaseEntity {
 	private Set<Coconfig> children = new HashSet<>(0);
 	@Column(name = "config_name")
 	private String configName;
+	
+	@Column(name = "is_required")
+	private Integer isRequired;
+	
+    public Integer getIsRequired() {
+        return isRequired;
+    }
+    
+    public void setIsRequired(Integer isRequired) {
+        this.isRequired = isRequired;
+    }
 
-	public String getConfigName() {
+    public String getConfigName() {
 		if (StringUtils.isNotEmpty(configName)) {
 			return configName;
 		} else if (StringUtils.isNotEmpty(getConfigDesc())) {

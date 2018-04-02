@@ -1,7 +1,7 @@
 window.jauth_onload = function() {
 			// 列表
 			var urlShow = $.ctx + '/api/group/groupPage/query';
-			var colNames = ['数据权限名称', '创建人', '创建时间', '数据权限描述', '操作'];
+			var colNames = ['数据权限名称', '创建人', '创建时间','', '数据权限描述', '操作'];
 			var colModel = [{
 						name : 'groupName',
 						index : 'groupName',
@@ -23,6 +23,11 @@ window.jauth_onload = function() {
 							 return cellvalue.substr(0,19);
 						}
 					}, {
+						name : 'organizationStr',
+						index : 'organizationStr',
+						width : 40,
+						align : 'left'
+					},{
 						name : 'groupDesc',
 						index : 'groupDesc',
 						width : 40,

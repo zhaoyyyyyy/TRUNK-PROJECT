@@ -77,14 +77,30 @@ public class GroupController extends BaseController<Group> {
 		
 		//zn
 		User user = sessionInfoHolder.getLoginUser();
-		if(user.getIsAdmin()==1){
-			JQGridPage<Group> groupList = groupService.findGroupList(page,groupVo);
-			return JSONResult.page2Json(groupList, cols);
-		}else{
-			groupVo.setOrginfoId(user.getOrginfoId());
-			JQGridPage<Group> groupList = groupService.findGroupList(page,groupVo);
-			return JSONResult.page2Json(groupList, cols);
+		if(user.getIsAdmin()!=1){
+		    groupVo.setOrginfoId(user.getOrginfoId());
 		}
+		JQGridPage<Group> groupList = groupService.findGroupList(page,groupVo);
+		for(int i=0 ; i<groupList.getData().size() ; i++){
+		    groupList.getData().get(i).getOrganizationSet();
+		    int k = 0;
+		    for(Organization g : groupList.getData().get(i).getOrganizationSet()){
+		        if(g.getOrgCode().equals("999")||g.getOrgCode().equals("1")||g.getOrgCode().equals("2")){
+		            continue;
+		        }
+		        String name = g.getFullName();
+		        if(g.getFullName()==null){
+		            name = g.getSimpleName();
+		        }
+		        if(k==0){
+                    groupList.getData().get(i).setOrganizationStr(name);
+                    k++;
+		        }else{
+		            groupList.getData().get(i).setOrganizationStr(groupList.getData().get(i).getOrganizationStr()+"/"+name);
+		        }
+		    }
+		}
+        return JSONResult.page2Json(groupList, cols);
 		//zn
 	}
 

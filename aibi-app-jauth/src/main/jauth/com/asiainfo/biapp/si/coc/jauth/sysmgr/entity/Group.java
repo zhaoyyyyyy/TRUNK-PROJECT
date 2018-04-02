@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -96,8 +97,19 @@ public class Group extends BaseEntity {
 	@JoinTable(name="LOC_SYS_GROUPORG",  
 	joinColumns={@JoinColumn(name="GROUP_ID")},inverseJoinColumns={@JoinColumn(name="ORG_CODE",referencedColumnName="ORGCODE")})  
 	private Set<Organization> organizationSet;
+	
+	@Transient
+	private String organizationStr;
 
-	@Override
+    public String getOrganizationStr() {
+        return organizationStr;
+    }
+    
+    public void setOrganizationStr(String organizationStr) {
+        this.organizationStr = organizationStr;
+    }
+
+    @Override
 	public String getId() {
 		return id;
 	}

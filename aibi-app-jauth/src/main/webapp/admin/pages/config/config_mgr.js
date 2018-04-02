@@ -200,8 +200,14 @@ window.jauth_onload = function() {
 		}
 	});
 
-	var colNames = [ '名称', '编码', '值', '描述', '类型', '操作' ];
+	var colNames = [ '必填','名称', '编码', '值', '描述', '类型', '操作' ];
 	var colModel = [
+			{
+				name : 'isRequired',
+				index : 'isRequired',
+				width : 20,
+				align : 'left'
+			},
 			{
 				name : 'configName',
 				index : 'configName',
