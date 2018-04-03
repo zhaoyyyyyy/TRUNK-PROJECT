@@ -16,6 +16,14 @@ window.jauth_onload=function() {
 	}
 	dg.addBtn("save", "保存", function() {
 		if ($('#saveDataForm').validateForm()) {
+			if($("#ipAddress").val()==""){
+				$.alert("ip白名单不能为空");
+				return false;
+			}
+			if($("#requestAddress").val()==""){
+				$.alert("请求地址不能为空");
+				return false;
+			}
 			var listId = document.getElementById("listId").value;
 			if(listId!=null&&listId!=""){
 				var url = $.ctx+'/api/ipWhiteList/whitelist/update';

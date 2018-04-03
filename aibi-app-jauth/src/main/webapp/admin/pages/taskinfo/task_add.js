@@ -150,6 +150,10 @@ window.jauth_onload = function() {
 	var dg = frameElement.lhgDG;
 	dg.removeBtn();
 	dg.addBtn("save", "保存", function() {
+		if($("#taskExeTime1").val()=="" || $("#taskExeTime2").val()=="" || $("#taskExeTime3").val()=="" || $("#taskExeTime4").val()=="" || $("#taskExeTime5").val()=="" || $("#taskExeTime6").val()=="" ){
+			$.alert("请输入调度时间规则");
+			return false;
+		}
 		$.commAjax({
 			url : $.ctx + '/api/schedule/taskExeInfo/save',
 			type : 'post',
@@ -278,7 +282,8 @@ function changeSelect(obj){
 		type : 'post',
 		cache : false,
 		onSuccess : function(data) {
-			$("#sysId").val(data.config.configDesc);
+			model.sysId = data.config.configDesc;
+//			$("#sysId").val(data.config.configDesc);
 		}
 	})
 }

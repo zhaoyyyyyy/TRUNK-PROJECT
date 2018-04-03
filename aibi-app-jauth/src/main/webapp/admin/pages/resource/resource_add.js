@@ -9,6 +9,10 @@ window.jauth_onload = function() {
 			cache:false,
 			async:false,
 			onSuccess:function(data){
+				$("#resourceName").attr("disabled",true);
+				$("#resourceName").addClass("read_inputStyle");
+				$("#resourceCode").attr("disabled",true);
+				$("#resourceCode").addClass("read_inputStyle");
 				$.commAjax({
 						url:$.ctx+'/api/resource/parentResource/get',
 						postData:{"id":id},
