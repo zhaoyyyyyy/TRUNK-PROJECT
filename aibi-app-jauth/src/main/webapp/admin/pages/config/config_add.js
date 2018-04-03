@@ -13,6 +13,7 @@ window.jauth_onload = function() {
 	var coKey = paramsObj.coKey;
 	var isEdit = paramsObj.isEdit;
 	var obj = paramsObj.configFields;
+	var isRequired=paramsObj.isRequired;
 	$.commAjax({
 		url : $.ctx + '/api/config/get',
 		postData : {
@@ -62,14 +63,25 @@ window.jauth_onload = function() {
 			if('1'==isEdit){
 				html+='<td v-show="\'undefined\'!=\''+obj[0].code+'\'"><v-input name="configKey" defValue="configKey" type="text"class="read_inputStyle easyui-validatebox" required="true" readonly="readonly"></v-input></td>';
 			}	
-			html+=
-				  '<th v-show="\'undefined\'!=\''+obj[0].flag+'\'">配置值</th><td v-show="\'undefined\'!=\''+obj[0].flag+'\'">'
-				+'<p v-if="\'enum\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 " required="true" datadic="ALL" ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
-				+'<p v-if="\'driver\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 " required="true" datadic="'+obj[0].dimCode+'" ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
-				+'<p v-if="\'text\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 "  required="true" ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
-				+'<p v-if="\'boolean\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 "  required="true" datadic="TOF"></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
-				+'<p v-if="\'catalog\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 "  required="true" ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /> </p>'
-				+'</td>';
+			if(1==isRequired){
+				html+=
+					  '<th v-show="\'undefined\'!=\''+obj[0].flag+'\'">配置值<span class="req">*</span></th></th><td v-show="\'undefined\'!=\''+obj[0].flag+'\'">'
+					+'<p v-if="\'enum\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 easyui-validatebox" required="true" datadic="ALL" ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
+					+'<p v-if="\'driver\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 easyui-validatebox" required="true" datadic="'+obj[0].dimCode+'" ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
+					+'<p v-if="\'text\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 easyui-validatebox"  required="true" ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
+					+'<p v-if="\'boolean\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 easyui-validatebox"  required="true" datadic="TOF"></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
+					+'<p v-if="\'catalog\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 easyui-validatebox"  required="true" ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /> </p>'
+					+'</td>';
+			}else{
+				html+=
+					  '<th v-show="\'undefined\'!=\''+obj[0].flag+'\'">配置值</th><td v-show="\'undefined\'!=\''+obj[0].flag+'\'">'
+					+'<p v-if="\'enum\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 " datadic="ALL" ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
+					+'<p v-if="\'driver\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 " datadic="'+obj[0].dimCode+'" ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
+					+'<p v-if="\'text\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 "  ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
+					+'<p v-if="\'boolean\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 "  datadic="TOF"></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /></p>'
+					+'<p v-if="\'catalog\'==\''+obj[0].type+'\'"><v-input id="configVal" name="configVal" defValue="configVal" type="text" class="inputStyle_300 "  ></v-input><input name="configValType" type="hidden" value="'+obj[0].valueType+'" /> </p>'
+					+'</td>';
+			}
 			html+='</tr><tr>';
 			html+='<th v-show="\'undefined\'!=\''+obj[0].desc+'\'">配置描述</th><td colspan="5" v-show="\'undefined\'!=\''+obj[0].desc+'\'"><textarea maxlength="128" id="configDesc"name="configDesc" v-model="configDesc"class="input_textarea"></textarea></td>'
 			html+='</tr>';

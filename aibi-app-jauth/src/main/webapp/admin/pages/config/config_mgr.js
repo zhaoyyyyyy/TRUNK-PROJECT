@@ -122,9 +122,21 @@ var createConfigurationTemplate = [ {
 function fun_add(i, configKey) {
 	var isEdit = 0;
 	var dg;
+	var isRequired=0;
 	if (null != configKey) {
 		var a = typeAndI[i];
 		isEdit = 1;
+		$.commAjax({
+			url : $.ctx + '/api/config/get',
+			postData : {
+				"coKey" : configKey
+			},
+			type : 'post',
+			cache : false,
+			onSuccess : function(data) {
+				isRequired = data.config.isRequired;
+			}
+		});
 		dg = $.dialog('编辑  [  ' + configKey + '  ]', $.ctx
 				+ '/admin/pages/config/config_add.html', 1200, 500);
 		dg.getParams = function() {
@@ -132,6 +144,7 @@ function fun_add(i, configKey) {
 				'configFields' : createConfigurationTemplate[typeAndI[i]].fields,
 				'coKey' : configKey,
 				'isEdit' : isEdit,
+				'isRequired' : isRequired,
 			}
 		}
 	} else {
@@ -142,6 +155,7 @@ function fun_add(i, configKey) {
 				'configFields' : createConfigurationTemplate[i].fields,
 				'coKey' : _parentKey,
 				'isEdit' : isEdit,
+				'isRequired' : isRequired,
 			}
 		}
 	}
@@ -200,19 +214,22 @@ window.jauth_onload = function() {
 		}
 	});
 
-	var colNames = [ '必填','名称', '编码', '值', '描述', '类型', '操作' ];
+	var colNames = [ '名称','必填','编码', '值', '描述', '类型', '操作' ];
 	var colModel = [
-			{
-				name : 'isRequired',
-				index : 'isRequired',
-				width : 20,
-				align : 'left'
-			},
 			{
 				name : 'configName',
 				index : 'configName',
 				width : 20,
 				align : 'left'
+			},
+			{
+				name : 'isRequired',
+				index : 'isRequired',
+				width : 20,
+				align : 'center',
+				formatter:function(value){
+					return $.getCodeDesc('SFZD', value);
+				}
 			},
 			{
 				name : 'configKey',
