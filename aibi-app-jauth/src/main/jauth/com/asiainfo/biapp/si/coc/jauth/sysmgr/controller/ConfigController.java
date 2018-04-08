@@ -212,6 +212,7 @@ public class ConfigController extends BaseController<Coconfig> {
 					dicDataService.save(newdata);
 				}
 				coconfig.setIsShowPage(1);
+				coconfig.setIsRequired(1);
 				coconfigService.saveOrUpdate(coconfig);
 			}
 			return "success";
@@ -244,6 +245,7 @@ public class ConfigController extends BaseController<Coconfig> {
 				newCon.setStatus(1);
 				newCon.setSysId("1");//TODO SYS_ID具体如何保存
 				newCon.setIsShowPage(1);
+				newCon.setIsRequired(0);
 				coconfigService.saveOrUpdate(newCon);
 			}
 			return "success";
