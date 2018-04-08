@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Component;
 
+import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
+
 import de.codecentric.boot.admin.model.Application;
 import de.codecentric.boot.admin.registry.ApplicationRegistry;
 
@@ -68,21 +70,29 @@ public class AppUrlComponent {
      * @param url   配置中心的地址
      * @return
      */
+	/**
+     *  把url替换成真实的地址
+     * @param url   配置中心的地址
+     * @return
+     */
     public String getRealUrl(String url){
-        String realUrl = null;
-        
-        //${LOC}/api/xxxx/refushCache 等地址替换成 spring boot admin 上面注册的地址
-        Pattern r = Pattern.compile("\\{.*\\}");
-        Matcher m = r.matcher(url);
-        while (m.find()){
-        	String appkey = m.group(0);
-        	appkey = appkey.substring(1, appkey.length()-1);
-        	realUrl = url.replaceAll("\\$\\{[^}]*\\}", this.getEuarkeAppUrl(appkey.toLowerCase()));
+    	String realUrl = null;
+        if(StringUtil.isNotEmpty(url)){
+	        //${LOC}/api/xxxx/refushCache 等地址替换成 spring boot admin 上面注册的地址
+	        Pattern r = Pattern.compile("\\{.*\\}");
+	        Matcher m = r.matcher(url);
+	        while (m.find()){
+	        	String appkey = m.group(0);
+	        	appkey = appkey.substring(1, appkey.length()-1);
+	        	if(url != null && this.getEuarkeAppUrl(appkey.toLowerCase()) != null){
+	        		realUrl = url.replaceAll("\\$\\{[^}]*\\}", this.getEuarkeAppUrl(appkey.toLowerCase()));
+	        	}
+	        }
+	        //去掉地址后面的 "/"
+	        if (realUrl != null && realUrl.endsWith("/")) {
+	        	realUrl = realUrl.substring(0, realUrl.length() - 1);
+	        } 
         }
-        //去掉地址后面的 "/"
-        if (realUrl != null && realUrl.endsWith("/")) {
-        	realUrl = realUrl.substring(0, realUrl.length() - 1);
-        } 
         return realUrl;
     }
     
