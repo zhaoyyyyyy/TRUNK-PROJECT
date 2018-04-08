@@ -212,7 +212,7 @@ public class ConfigController extends BaseController<Coconfig> {
 					dicDataService.save(newdata);
 				}
 				coconfig.setIsShowPage(1);
-				coconfig.setIsRequired(1);
+				coconfig.setIsRequired(0);
 				coconfigService.saveOrUpdate(coconfig);
 			}
 			return "success";
