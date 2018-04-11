@@ -1,19 +1,13 @@
 jauth-url: 
-  http://192.168.248.166:8440/jauth
+  http://10.3.232.192:80/jauth
 cust_id:
   cust_sub_code
-cust_mast_id:
-  cust_mast_code  
 spring:
-#  boot:
-#    admin:
-#      client:
-#        serviceUrl: http://192.168.248.169:${server.port}${server.context-path}
   datasource:
     primary:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.248.142:3306/datav?useUnicode=true&characterEncoding=utf-8
-      username: datav
+      url: jdbc:mysql://10.3.232.105:3306/acrm_coc?useUnicode=true&characterEncoding=utf-8
+      username: coc
       password: 1qaz2wsx
       maxActive: 300
       maxWait: 1800
@@ -25,12 +19,12 @@ spring:
       removeAbandonedTimeout: 3600
       test-while-idle: true
       validation-query: SELECT 1 FROM DUAL
-      time-between-eviction-runs-millis: 180000
+      time-between-eviction- -millis: 180000
     secondary:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.200.25:10034/ads_acrm?useUnicode=true&characterEncoding=utf-8
-      username: 2SbUQlH7FJKyur9V
-      password: WGoQpjLNgTA4VwrHNQBcqe0zDbXZti
+      url: jdbc:mysql://ads-acrm-cm360-fe11ca59.cn-beijing-bjyz-am92001-a.postcloud.cn:10069/ads_acrm_cm360?useUnicode=true&characterEncoding=utf-8
+      username: c90702QfZJrCrLPf
+      password: TbMEImohsKrRUrYQjpAUAfhZK2eXN2
       maxActive: 300
       maxWait: 1800
       maxIdle: 30
@@ -41,7 +35,7 @@ spring:
       removeAbandonedTimeout: 3600
       test-while-idle: true
       validation-query: SELECT 1 FROM DUAL
-      time-between-eviction-runs-millis: 180000
+      time-between-eviction-runs-millis: 180000  
 cache:
   isDimtableCached: false
 context:
