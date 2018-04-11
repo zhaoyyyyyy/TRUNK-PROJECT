@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
 import com.asiainfo.biapp.si.coc.jauth.log.entity.LogMonitorDetail;
 import com.asiainfo.biapp.si.coc.jauth.log.service.ILogMonitorDetailService;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.utils.ConfigUtil;
 
 /**
  * Title : LogUtil
@@ -158,8 +159,16 @@ public class LogUtil {
      * @param msg
      */
     private static void saveLog(String level, String threadName, String interfaceUrl, String method, Object msg) {
-    ILogMonitorDetailService logmonitorService = (ILogMonitorDetailService)SpringContextHolder.getBean("logMonitorDetailServiceImpl");
-        try {
+        String saveJauthLog = ConfigUtil.getInstance().getValue("LOC_CONFIG_APP_SAVE_JAUTH_LOG");
+        if(!"true".equals(saveJauthLog)){
+        	return;
+        }
+        String saveDebugLog = ConfigUtil.getInstance().getValue("LOC_CONFIG_APP_SAVE_ALL_DEBUG_LOG");
+        if(LEVEL_DEBUG.equals(level) && !"true".equals(saveDebugLog)){
+    		return ;
+    	}
+    	try {
+    		ILogMonitorDetailService logmonitorService = (ILogMonitorDetailService)SpringContextHolder.getBean("logMonitorDetailServiceImpl");
         	String localAddress = InetAddress.getLocalHost().getHostAddress();
         	LogMonitorDetail ld = new LogMonitorDetail();
         	ld.setUserId("admin");
@@ -177,12 +186,7 @@ public class LogUtil {
         	ld.setErrorMsg(iMsg);
             logmonitorService.saveRightNow(ld);
         } catch (Exception e) {
-//           LogUtil.error("http远程rest调用异常", e);
            e.printStackTrace();
         }
-    }
-    
-    public static void main(String[] args) {
-//        LogUtil.error("自定义LOG");
     }
 }

@@ -57,6 +57,13 @@ public class LogMonitorDetailDaoImpl extends BaseDaoImpl<LogMonitorDetail,String
             hql.append(" and l.errorMsg LIKE :errorMsg");
             params.put("errorMsg", "%"+logMonitorDetailVo.getErrorMsg()+"%");
         }
+        
+        //interfaceUrl  logger_na
+        if (StringUtils.isNotBlank(logMonitorDetailVo.getInterfaceUrl())) {
+            hql.append(" and l.interfaceUrl LIKE :interfaceUrl");
+            params.put("interfaceUrl", "%"+logMonitorDetailVo.getInterfaceUrl()+"%");
+        }
+        
         if(StringUtils.isNotBlank(page.getSortCol())){
             hql.append(" order by l."+page.getSortCol()+" "+page.getSortOrder());
         }else{

@@ -13,6 +13,7 @@ import com.asiainfo.biapp.si.coc.jauth.frame.service.impl.BaseServiceImpl;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.dao.CoconfigDao;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Coconfig;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.CoconfigService;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.utils.ConfigUtil;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.CoconfigVo;
 
 /**
@@ -52,6 +53,7 @@ public class CoconfigServiceImpl extends BaseServiceImpl<Coconfig, String> imple
 	}
 	@Override
 	public void saveOrUpdate(Coconfig coconfig){
+		ConfigUtil.refush();
 		coconfigDao.saveOrUpdate(coconfig);
 	}
 
