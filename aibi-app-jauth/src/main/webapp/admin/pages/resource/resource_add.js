@@ -74,7 +74,7 @@ window.jauth_onload = function() {
 					resourceCode : null ,
 					address : null ,
 					parentName : null ,
-					type : null ,
+					type : "JAUTH_API" ,
 					dispOrder : null
 				}
 			});
