@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
+import com.netflix.eureka.resources.StatusResource;
+import com.netflix.eureka.util.StatusInfo;
 
 import de.codecentric.boot.admin.model.Application;
 import de.codecentric.boot.admin.registry.ApplicationRegistry;
@@ -57,6 +59,9 @@ public class AppUrlComponent {
 	 * @return
 	 */
 	public String getEuarkeAppUrl(String appName){
+		if("jauth".equals(appName)){
+			return getJauthAppUrl();
+		}
 		Collection<Application> applications = registry.getApplicationsByName(appName);
 		for (Application application : applications) {
 			return application.getServiceUrl();
@@ -64,12 +69,24 @@ public class AppUrlComponent {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * Description: 如果LOC没有启动成功，会返回空（null），此场景下不应该发送请求给loc
+	 *
+	 * @param appName
+	 * @return
+	 */
+	public String getJauthAppUrl(){
+		StatusInfo statusInfo;
+		try {
+			statusInfo = new StatusResource().getStatusInfo();
+		}catch (Exception e) {
+			statusInfo = StatusInfo.Builder.newBuilder().isHealthy(false).build();
+		}
+		return statusInfo.getInstanceInfo().getHomePageUrl()+statusInfo.getInstanceInfo().getVIPAddress();
+	}
+	
     
-    /**
-     *  把url替换成真实的地址
-     * @param url   配置中心的地址
-     * @return
-     */
 	/**
      *  把url替换成真实的地址
      * @param url   配置中心的地址
