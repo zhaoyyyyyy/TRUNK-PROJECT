@@ -54,6 +54,7 @@ public class LogUtil {
     private LogUtil() {
     }
 
+    
   
 
     public static void debug(Object message) {
@@ -79,6 +80,8 @@ public class LogUtil {
             log.info(message.toString());
         }
     }
+    
+   
 
     public static void warn(Object message) {
         StackTraceElement ste = getClassName();
@@ -127,6 +130,21 @@ public class LogUtil {
         return ste;
     }
 
+    
+    /**
+     * 输出信息内部调用
+     * Description: 
+     *
+     * @param message
+     */
+    private static void errorInner(Object message) {
+        StackTraceElement ste = getClassName();
+        String className = ste.getClassName();
+        Logger log = getLogger(className);
+        if (log.isInfoEnabled()) {
+            log.info(message.toString());
+        }
+    }
     /**
      * 根据类名获得logger对象
      * 
@@ -144,8 +162,7 @@ public class LogUtil {
                 //log = Logger.getLogger(Class.forName(className));
                 loggerMap.put(className, log);
             } catch (ClassNotFoundException e) {
-//                LogUtil.error("日志无法通过反射加载类"+className,e);
-                e.printStackTrace();
+            	errorInner(e);
             }
         }
         return log;
@@ -168,6 +185,7 @@ public class LogUtil {
     		return ;
     	}
     	try {
+        	
     		ILogMonitorDetailService logmonitorService = (ILogMonitorDetailService)SpringContextHolder.getBean("logMonitorDetailServiceImpl");
         	String localAddress = InetAddress.getLocalHost().getHostAddress();
         	LogMonitorDetail ld = new LogMonitorDetail();
@@ -186,7 +204,7 @@ public class LogUtil {
         	ld.setErrorMsg(iMsg);
             logmonitorService.saveRightNow(ld);
         } catch (Exception e) {
-           e.printStackTrace();
+        	errorInner(e);
         }
     }
 }
