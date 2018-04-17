@@ -124,7 +124,7 @@ public class LabelTableDataDaoImpl  implements ILabelTableDataDao{
 		final int max = page.getPageSize();
 		
 		List dataList = secondaryJdbcTemplate.queryForList(sql+" limit "+start+ ","+max);
-		LogUtil.debug("========================================sql:"+sql+" limit "+start+ ","+max);
+		LogUtil.info("page sql:"+sql+" limit "+start+ ","+max);
 		List result=getDataListMapString(dataList);
 		page.setData(result);
 		final String countSql="select count(*) as cnt from ("+sql+") as t";
