@@ -82,8 +82,6 @@ public class CustomerController extends BaseController<User> {
 		}else{
 			respData.setAmount("0");
 			respData.setDataList(new ArrayList());
-			respData.setPageInfo(null);
-			return webResult.success("分页查询成功", respData);
 		}
 		if (viewReqModel.getPageInfo()!=null){
 			PageResponseModel respModel=new PageResponseModel();
