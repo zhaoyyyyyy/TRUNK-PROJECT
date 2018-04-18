@@ -126,7 +126,8 @@ public class LogUtil {
         if (stes == null) {
             return null;
         }
-        StackTraceElement ste = stes[2];
+        Integer num = 2;
+        StackTraceElement ste = stes[num];
         return ste;
     }
 
@@ -159,7 +160,6 @@ public class LogUtil {
             try {
             	
             	log = LoggerFactory.getLogger(Class.forName(className));
-                //log = Logger.getLogger(Class.forName(className));
                 loggerMap.put(className, log);
             } catch (ClassNotFoundException e) {
             	errorInner(e);
@@ -196,8 +196,9 @@ public class LogUtil {
         	ld.setThreadName(threadName);
         	ld.setInterfaceUrl(interfaceUrl + "/" + method);
         	String iMsg = "";
-        	if(StringUtils.isNotBlank(msg.toString()) && msg.toString().length()>2000){
-        		iMsg = msg.toString().substring(0,2000);
+        	Integer num = 2000;
+        	if(StringUtils.isNotBlank(msg.toString()) && msg.toString().length()>num){
+        		iMsg = msg.toString().substring(0,num);
         	}else{
         		iMsg = msg.toString();
         	}

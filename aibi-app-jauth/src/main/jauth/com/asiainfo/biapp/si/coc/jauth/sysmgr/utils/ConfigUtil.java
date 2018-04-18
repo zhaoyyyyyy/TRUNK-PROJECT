@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Coconfig;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.CoconfigService;
 
@@ -35,7 +36,7 @@ public class ConfigUtil {
         return config;  
     }
     public static void refush(){
-    	System.out.println("清空了");
+        LogUtil.info("清空了");
         config = null;
     }  
     
