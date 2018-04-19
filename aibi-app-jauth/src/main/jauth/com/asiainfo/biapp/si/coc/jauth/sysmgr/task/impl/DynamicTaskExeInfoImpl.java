@@ -120,9 +120,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
                         map = (Map) JSONObject.toBean(sysId, Map.class);
                     }
     
-                    if (null != token) {
-                        map.put("token", token);
-                    } else {
+                    if (StringUtil.isNotBlank(token) || "null".equalsIgnoreCase(token)) {
                         //有必要就自己获取token
                         LogUtil.debug("AppName:"+AppName+",tokenSigningKey:"+tokenSigningKey);
                         Map<String, Object> autoLoginUserMap = new HashMap<>();
@@ -137,9 +135,9 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
                             LogUtil.warn("token不能为空");
                         }
                     }
+                    map.put("token", token);
                     
                     log.setExeParams(map.toString());
-                    
                     log.setReturnMsg(this.toLen(HttpUtil.sendPost(url, map)));
                     log.setEndTime(new Date());
                     log.setStatus(String.valueOf(WebResult.Code.OK));
@@ -186,7 +184,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
         if(userPwdMap.containsKey("username")){
             throw new BaseException("用户名不能为空");
         }
-        if(StringUtil.isEmpty("password")){
+        if(userPwdMap.containsKey("password")){
             throw new BaseException("密码不能为空");
         }
         
