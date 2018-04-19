@@ -80,8 +80,6 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
     @Autowired
     private CoconfigService coconfigService;
 
-    private static final String SUCCESS = "success";
-
     @Override
     protected BaseService<LocTaskExeInfo, String> getBaseService() {
         return locTaskExeInfoService;
@@ -220,7 +218,7 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
             @ApiImplicitParam(name = "exeType", value = "执行类型", required = false, paramType = "query", dataType = "string") })
     @RequestMapping(value = "/taskExeInfo/save", method = RequestMethod.POST)
     public String saveTaskExeInfo(@ApiIgnore LocTaskExeInfo locTask) {
-    	String result = "";
+    	    String result = RETURN_SUCCESS;
         if (!"1".equals(locTask.getParentExeId()) && StringUtils.isBlank(locTask.getTaskExeTime())) {
         		result = "notime";
         }
@@ -238,7 +236,7 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
             oldLocTask.setTaskExeTime(taskExeTime);
             locTask = oldLocTask;
         } else {    //新增
-            if (!SUCCESS.equals(this.queryNameExist(locTask.getTaskExeName()))) {
+            if (!RETURN_SUCCESS.equals(this.queryNameExist(locTask.getTaskExeName()))) {
             		result = "failure";
             }
             if (StringUtils.isBlank(locTask.getTaskExeTime())) {
@@ -271,7 +269,7 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
         if (locTaskExeInfo != null) {
             return "exits";
         }
-        return SUCCESS;
+        return RETURN_SUCCESS;
     }
 
     /**
