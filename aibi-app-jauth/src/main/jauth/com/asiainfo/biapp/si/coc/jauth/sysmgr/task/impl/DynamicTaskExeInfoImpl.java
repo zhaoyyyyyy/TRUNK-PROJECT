@@ -177,23 +177,23 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
      * Map<String,Object> map = new HashMap<>();
      * map.put("username", username);
      * map.put("password", password);</pre>
-     * @return
+     * @return tokenStr
      * @throws BaseException
      */
     private String getTokenByUsernamePassword(Map<String,Object> userPwdMap) throws BaseException{
-        if(userPwdMap.containsKey("username")){
+        if(!userPwdMap.containsKey("username")){
             throw new BaseException("用户名不能为空");
         }
-        if(userPwdMap.containsKey("password")){
+        if(!userPwdMap.containsKey("password")){
             throw new BaseException("密码不能为空");
         }
         
         try{
-            return HttpUtil.sendPost(appUrlCom.getJauthAppUrl()+"/api/auth/login", userPwdMap);
+            String tokenStr = HttpUtil.sendPost(appUrlCom.getJauthAppUrl()+"/api/auth/login", userPwdMap);
+            return JSONObject.fromObject(tokenStr).getString("token");
         }catch(Exception e){
             throw new UserAuthException("错误的用户名/密码");
         }
-        
     }
     
     
