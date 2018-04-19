@@ -220,33 +220,37 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
             @ApiImplicitParam(name = "exeType", value = "执行类型", required = false, paramType = "query", dataType = "string") })
     @RequestMapping(value = "/taskExeInfo/save", method = RequestMethod.POST)
     public String saveTaskExeInfo(@ApiIgnore LocTaskExeInfo locTask) {
+    	String result = "";
         if (!"1".equals(locTask.getParentExeId()) && StringUtils.isBlank(locTask.getTaskExeTime())) {
-            return "notime";
+        		result = "notime";
         }
-        if (locTask.getTaskExeId() != null) {   //修改
+        
+        String taskExeTime = locTask.getTaskExeTime().replace(",", " ").trim();
+        if (locTaskExeInfoService.isCronExpression(taskExeTime)) {
+        		result = "failure";
+        }
+		if (locTask.getTaskExeId() != null) {   //修改
             LocTaskExeInfo oldLocTask = locTaskExeInfoService.get(locTask.getTaskExeId());
             oldLocTask.setTaskId(locTask.getTaskId());
             oldLocTask.setTaskExeName(locTask.getTaskExeName());
             oldLocTask.setSysId(locTask.getSysId());
             oldLocTask.setExeType(locTask.getExeType());
-            oldLocTask.setTaskExeTime(locTask.getTaskExeTime().replace(",", " ").trim());
+            oldLocTask.setTaskExeTime(taskExeTime);
             locTask = oldLocTask;
         } else {    //新增
             if (!SUCCESS.equals(this.queryNameExist(locTask.getTaskExeName()))) {
-                return "failure";
+            		result = "failure";
             }
             if (StringUtils.isBlank(locTask.getTaskExeTime())) {
                 locTask.setExeType(String.valueOf(ServiceConstants.TaskExeInfo.EXE_TYPE_DELAY));
-            } else {
-                
             }
             //默认任务是停止的
             locTask.setExeStatus(String.valueOf(ServiceConstants.TaskExeInfo.EXE_STATUS_NO));
-            locTask.setTaskExeTime(locTask.getTaskExeTime().replace(",", " ").trim());
+            locTask.setTaskExeTime(taskExeTime);
         }
         locTaskExeInfoService.saveOrUpdate(locTask);
         
-        return SUCCESS;
+        return result;
     }
 
     /**

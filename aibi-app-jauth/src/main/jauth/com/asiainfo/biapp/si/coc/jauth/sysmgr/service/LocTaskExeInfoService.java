@@ -1,17 +1,8 @@
 package com.asiainfo.biapp.si.coc.jauth.sysmgr.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.asiainfo.biapp.si.coc.jauth.frame.exception.BaseException;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
-import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
-import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.component.DynamicTaskComponent;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Coconfig;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.LocTaskExeInfo;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.task.impl.DynamicTaskExeInfoImpl;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.LocTaskExeInfoVo;
 
 /**
@@ -35,5 +26,11 @@ public interface LocTaskExeInfoService extends BaseService<LocTaskExeInfo, Strin
      */
     public boolean taskExeInfoSchedule(String token,boolean isSchedule, LocTaskExeInfo locTask, Long ms);
     
-    
+
+    /**
+     *  判断是否是有效的cron表达式
+     * @param cronExpression    cron表达式
+     * @return
+     */
+    public boolean isCronExpression(final String cronExpression);
 }

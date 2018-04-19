@@ -10,6 +10,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.asiainfo.biapp.si.coc.jauth.frame.exception.BaseException;
+import com.asiainfo.biapp.si.coc.jauth.frame.exception.UserAuthException;
 import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.HttpUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
@@ -17,6 +24,7 @@ import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.WebResult;
 import com.asiainfo.biapp.si.coc.jauth.log.entity.LogTaskExecuteDetail;
 import com.asiainfo.biapp.si.coc.jauth.log.service.ILogTaskExecuteDetailService;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.component.AppUrlComponent;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.LocTaskExeInfo;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.task.IDynamicTask;
 
@@ -42,15 +50,27 @@ import net.sf.json.JSONObject;
  * @author  hongfb
  * @version 1.0.0.2018年1月6日
  */
- 
+
+@Service
+@Configuration
+@Scope("prototype")
 public class DynamicTaskExeInfoImpl implements IDynamicTask {
     
     private static final int LOG_FIELD_DEFAULT_LEN = 2000;
+    
+    @Value("${demo.security.jwt.tokenSigningKey}")
+    private String tokenSigningKey;
+    @Value("${spring.application.name}")
+    private String AppName;
 
+    //传入参数
     private String url;
     private String token;
     private String userId;
     private LocTaskExeInfo taskExeInfo;
+    
+    //内部变量
+    private AppUrlComponent appUrlCom;
     
     private ILogTaskExecuteDetailService logTaskExecuteDetailService;
     
@@ -58,17 +78,16 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
      * @Description:传入参数
      * @param Map<String, Object> parameters
      */
-    public void initParameters(Map<String, Object> parameters) {}
-    
-    public DynamicTaskExeInfoImpl() {}
-    public DynamicTaskExeInfoImpl(Map<String, Object> parameters) {
+    public void initParameters(Map<String, Object> parameters) {
         this.url = String.valueOf(parameters.get("url"));
         this.token = String.valueOf(parameters.get("token"));
         this.userId = String.valueOf(parameters.get("userId"));
         this.taskExeInfo = (LocTaskExeInfo) parameters.get("taskExeInfo");
         this.logTaskExecuteDetailService = (ILogTaskExecuteDetailService)SpringContextHolder.getBean("logTaskExecuteDetailServiceImpl");
-        LogUtil.debug("url="+url+"token="+token+"userId="+userId
-            +"taskExeInfo="+taskExeInfo);
+
+        appUrlCom = (AppUrlComponent) SpringContextHolder.getBean("appUrlComponent");
+        
+        LogUtil.debug("url="+url+"token="+token+"userId="+userId+"taskExeInfo="+taskExeInfo);
     }
     
     @Override
@@ -77,7 +96,15 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
         LogUtil.debug("任务("+Thread.currentThread().getName()+")正在执行。。。"+new Date().toLocaleString());
         
         // 发送请求
-        if (null != url) {
+        if (StringUtil.isNotEmpty(url)) {
+        		if (url.contains("{") && url.contains("}")) { //有必要就自己获取真实的url
+        			String realUrl = appUrlCom.getRealUrl(url);
+                if (StringUtil.isNotBlank(realUrl)) {
+            			url = realUrl;
+                } else {
+                		LogUtil.warn(url +" getRealUrl is null!");
+                }
+        		}
             if (null != taskExeInfo) {
                 //记录日志
                 LogTaskExecuteDetail log = new LogTaskExecuteDetail();
@@ -96,7 +123,19 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
                     if (null != token) {
                         map.put("token", token);
                     } else {
-                        LogUtil.warn("token不能为空");
+                        //有必要就自己获取token
+                        LogUtil.debug("AppName:"+AppName+",tokenSigningKey:"+tokenSigningKey);
+                        Map<String, Object> autoLoginUserMap = new HashMap<>();
+                        autoLoginUserMap.put("username",AppName+"AutoLoginUser");
+                        autoLoginUserMap.put("password",tokenSigningKey);
+                        
+                        String autoToken = this.getTokenByUsernamePassword(autoLoginUserMap);
+                        LogUtil.debug("autoToken:"+autoToken);
+                        if (StringUtil.isNotBlank(autoToken)) {
+                            token = autoToken;
+                        } else {
+                            LogUtil.warn("token不能为空");
+                        }
                     }
                     
                     log.setExeParams(map.toString());
@@ -132,7 +171,32 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
         }
         return str;
     }
-    
+
+    /**
+     * 获取token
+     * @param userPwdMap 必须有user和password两个key，形如：
+     * <pre>
+     * Map<String,Object> map = new HashMap<>();
+     * map.put("username", username);
+     * map.put("password", password);</pre>
+     * @return
+     * @throws BaseException
+     */
+    private String getTokenByUsernamePassword(Map<String,Object> userPwdMap) throws BaseException{
+        if(userPwdMap.containsKey("username")){
+            throw new BaseException("用户名不能为空");
+        }
+        if(StringUtil.isEmpty("password")){
+            throw new BaseException("密码不能为空");
+        }
+        
+        try{
+            return HttpUtil.sendPost(appUrlCom.getJauthAppUrl()+"/api/auth/login", userPwdMap);
+        }catch(Exception e){
+            throw new UserAuthException("错误的用户名/密码");
+        }
+        
+    }
     
     
 }

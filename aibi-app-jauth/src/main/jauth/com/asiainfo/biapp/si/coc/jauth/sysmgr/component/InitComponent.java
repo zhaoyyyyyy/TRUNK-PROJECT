@@ -11,11 +11,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.asiainfo.biapp.si.coc.jauth.common.ServiceConstants;
-import com.asiainfo.biapp.si.coc.jauth.frame.exception.BaseException;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
-import com.asiainfo.biapp.si.coc.jauth.log.service.ILogInterfaceDetailService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.LocTaskExeInfo;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.LocTaskExeInfoService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.LocTaskExeInfoVo;

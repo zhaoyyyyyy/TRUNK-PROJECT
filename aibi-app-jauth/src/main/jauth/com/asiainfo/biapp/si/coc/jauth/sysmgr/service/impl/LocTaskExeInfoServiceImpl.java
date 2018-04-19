@@ -17,7 +17,6 @@ import com.asiainfo.biapp.si.coc.jauth.frame.service.impl.BaseServiceImpl;
 import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
-import com.asiainfo.biapp.si.coc.jauth.log.service.ILogTaskExecuteDetailService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.component.AppUrlComponent;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.component.DynamicTaskComponent;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.dao.LocTaskExeInfoDao;
@@ -25,7 +24,7 @@ import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Coconfig;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.LocTaskExeInfo;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.CoconfigService;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.LocTaskExeInfoService;
-import com.asiainfo.biapp.si.coc.jauth.sysmgr.task.impl.DynamicTaskExeInfoImpl;
+import com.asiainfo.biapp.si.coc.jauth.sysmgr.task.IDynamicTask;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.utils.SessionInfoHolder;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.LocTaskExeInfoVo;
 
@@ -40,8 +39,6 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
 
 	public static final Map<String,String>  CONFIG_LOG_TASK_IDS = new HashMap<>();
 	
-    @Autowired
-    private ILogTaskExecuteDetailService logTaskExecuteDetailService;
     @Autowired
     private SessionInfoHolder sessionInfoHolder;
     @Autowired
@@ -76,77 +73,80 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
             Coconfig coconfig = coconfigService.getCoconfigByKey(locTask.getTaskId());
             if (null != coconfig) {
                 String url = coconfig.getConfigVal();
-                if (null != url) {
+                if (StringUtil.isNotBlank(url)) {
                     AppUrlComponent appUrlCom = (AppUrlComponent) SpringContextHolder.getBean("appUrlComponent");
-                    url = appUrlCom.getRealUrl(url);
+                    String realUrl = appUrlCom.getRealUrl(url);
+                    if (StringUtil.isNotBlank(realUrl)) {
+                    		url = realUrl;
+                    } else {
+                    		LogUtil.warn(coconfig.getConfigVal() +" getRealUrl is null!");
+                    }
+                    
                     Map<String, Object> map = new HashMap<>();
-                    if (null != url) {
-                        map.put("url",url);
-                        map.put("token",token);
-                        map.put("taskExeInfo",locTask);
-                        if (null != sessionInfoHolder.getLoginUser()) {
-                            map.put("userId", sessionInfoHolder.getLoginUser().getUserName());
-                        }
+                    map.put("url",url);
+                    map.put("token",token);
+                    map.put("taskExeInfo",locTask);
+                    if (null != sessionInfoHolder.getLoginUser()) {
+                        map.put("userId", sessionInfoHolder.getLoginUser().getUserName());
+                    }
 
-                        if (this.isValidExpression(locTask.getTaskExeTime())) {
-                            DynamicTaskExeInfoImpl task = new DynamicTaskExeInfoImpl(map);
-                            
-                            if (isSchedule) {   //调度任务
+                    if (this.isCronExpression(locTask.getTaskExeTime())) {
+                        IDynamicTask task = (IDynamicTask) SpringContextHolder.getBean("dynamicTaskExeInfoImpl");
+                        task.initParameters(map);
+                        
+                        if (isSchedule) {   //调度任务
+                            //启动调度任务
+                            String localAddress = null;
+                    			try {
+                    				localAddress = InetAddress.getLocalHost().getHostAddress();
+                    			} catch (UnknownHostException e) {
+                    				LogUtil.error("get localhost ipv4 error!", e);
+                    			}
+                    			
+                    			Coconfig ipConfig = coconfigService.getCoconfigByKey("LOC_CONFIG_SYS_JAUTH_MASTER_IP");
+                				LogUtil.debug("localhost ip is :"+localAddress+" | JAUTH host Ip is :"+ipConfig.getConfigVal());
+                				
+                    			//JAUTH是单机吗？true:单机，false:多机
+                        		if (null == ipConfig || (null!=ipConfig.getConfigVal()&&"127.0.0.1".equals(ipConfig.getConfigVal()))) {	
+
+                    				LogUtil.debug("JAUTH is simple,start all task。。。");
+                    			
                                 //启动调度任务
-                                String localAddress = null;
-	                    			try {
-	                    				localAddress = InetAddress.getLocalHost().getHostAddress();
-	                    			} catch (UnknownHostException e) {
-	                    				LogUtil.error("get localhost ipv4 error!", e);
-	                    			}
-	                    			
-                        			Coconfig ipConfig = coconfigService.getCoconfigByKey("LOC_CONFIG_SYS_JAUTH_MASTER_IP");
-                    				LogUtil.debug("localhost ip is :"+localAddress+" | JAUTH host Ip is :"+ipConfig.getConfigVal());
-                    				
-	                    			//JAUTH是单机吗？true:单机，false:多机
-                            		if (null == ipConfig || (null!=ipConfig.getConfigVal()&&"127.0.0.1".equals(ipConfig.getConfigVal()))) {	
+                                DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
+                                dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
+                                res = true;
+                        		} else {		//JAUTH是多机部署
 
-	                    				LogUtil.debug("JAUTH is simple,start all task。。。");
+                    				LogUtil.debug("JAUTH is Computer cluster。。。");
 	                    			
+                        			if (ipConfig.getConfigVal().equals(localAddress)) {	//本机是主机
                                     //启动调度任务
                                     DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
                                     dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
                                     res = true;
-                            		} else {		//JAUTH是多机部署
-
-	                    				LogUtil.debug("JAUTH is Computer cluster。。。");
-    	                    			
-                            			if (ipConfig.getConfigVal().equals(localAddress)) {	//本机是主机
+                        			} else {		//本机是备份机
+                        				//自启动日志任务
+                        				if (CONFIG_LOG_TASK_IDS.containsKey(locTask.getTaskId())) {	
                                         //启动调度任务
                                         DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
                                         dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
                                         res = true;
-                            			} else {		//本机是备份机
-                            				//自启动日志任务
-                            				if (CONFIG_LOG_TASK_IDS.containsKey(locTask.getTaskId())) {	
-                                            //启动调度任务
-                                            DynamicTaskComponent dSTaskUtil = (DynamicTaskComponent)SpringContextHolder.getBean("dynamicTaskComponent");
-                                            dSTaskUtil.startTask(String.valueOf(locTask.getTaskExeId()), task, locTask.getTaskExeTime().trim());
-                                            res = true;
-                            				}
-                            			}
-                            		}
-                            } else {    //立即/延迟执行任务
-                                if (ms > 0) {
-                                    try {
-                                        Thread.sleep(ms);
-                                    } catch (InterruptedException e) {
-                                        LogUtil.error("error in sleep!");
-                                    }
+                        				}
+                        			}
+                        		}
+                        } else {    //立即/延迟执行任务
+                            if (ms > 0) {
+                                try {
+                                    Thread.sleep(ms);
+                                } catch (InterruptedException e) {
+                                    LogUtil.error("error in sleep!");
                                 }
-                                new Thread(task).start();
-                                res = true;
                             }
-                        } else {
-                            LogUtil.error("Execute parameters ["+locTask.getTaskExeTime()+"] is not Cron!");
+                            new Thread(task).start();
+                            res = true;
                         }
                     } else {
-                        LogUtil.error(coconfig.getConfigVal() +"getRealUrl is error!");
+                        LogUtil.error("Execute parameters ["+locTask.getTaskExeTime()+"] is not Cron!");
                     }
                 } else {
                     LogUtil.error("ConfigVal of "+locTask.getTaskId()+" is null!");
@@ -160,14 +160,13 @@ public class LocTaskExeInfoServiceImpl extends BaseServiceImpl<LocTaskExeInfo, S
         
         return res;
     }
-
     
     /**
      *  判断是否是有效的cron表达式
      * @param cronExpression    cron表达式
      * @return
      */
-    private boolean isValidExpression(final String cronExpression){
+    public boolean isCronExpression(final String cronExpression){
         boolean res = true;
         
         if (StringUtil.isNotBlank(cronExpression)) {
