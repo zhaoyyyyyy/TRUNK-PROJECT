@@ -99,11 +99,12 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
         if (StringUtil.isNotEmpty(url)) {
         		if (url.contains("{") && url.contains("}")) { //有必要就自己获取真实的url
         			String realUrl = appUrlCom.getRealUrl(url);
-                if (StringUtil.isNotBlank(realUrl)) {
-            			url = realUrl;
-                } else {
-                		LogUtil.warn(url +" getRealUrl is null!");
-                }
+	                if (StringUtil.isNotBlank(realUrl)) {
+	            		url = realUrl;
+	                } else {
+	                	LogUtil.error("暂时无法调用此接口:"+url);
+        				return ;
+	                }
         		}
             if (null != taskExeInfo) {
                 //记录日志
@@ -124,7 +125,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
                         //有必要就自己获取token
                         LogUtil.debug("AppName:"+AppName+",tokenSigningKey:"+tokenSigningKey);
                         Map<String, Object> autoLoginUserMap = new HashMap<>();
-                        autoLoginUserMap.put("username",AppName+"AutoLoginUser");
+                        autoLoginUserMap.put("username","sys_"+AppName);
                         autoLoginUserMap.put("password",tokenSigningKey);
                         
                         String autoToken = this.getTokenByUsernamePassword(autoLoginUserMap);

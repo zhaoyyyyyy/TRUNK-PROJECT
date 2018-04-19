@@ -87,17 +87,12 @@ public class JAuthApi {
 	})
     @RequestMapping(value="/permission/data", method=RequestMethod.GET)
     public @ResponseBody List<Organization> dataPermission(String token,String type) {
-    	
-    	//通过token拿到
-        String tokenPayload = tokenExtractor.extract(token);
-        RawAccessJwtToken rawToken = new RawAccessJwtToken(tokenPayload);
-        Jws<Claims> jwsClaims =  rawToken.parseClaims(jwtSettings.getTokenSigningKey());
-        String userName = jwsClaims.getBody().getSubject();
+    	String userName = getUserNameByToken(token);
         
         //得到用户的组织权限
         List<Organization> list = new ArrayList<Organization>();
         User user = userService.getUserByName(userName);
-        if(user.getGroupSet() != null){
+        if(user != null && user.getGroupSet() != null){
         	for(Group group : user.getGroupSet()){
         	    for(Organization org : group.getOrganizationSet()){
         	        if(!list.contains(org)){
@@ -124,56 +119,23 @@ public class JAuthApi {
 	})
     @RequestMapping(value="/permission/resource", method=RequestMethod.GET)
     public @ResponseBody List<Resource> resourcePermission(String token,String type) {
-    	//通过token拿到
-        String tokenPayload = tokenExtractor.extract(token);
-        RawAccessJwtToken rawToken = new RawAccessJwtToken(tokenPayload);
-        Jws<Claims> jwsClaims =  rawToken.parseClaims(jwtSettings.getTokenSigningKey());
-        String userName = jwsClaims.getBody().getSubject();
         
-
-        
-        
-        
+    	String userName = getUserNameByToken(token);
         
         //得到用户的组织权限
         User user = userService.getUserByName(userName);
         
-        
-        ResourceVo resourceVo = new ResourceVo();
-        resourceVo.setRoleSet(user.getRoleSet());
         JQGridPage<Resource> page = new JQGridPage<Resource>();
-        page.setPageSize(100);
-        resourceService.findResourceList(page, resourceVo);
+        
+        if(user != null && user.getRoleSet() != null){
+        	ResourceVo resourceVo = new ResourceVo();
+        	resourceVo.setRoleSet(user.getRoleSet());
+        	page.setPageSize(100);
+        	resourceService.findResourceList(page, resourceVo);
+        }
         
         return page.getData();
-        
-        
-        
-//        if(user != null && user.getRoleSet() != null){
-//        	for(Role role : user.getRoleSet()){
-//        		list.addAll(role.getResourceSet());
-//        	}
-//        }
-//        for (Resource resource : list) {
-//            if (resource.getChildren().size()!=0) {
-//                resource.setChildren(null);
-//            }
-//        }
-//        List<Resource> list1 = new ArrayList<Resource>();
-//        for (Resource resource : list) {
-//            if (resource.getType().equals(type)) {
-//                if (resource.getChildren().size()!=0) {
-//                    resource.setChildren(null);
-//                }
-//                list1.add(resource);
-//            }
-//        }
-//        if (type!=null) {
-//            return list1;
-//        }
-//        return list;
     }
-    
     
     /**
      * 
@@ -203,7 +165,6 @@ public class JAuthApi {
         String tokenPayload = tokenExtractor.extract(request.getHeader(WebSecurityConfig.JWT_TOKEN_HEADER_PARAM));
         
         RawAccessJwtToken rawToken = new RawAccessJwtToken(tokenPayload);
-//        RefreshToken refreshToken = RefreshToken.create(rawToken, jwtSettings.getTokenSigningKey()).orElseThrow(() -> new InvalidJwtToken());
         RefreshToken refreshToken = RefreshToken.create(rawToken, jwtSettings.getTokenSigningKey());
         String jti = refreshToken.getJti();
         if (!tokenVerifier.verify(jti)) {
@@ -214,9 +175,6 @@ public class JAuthApi {
         User user = userService.getUserByName(subject);
 
         if (user.getRoleSet() == null) throw new InsufficientAuthenticationException("User has no roles assigned");
-//        List<GrantedAuthority> authorities = user.getRoleSet().stream()
-//                .map(authority -> new SimpleGrantedAuthority(authority.getRoleName()))
-//                .collect(Collectors.toList());
         List<GrantedAuthority> authorities = new ArrayList<>();
         for(Role r:user.getRoleSet()){
             authorities.add(new SimpleGrantedAuthority(r.getRoleName()));
@@ -226,5 +184,23 @@ public class JAuthApi {
         UserContext userContext = UserContext.create(user.getId(),user.getUserName(), authorities);
 
         return tokenFactory.createAccessJwtToken(userContext);
+    }
+    
+    
+    
+    /**
+     * 通过token得到用户名
+     * Description: 
+     *
+     * @param token
+     * @return
+     */
+    private String getUserNameByToken(String token){
+    	//通过token拿到
+        String tokenPayload = tokenExtractor.extract(token);
+        RawAccessJwtToken rawToken = new RawAccessJwtToken(tokenPayload);
+        Jws<Claims> jwsClaims =  rawToken.parseClaims(jwtSettings.getTokenSigningKey());
+        String userName = jwsClaims.getBody().getSubject();
+        return userName;
     }
 }
