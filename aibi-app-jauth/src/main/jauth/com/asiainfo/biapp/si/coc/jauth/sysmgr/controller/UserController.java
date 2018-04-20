@@ -70,6 +70,7 @@ public class UserController {
     public String list(@ModelAttribute JQGridPage<User> page, String cols,
             @ApiIgnore UserVo userVo) {
         User user = userService.get(sessionInfoHolder.getLoginId());
+        userVo.setIsAdmin(user.getIsAdmin());
         if (user.getGroupSet() != null && !user.getGroupSet().isEmpty()) {
             userVo.setGroupSet(user.getGroupSet());
         }
@@ -79,7 +80,6 @@ public class UserController {
         } else {
             userVo.setOrginfoId(user.getOrginfoId());// 本组织
             userVo.setId(user.getId());// 当前用户
-            userVo.setIsAdmin(2);
             userVo.setCreateUserId(user.getUserName());
             JQGridPage<User> userList = userService.findUserList(page, userVo);
             return JSONResult.page2Json(userList, cols);

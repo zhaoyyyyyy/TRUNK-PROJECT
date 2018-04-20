@@ -79,6 +79,7 @@ public class GroupController extends BaseController<Group> {
 		User user = sessionInfoHolder.getLoginUser();
 		if(user.getIsAdmin()!=1){
 		    groupVo.setOrginfoId(user.getOrginfoId());
+		    groupVo.setCreateUserId(user.getUserName());
 		}
 		JQGridPage<Group> groupList = groupService.findGroupList(page,groupVo);
 		for(int i=0 ; i<groupList.getData().size() ; i++){

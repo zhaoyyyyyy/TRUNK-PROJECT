@@ -34,6 +34,13 @@ public class GroupDaoImpl extends BaseDaoImpl<Group,String> implements GroupDao 
 	public JQGridPage<Group> findGroupList(JQGridPage<Group> page, GroupVo groupVo) {
 		Map<String, Object> params = new HashMap<>();
 		StringBuffer hql = new StringBuffer("from Group g where 1=1");
+		
+		
+		// 创建人
+        if (StringUtils.isNotBlank(groupVo.getCreateUserId())) {
+            hql.append(" and g.createUserId = :createUserId");
+            params.put("createUserId", groupVo.getCreateUserId());
+        }
 		// 组织
 		if (StringUtils.isNotBlank(groupVo.getOrginfoId())) {
 			hql.append(" and g.orginfoId = :orginfoId");

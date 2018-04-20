@@ -46,37 +46,35 @@
 							</td>
 						</tr>
 						
-						<tr>
+						<tr >
 							
 							<th>
 								邮箱
 							</th>
-							<td>
+							<td colspan="3">
 								<input id="user.email" name="email" v-model="user.email"
 									class="inputStyle easyui-validatebox" validType="email" />
 							</td>
-							<th>
-								角色
-							</th>
-							<td colspan="3">
-								{{user.roleNames}}
-								<a id="edit_user_role" class="s_edit"></a>
-							</td>
+							
 						</tr>
-						<!-- 
+						
 						<tr>
 							<th>
 								数据范围
 							</th>
-							<td title="${user.groupNames}">
-								
-								<p v-if="fn:length(user.groupNames) > 16">
-															...
-														</p>
+							<td>
+								{{user.groupNames}}
 								<a id="edit_user_group" class="s_edit"></a>
 							</td>
+							<th>
+								角色
+							</th>
+							<td>
+								{{user.roleNames}}
+								<a id="edit_user_role" class="s_edit"></a>
+							</td>
 						</tr>
-						 -->
+						
 					</tbody>
 				</table>
 			</form>

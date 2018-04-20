@@ -50,20 +50,19 @@ public class UserDaoImpl extends BaseDaoImpl<User,String> implements UserDao {
 		StringBuffer hql = new StringBuffer(
 				"from User r where r.status!=3 and r.id !='-2' ");
 		// 管理员
-		if (userVo.getIsAdmin()!=null) {
-			hql.append(" and r.isAdmin != :isAdmin");
-			params.put("isAdmin", 1);
+		if (userVo.getIsAdmin()!=1) {
+		    // 本用户
+	        if (StringUtils.isNotBlank(userVo.getId())) {
+	            hql.append(" and r.id != :id");
+	            params.put("id", userVo.getId());
+	        }
+	        //创建人
+	        if (StringUtils.isNotBlank(userVo.getCreateUserId())) {
+	            hql.append(" and r.createUserId = :createUserId");
+	            params.put("createUserId", userVo.getCreateUserId());
+	        }
 		}
-		// 本用户
-		if (StringUtils.isNotBlank(userVo.getId())) {
-			hql.append(" and r.id != :id");
-			params.put("id", userVo.getId());
-		}
-		//创建人
-		if (StringUtils.isNotBlank(userVo.getCreateUserId())) {
-            hql.append(" and r.createUserId = :createUserId");
-            params.put("createUserId", userVo.getCreateUserId());
-        }
+		
 		// 组织
 		if (StringUtils.isNotBlank(userVo.getOrginfoId())) {
 			hql.append(" and r.orginfoId = :orginfoId");
