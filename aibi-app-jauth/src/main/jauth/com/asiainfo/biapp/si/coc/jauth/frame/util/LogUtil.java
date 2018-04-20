@@ -50,6 +50,7 @@ public class LogUtil {
     private static final String LEVEL_ERROR = "1";
     private static final String LEVEL_INFO = "2";
     private static final String LEVEL_WARN = "3";
+    private static final Integer NUM = 2000;
 
     private LogUtil() {
     }
@@ -196,9 +197,8 @@ public class LogUtil {
         	ld.setThreadName(threadName);
         	ld.setInterfaceUrl(interfaceUrl + "/" + method);
         	String iMsg = "";
-        	Integer num = 2000;
-        	if(StringUtils.isNotBlank(msg.toString()) && msg.toString().length()>num){
-        		iMsg = msg.toString().substring(0,num);
+        	if(StringUtils.isNotBlank(msg.toString()) && msg.toString().length()>NUM){
+        		iMsg = msg.toString().substring(0,NUM);
         	}else{
         		iMsg = msg.toString();
         	}

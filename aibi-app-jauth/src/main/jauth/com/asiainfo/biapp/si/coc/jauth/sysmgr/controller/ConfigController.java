@@ -41,6 +41,8 @@ import com.asiainfo.biapp.si.coc.jauth.sysmgr.vo.CoconfigVo;
 public class ConfigController extends BaseController<Coconfig> {
 
 	private static final long serialVersionUID = 1L;
+	static final Integer MULUTYPE = 5;
+    static final Integer CODELENGTH = 128;
 
 	@Autowired
 	private CoconfigService coconfigService;
@@ -52,7 +54,6 @@ public class ConfigController extends BaseController<Coconfig> {
 		return coconfigService;
 	}
 	
-	static final Integer muluType = 5;
 
 	/**
 	 * @describe 开始构造树
@@ -80,7 +81,7 @@ public class ConfigController extends BaseController<Coconfig> {
         if(null != coconfig.getIsShowPage() && coconfig.getIsShowPage() == 0){
             show = false;
         }
-        if (coconfig.getConfigValType()== muluType && show) {
+        if (coconfig.getConfigValType()== MULUTYPE && show) {
 	        html.append("<li id='").append(coconfig.getConfigKey()).append("' name='").append(coconfig.getConfigKey())
                 .append("' selectable='true'><span class='text'>").append(coconfig.getConfigName()).append("</span>");
             html.append("</span><ul  class='ajax'>");
@@ -93,7 +94,7 @@ public class ConfigController extends BaseController<Coconfig> {
 
 	// 最小节点
 	private String getLeaf(Coconfig coconfig, StringBuffer htmlCon) {
-	    if (coconfig.getConfigValType()==muluType) {
+	    if (coconfig.getConfigValType()==MULUTYPE) {
 	        htmlCon.append("<li id='").append(coconfig.getConfigKey()).append("' name='").append(coconfig.getConfigKey())
                     .append("' selectable='true'");
             htmlCon.append(">");
@@ -181,12 +182,11 @@ public class ConfigController extends BaseController<Coconfig> {
 	public String save(@ApiIgnore Coconfig coconfig) {
 		String isEdit = request.getParameter("isEdit");
 		String[] conKeys = coconfig.getConfigKey().split(",");// 分割Key
-		int codeLength = 128;
 		if (conKeys.length == 1) {// 判断是否为同时添加多条数据
 		    if(!"1".equals(isEdit)){
 		        conKeys[0] = coconfig.getParentKey()+"_"+conKeys[0];
             }
-		    if((coconfig.getParentKey()+"_"+conKeys[0]).length()>codeLength){
+		    if((coconfig.getParentKey()+"_"+conKeys[0]).length()>CODELENGTH){
 		        return "编码过长";
 		    }
 		    Coconfig oldCon = coconfigService.getCoconfigByKey(conKeys[0]);
@@ -231,7 +231,7 @@ public class ConfigController extends BaseController<Coconfig> {
 						continue;
 					}
 				}
-				if((coconfig.getParentKey()+"_"+conKeys[i]).length()>codeLength){
+				if((coconfig.getParentKey()+"_"+conKeys[i]).length()>CODELENGTH){
 	                return "第" + (i + 1) + "行编码过长";
 	            }
 				if (null != coconfigService.getCoconfigByKey(coconfig.getParentKey()+"_"+conKeys[i])) {
