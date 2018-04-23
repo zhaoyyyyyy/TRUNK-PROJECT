@@ -288,6 +288,9 @@ public class OrganizationController extends BaseController<Organization> {
     public String updateOrg(Organization organization) {
         Organization organizations = organizationService.getOrgByOrgCode(organization.getOrgCode());
         Organization old = organizationService.get(organization.getId());
+        if(organizationService.checkSimpleName(organization.getSimpleName())&&!organization.getSimpleName().equals(old.getSimpleName())){
+            return "simpleNameExist";
+        }
         if (!organization.getOrgCode().equals(old.getOrgCode()) && organizations != null){// 如果修改时的orgCode与旧的不同且orgCode存在返回orgCode已存在
             return "orgCodeExist";
         }else{
