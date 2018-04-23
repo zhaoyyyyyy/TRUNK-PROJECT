@@ -301,6 +301,16 @@ public class OrganizationServiceImpl extends BaseServiceImpl<Organization,String
     	}
     }
     
+    @Override
+    public boolean checkSimpleName(String name){
+        int i = organizationDao.getCount("from Organization where simpleName =?", name);
+        if(i < 1){
+            return false;
+        }else {
+            return true;
+        }
+    }
+    
     /**
      * 
      * @describe 根据orgCode删除组织

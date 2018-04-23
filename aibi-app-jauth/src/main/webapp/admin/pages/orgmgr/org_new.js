@@ -75,6 +75,10 @@ window.jauth_onload = function() {
 						$.err('组织编码已存在，请重新输入！',function(){
 							$("orgCode").focus();
 						});
+					}else if(data == "simpleNameExist"){
+						$.err('组织名称已存在，请重新输入！',function(){
+							$("simpleName").focus();
+						});
 					}
 				}
 			});

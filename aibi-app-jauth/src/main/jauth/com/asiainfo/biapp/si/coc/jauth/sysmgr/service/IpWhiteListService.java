@@ -23,4 +23,6 @@ public interface IpWhiteListService extends BaseService<IpWhiteList, String>{
 	public List<IpWhiteList> findIpWhiteList();
 	
 	public JQGridPage<IpWhiteList> finIpWhiteListPage(JQGridPage<IpWhiteList> page);
+	
+	public boolean checkIP(String ipAddress);
 }

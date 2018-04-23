@@ -265,10 +265,13 @@ public class OrganizationController extends BaseController<Organization> {
         Organization organizations = organizationService.getOrgByOrgCode(organization.getOrgCode());
         if (organizations != null) {// 如果orgCode存在返回orgCode已存在
             return "orgCodeExist";
-        } else {// orgCode不存在执行新建然后返回success
-            organizationService.createAllTypeOrgByVo(organization);
-            return "success";
         }
+        if(organizationService.checkSimpleName(organization.getSimpleName())){
+            return "simpleNameExist";
+        }
+        organizationService.createAllTypeOrgByVo(organization);
+        return "success";
+        
     }
     
     @ApiOperation(value = "修改组织")

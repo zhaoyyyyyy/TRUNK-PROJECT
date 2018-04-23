@@ -40,5 +40,14 @@ public class IpWhiteListServiceImpl extends BaseServiceImpl<IpWhiteList, String>
     public JQGridPage<IpWhiteList> finIpWhiteListPage(JQGridPage<IpWhiteList> page) {
         return ipwhitelistDao.finIpWhiteListPage(page);
     }
+    @Override
+    public boolean checkIP(String ipAddress){
+        int i = ipwhitelistDao.getCount("from IpWhiteList where ipAddress =?", ipAddress);
+        if(i < 1){
+            return false;
+        }else {
+            return true;
+        }
+    }
 	
 }

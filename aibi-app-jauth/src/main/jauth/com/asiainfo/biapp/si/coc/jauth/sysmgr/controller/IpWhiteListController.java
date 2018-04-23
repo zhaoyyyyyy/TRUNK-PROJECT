@@ -122,6 +122,9 @@ public class IpWhiteListController extends BaseController<IpWhiteList> {
 		IpWhiteList newIpWhiteList = new IpWhiteList();
 		newIpWhiteList.setIpAddress(ipWhiteList.getIpAddress());
 		newIpWhiteList.setRequestAddress(ipWhiteList.getRequestAddress());
+		if(ipwhitelistService.checkIP(ipWhiteList.getIpAddress())){
+		    return "exist";
+		}
 		ipwhitelistService.save(newIpWhiteList);
 		return "success";
 	}

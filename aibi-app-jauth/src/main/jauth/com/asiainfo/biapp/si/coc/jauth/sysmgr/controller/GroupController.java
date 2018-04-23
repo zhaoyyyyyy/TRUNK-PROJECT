@@ -165,8 +165,11 @@ public class GroupController extends BaseController<Group> {
 	public String save(String groupName,String id,String tree,String groupDesc) {
 			User user = sessionInfoHolder.getLoginUser();
 			List<Group> groupList = null;
+			Group groupE = groupService.get(id);
 			if(StringUtil.isBlank(id)){
 				groupList = groupService.findGroupByName(groupName, id);
+			}else if(!groupName.equals(groupE.getGroupName())){
+			    groupList = groupService.findGroupByName(groupName, null);
 			}
 			// 数据范围重复
 			if (groupList != null && groupList.size() > 0) {

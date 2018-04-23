@@ -39,7 +39,11 @@ window.jauth_onload=function() {
 							dg.cancel();
 							dg.reload();
 						})
-					} 
+					} else if (data == 'exist'){
+						$.err('IP地址已存在，请重新输入！',function(){
+							$("ipAddress").focus();
+						});
+					}
 				}
 			})
 	}	

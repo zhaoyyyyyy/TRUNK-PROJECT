@@ -155,6 +155,8 @@ public interface OrganizationService extends BaseService<Organization,String>{
      */
     public boolean checkOrgCode(String orgCode);
     
+    public boolean checkSimpleName(String name);
+    
     /**
      * 
      * @describe 根据orgCode删除组织
