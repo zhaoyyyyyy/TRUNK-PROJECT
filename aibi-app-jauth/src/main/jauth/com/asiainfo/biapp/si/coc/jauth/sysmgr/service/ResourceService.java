@@ -77,5 +77,7 @@ public interface ResourceService extends BaseService<Resource,String>{
 	 */
 	@Cacheable(value="resource_cache",key="'findResourceList'")
 	public List<Resource> findResourceList(String orgId);
+	
+	public Resource getResourceByName(String name);
 
 }

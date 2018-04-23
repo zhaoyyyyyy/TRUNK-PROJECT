@@ -72,4 +72,6 @@ public interface ResourceDao extends BaseDao<Resource,String>{
 	 * @date 2013-7-16
 	 */
 	public List<Resource> findResourceList(String orgId);
+	
+	public Resource getResourceByName(String name);
 }

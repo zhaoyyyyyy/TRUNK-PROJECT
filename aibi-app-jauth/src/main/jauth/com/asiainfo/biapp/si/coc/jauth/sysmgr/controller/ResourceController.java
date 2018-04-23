@@ -160,6 +160,10 @@ public class ResourceController extends BaseController<Resource> {
 		if (resourceBy != null) {
 			return "haveSameCode";
 		}
+		resourceBy = resourceService.getResourceByName(resource.getResourceName());
+		if(null != resourceBy){
+		    return "haveSameName";
+		}
 		resource.setOrginfoId(user.getOrginfoId());
 		try {
 			resourceService.saveOrUpdate(resource);

@@ -214,7 +214,9 @@ window.jauth_onload = function() {
 												dg.reload();
 											})
 										} else if (data == 'haveSameCode') {
-											$.alert("已存在的菜单编码");
+											$.alert("已存在的资源编码");
+										} else if (data == 'haveSameName'){
+											$.alert("已存在的资源名称");
 										}
 									}
 								});

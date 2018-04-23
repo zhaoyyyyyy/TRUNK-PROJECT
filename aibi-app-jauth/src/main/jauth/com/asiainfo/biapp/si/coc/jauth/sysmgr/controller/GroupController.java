@@ -21,6 +21,7 @@ import com.asiainfo.biapp.si.coc.jauth.frame.controller.BaseController;
 import com.asiainfo.biapp.si.coc.jauth.frame.json.JSONResult;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Group;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Organization;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.User;
@@ -164,7 +165,7 @@ public class GroupController extends BaseController<Group> {
 	public String save(String groupName,String id,String tree,String groupDesc) {
 			User user = sessionInfoHolder.getLoginUser();
 			List<Group> groupList = null;
-			if(id==null){
+			if(StringUtil.isBlank(id)){
 				groupList = groupService.findGroupByName(groupName, id);
 			}
 			// 数据范围重复

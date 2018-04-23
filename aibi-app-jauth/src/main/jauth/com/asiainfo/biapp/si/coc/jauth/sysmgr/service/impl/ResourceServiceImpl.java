@@ -108,6 +108,10 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource,String> implem
 		return this.resourceDao.findResourceList(orgId);
 	}
 	
+	public Resource getResourceByName(String name){
+	    return resourceDao.getResourceByName(name);
+	}
+	
 	@Override
 	public List<Resource> getResourceByParentId(String parentId) {
 		List<Resource> resources=new ArrayList<>();

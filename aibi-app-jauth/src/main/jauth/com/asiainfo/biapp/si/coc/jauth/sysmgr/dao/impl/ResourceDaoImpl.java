@@ -94,6 +94,12 @@ public class ResourceDaoImpl extends BaseDaoImpl<Resource,String> implements
 		return this.findOneByHql("from Resource r where r.resourceCode = ?0 and r.status=0",
 				resourceCode);
 	}
+	
+	@Override
+    public Resource getResourceByName(String name) {
+        return this.findOneByHql("from Resource r where r.resourceName = ?0 and r.status=0",
+                name);
+    }
 
 	/**
 	 * 
