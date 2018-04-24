@@ -56,5 +56,14 @@ public class CoconfigServiceImpl extends BaseServiceImpl<Coconfig, String> imple
 		ConfigUtil.refush();
 		coconfigDao.saveOrUpdate(coconfig);
 	}
+	@Override
+	public boolean checkConfigName(String name){
+	    int i = coconfigDao.getCount("from Coconfig where configName =?", name);
+        if(i < 1){
+            return false;
+        }else {
+            return true;
+        }
+	}
 
 }

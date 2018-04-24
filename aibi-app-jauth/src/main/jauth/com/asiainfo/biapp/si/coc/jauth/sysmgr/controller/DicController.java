@@ -133,6 +133,9 @@ public class DicController extends BaseController<Dic>{
 			}else if(!dicd.getDicCode().equals(dic.getDicCode())){
 				return "haveCode";
 			}
+			if(dicService.checkDicName(dic.getDicName()) && !dic.getDicName().equals(dicd.getDicName())){
+			    return "haveName";
+			}
 			dicd.setDicName(dic.getDicName());
 			dicd.setNote(dic.getNote());
 			dicd.setDicType(dic.getDicType());
@@ -154,6 +157,9 @@ public class DicController extends BaseController<Dic>{
 		}else{
 			return "haveCode";
 		}
+		if(dicService.checkDicName(dic.getDicName())){
+            return "haveName";
+        }
 		newdic.setDicCode(dic.getDicCode());
 		newdic.setDicName(dic.getDicName());
 		newdic.setNote(dic.getNote());

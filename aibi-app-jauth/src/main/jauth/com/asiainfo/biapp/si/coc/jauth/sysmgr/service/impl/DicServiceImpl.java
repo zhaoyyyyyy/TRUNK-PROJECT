@@ -47,4 +47,13 @@ public class DicServiceImpl extends BaseServiceImpl<Dic,String> implements DicSe
 	protected BaseDao<Dic, String> getBaseDao() {
 		return dicDao;
 	}
+	@Override
+    public boolean checkDicName(String name){
+        int i = dicDao.getCount("from Dic where dicName =?", name);
+        if(i < 1){
+            return false;
+        }else {
+            return true;
+        }
+    }
 }

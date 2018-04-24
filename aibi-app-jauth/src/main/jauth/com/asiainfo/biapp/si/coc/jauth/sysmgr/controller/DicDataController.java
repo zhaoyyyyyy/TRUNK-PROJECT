@@ -85,6 +85,9 @@ public class DicDataController extends BaseController<DicData>{
 			if(i==1){
 				return "haveCode";
 			}
+			if(dicDataService.checkDicDataName(dicData.getDataName()) && !dicData.getDataName().equals(dicdata.getDataName())){
+			    return "haveName";
+			}
 			dicdata.setCode(dicData.getCode());
 			dicdata.setDataName(dicData.getDataName());
 			dicdata.setNote(dicData.getNote());
@@ -108,6 +111,9 @@ public class DicDataController extends BaseController<DicData>{
 		if(i==1){
 			return "haveCode";
 		}
+		if(dicDataService.checkDicDataName(dicData.getDataName())){
+            return "haveName";
+        }
 		newdata.setDicCode(dicCode);
 		newdata.setCode(dicData.getCode());
 		newdata.setDataName(dicData.getDataName());

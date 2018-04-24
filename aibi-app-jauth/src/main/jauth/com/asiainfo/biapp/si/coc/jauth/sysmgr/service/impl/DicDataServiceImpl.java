@@ -66,4 +66,13 @@ public class DicDataServiceImpl extends BaseServiceImpl<DicData,String> implemen
 	public List<DicData> findDicDataList(DicDataVo dataVo){
 	    return dicDataDao.findDicDataList(dataVo);
 	}
+	@Override
+	public boolean checkDicDataName(String name){
+	    int i = dicDataDao.getCount("from DicData where dataName =?", name);
+	    if(i<1){
+	        return false;
+	    }else{
+	        return true;
+	    }
+	}
 }

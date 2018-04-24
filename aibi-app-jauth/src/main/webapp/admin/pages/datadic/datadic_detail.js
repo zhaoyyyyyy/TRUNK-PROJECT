@@ -53,6 +53,8 @@ window.jauth_onload = function() {
 						})
 					} else if (data == 'haveCode') {
 						$.alert("编码重复");
+					} else if (data == 'haveName'){
+						$.alert("名称重复");
 					}
 				}
 			})

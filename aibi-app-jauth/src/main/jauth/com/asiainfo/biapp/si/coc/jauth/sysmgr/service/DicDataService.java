@@ -28,4 +28,6 @@ public interface DicDataService extends BaseService<DicData,String>{
 	public JQGridPage<DicData> findDicDataList(JQGridPage<DicData> page,DicDataVo dicDataVo);
 	
 	public List<DicData> findDicDataList(DicDataVo dicDataVo);
+	
+	public boolean checkDicDataName(String name);
 }

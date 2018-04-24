@@ -21,5 +21,7 @@ public interface CoconfigService extends BaseService<Coconfig, String> {
 	public List<Coconfig> getCoconfigByParentKey(String configKey);
 	
 	public JQGridPage<Coconfig> findCoconfigList(JQGridPage<Coconfig> page, CoconfigVo coconfigVo);
+	
+	public boolean checkConfigName(String name);
 
 }

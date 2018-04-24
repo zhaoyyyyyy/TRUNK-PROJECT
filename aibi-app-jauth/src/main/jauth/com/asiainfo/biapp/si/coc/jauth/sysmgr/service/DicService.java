@@ -22,4 +22,6 @@ public interface DicService extends BaseService<Dic,String>{
 	 * @date 2013-11-21
 	 */
 	public List<Dic> findDicListByDic(String dic);
+	
+	public boolean checkDicName(String name);
 }

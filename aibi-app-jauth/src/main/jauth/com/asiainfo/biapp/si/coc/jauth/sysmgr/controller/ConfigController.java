@@ -192,6 +192,9 @@ public class ConfigController extends BaseController<Coconfig> {
 		    Coconfig oldCon = coconfigService.getCoconfigByKey(conKeys[0]);
 			if (null != oldCon) {
 				if ("1".equals(isEdit)) {// 编辑
+				    if(coconfigService.checkConfigName(coconfig.getConfigName()) && !coconfig.getConfigName().equals(oldCon.getConfigName())){
+				        return "名称已存在";
+				    }
 					oldCon.setConfigName(coconfig.getConfigName());
 					oldCon.setConfigDesc(coconfig.getConfigDesc());
 					oldCon.setConfigVal(coconfig.getConfigVal());
@@ -200,6 +203,9 @@ public class ConfigController extends BaseController<Coconfig> {
 					return "编码已存在";
 				}
 			} else {// 新建
+			    if(coconfigService.checkConfigName(coconfig.getConfigName())){
+                    return "名称已存在";
+                }
 				coconfig.setConfigKey(conKeys[0].toUpperCase());
 				coconfig.setStatus(1);
 				coconfig.setSysId(coconfig.getParentKey());
