@@ -66,8 +66,6 @@ public class LogMonitorDetailServiceImpl extends BaseServiceImpl<LogMonitorDetai
     
     @Override
     public void save(LogMonitorDetail model) {
-//        LogUtil.debug(this.getClass().getSimpleName()+".save()");
-        
         savePool.add(model);    //加入缓存，等待入库
 
         //当日志数量大于poolSaveSize时，自动入库
@@ -79,8 +77,7 @@ public class LogMonitorDetailServiceImpl extends BaseServiceImpl<LogMonitorDetai
     }
     
     public void saveRightNow(LogMonitorDetail model){
-//    	LogUtil.debug(this.getClass().getSimpleName()+".saveRightNow()");
-    	super.save(model);
+        super.save(model);
     }
     
     @Override

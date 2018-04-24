@@ -62,8 +62,6 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
     
     @Override
     public void save(LogInterfaceDetail model) {
-//        LogUtil.debug(this.getClass().getSimpleName()+".save()");
-
         savePool.add(model);    //加入缓存，等待入库
         
         //当日志数量大于poolSaveSize时，自动入库
@@ -76,14 +74,12 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
     
     @Override
     public void taskSave() {
-//        LogUtil.debug(this.getClass().getSimpleName()+".taskSave()入库,缓存入库实体池子大小："+savePool.size());
         if (null != savePool && !savePool.isEmpty()) {  //入库
             for (LogInterfaceDetail model : savePool) {
                 //解决:org.hibernate.PersistentObjectException: detached entity passed to persist:
                 if (StringUtil.isNotBlank(model.getLogId())) {
                     model.setLogId(null);
                 }
-//                LogUtil.debug("入库："+model.toString());
                 super.save(model);
             }
             savePool.clear();
@@ -103,7 +99,7 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 		String newTabelName = BEAN2TABEL_NAME + "_" + DateUtil.format(nowdate,DateUtil.FMT_DATE_YYYYMMDD);
 		final String newTabelNameF = newTabelName;	//供线程使用
 		Integer no = this.CreateTable(oldTableName, newTabelName, true);
-		LogUtil.debug(oldTableName+"———bak———>"+newTabelName+" end,cost:"+((System.currentTimeMillis()-s)/1000L) + " s.");
+		LogUtil.debug(oldTableName+"—bak—>"+newTabelName+" end,cost:"+((System.currentTimeMillis()-s)/1000L) + " s.");
 		
         //1.2 计算总条数，清空表
 		long s1 = System.currentTimeMillis();
@@ -197,7 +193,7 @@ public class LogInterfaceDetailServiceImpl extends BaseServiceImpl<LogInterfaceD
 				LogUtil.debug("drop bak table sql:"+sqlb.toString());
 				countNO = logInterService.excuteSql(sqlb.toString(), new Object[0]);
 				
-				LogUtil.debug("Interface log bak end:" + flag + ",cost:"+((System.currentTimeMillis()-s)/1000L) + " s.");
+				LogUtil.debug("Interface log bak end:" + flag + ",cost:"+(System.currentTimeMillis()-s) + " ms.");
 			}
 		}).start();
         

@@ -157,7 +157,7 @@ public class DynamicTaskExeInfoImpl implements IDynamicTask {
             LogUtil.error("url不能为空");
         }
         
-        LogUtil.debug("DynamicTaskExeInfoImpl.run() end.耗时："+((System.currentTimeMillis()-s)/1000.0)+"秒。");
+        LogUtil.debug("DynamicTaskExeInfoImpl.run() end.cost："+(System.currentTimeMillis()-s)+" ms。");
     }
 
     /** 按日志的最大字符长度截断字符串
