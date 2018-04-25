@@ -224,29 +224,30 @@ public class ScheduleController extends BaseController<LocTaskExeInfo> {
         }
         
         String taskExeTime = locTask.getTaskExeTime().replace(",", " ").trim();
-        if (locTaskExeInfoService.isCronExpression(taskExeTime)) {
+        if (!locTaskExeInfoService.isCronExpression(taskExeTime)) {
         		result = "failure";
-        }
-		if (locTask.getTaskExeId() != null) {   //修改
-            LocTaskExeInfo oldLocTask = locTaskExeInfoService.get(locTask.getTaskExeId());
-            oldLocTask.setTaskId(locTask.getTaskId());
-            oldLocTask.setTaskExeName(locTask.getTaskExeName());
-            oldLocTask.setSysId(locTask.getSysId());
-            oldLocTask.setExeType(locTask.getExeType());
-            oldLocTask.setTaskExeTime(taskExeTime);
-            locTask = oldLocTask;
-        } else {    //新增
-            if (!RETURN_SUCCESS.equals(this.queryNameExist(locTask.getTaskExeName()))) {
-            		result = "failure";
+        } else {
+		    if (locTask.getTaskExeId() != null) {   //修改
+                LocTaskExeInfo oldLocTask = locTaskExeInfoService.get(locTask.getTaskExeId());
+                oldLocTask.setTaskId(locTask.getTaskId());
+                oldLocTask.setTaskExeName(locTask.getTaskExeName());
+                oldLocTask.setSysId(locTask.getSysId());
+                oldLocTask.setExeType(locTask.getExeType());
+                oldLocTask.setTaskExeTime(taskExeTime);
+                locTask = oldLocTask;
+            } else {    //新增
+                if (!RETURN_SUCCESS.equals(this.queryNameExist(locTask.getTaskExeName()))) {
+                		result = "failure";
+                }
+                if (StringUtils.isBlank(locTask.getTaskExeTime())) {
+                    locTask.setExeType(String.valueOf(ServiceConstants.TaskExeInfo.EXE_TYPE_DELAY));
+                }
+                //默认任务是停止的
+                locTask.setExeStatus(String.valueOf(ServiceConstants.TaskExeInfo.EXE_STATUS_NO));
+                locTask.setTaskExeTime(taskExeTime);
             }
-            if (StringUtils.isBlank(locTask.getTaskExeTime())) {
-                locTask.setExeType(String.valueOf(ServiceConstants.TaskExeInfo.EXE_TYPE_DELAY));
-            }
-            //默认任务是停止的
-            locTask.setExeStatus(String.valueOf(ServiceConstants.TaskExeInfo.EXE_STATUS_NO));
-            locTask.setTaskExeTime(taskExeTime);
+            locTaskExeInfoService.saveOrUpdate(locTask);
         }
-        locTaskExeInfoService.saveOrUpdate(locTask);
         
         return result;
     }
