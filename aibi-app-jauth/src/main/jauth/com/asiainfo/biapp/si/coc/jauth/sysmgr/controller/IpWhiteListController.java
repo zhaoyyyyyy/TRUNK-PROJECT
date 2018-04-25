@@ -148,6 +148,9 @@ public class IpWhiteListController extends BaseController<IpWhiteList> {
 	@RequestMapping(value = "/whitelist/update", method = RequestMethod.POST)	
 	public String updateIpWhiteList(@ApiIgnore IpWhiteList ipWhiteList) {
 	    IpWhiteList oldIpWhiteList=ipwhitelistService.get(ipWhiteList.getListId());
+	    if(ipwhitelistService.checkIP(ipWhiteList.getIpAddress()) && !ipWhiteList.getIpAddress().equals(oldIpWhiteList.getIpAddress())){
+            return "exist";
+        }
 	    oldIpWhiteList.setIpAddress(ipWhiteList.getIpAddress());
 	    oldIpWhiteList.setRequestAddress(ipWhiteList.getRequestAddress());
 	    ipwhitelistService.update(oldIpWhiteList);

@@ -147,6 +147,17 @@ public class UserController {
                 roleSet.add(role);
             }
             user.setRoleSet(roleSet);
+//            boolean isAdmin = false;
+//            for (Role r : roleSet){
+//                if(r.getId().equals("1")){
+//                    isAdmin = true;
+//                }
+//            }
+//            if(isAdmin){
+//                user.setIsAdmin(1);
+//            }else{
+//                user.setIsAdmin(2);
+//            }
             userService.saveOrUpdate(user);
         }
         return success;

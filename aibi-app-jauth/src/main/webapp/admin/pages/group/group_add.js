@@ -81,7 +81,7 @@ window.jauth_onload = function() {
 														dg.reload();
 													})
 										} else if (data == 'haveSameName') {
-											$.alert("数据范围名称重复");
+											$.alert("数据权限名称重复");
 											isSave =false;
 										}
 									}

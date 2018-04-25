@@ -28,6 +28,7 @@ import com.asiainfo.biapp.si.coc.jauth.frame.controller.BaseController;
 import com.asiainfo.biapp.si.coc.jauth.frame.json.JSONResult;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.BaseService;
+import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Resource;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.Role;
 import com.asiainfo.biapp.si.coc.jauth.sysmgr.entity.User;
@@ -153,10 +154,14 @@ public class RoleController extends BaseController<Role> {
 		String tree3 = request.getParameter("tree3");
 		String tree4 = request.getParameter("tree4");
 		List<Role> roles = null;
-		if (StringUtils.isBlank(id)) {
-			roles = roleService.findRoleByName(id, roleName);
+		roles = roleService.findRoleByName(null, roleName);
+		if(StringUtil.isNotBlank(id)){
+		    String oldName = roleService.get(id).getRoleName();
+		    if(!roleName.equals(oldName)){
+		        return "haveSameName";
+		    }
 		}
-		if (roles != null && !roles.isEmpty()) {
+		if (roles != null && !roles.isEmpty() && StringUtil.isBlank(id)) {
 			return "haveSameName";
 		} else {
 			Set<Resource> rSet = new HashSet<>();
