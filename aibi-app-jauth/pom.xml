@@ -40,6 +40,13 @@
             </properties>
         </profile>
         <profile>
+            <id>as-show</id><!-- 亚信演示环境-->
+            <properties>
+                <env>as-show</env>
+                <port>8440</port>
+            </properties>
+        </profile>
+        <profile>
             <id>cp-yw-dev</id> <!-- 中邮-邮务-开发-->
             <properties>
                 <env>cp-yw-dev</env>

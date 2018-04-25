@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.1.235.181:3306/locdemo5?useUnicode=true&characterEncoding=utf-8
+    username: locdemo5
+    password: locdemo5
