@@ -1,13 +1,8 @@
 
 package com.asiainfo.biapp.si.coc.jauth.log.service.impl;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -18,8 +13,6 @@ import com.asiainfo.biapp.si.coc.jauth.frame.dao.BaseDao;
 import com.asiainfo.biapp.si.coc.jauth.frame.page.JQGridPage;
 import com.asiainfo.biapp.si.coc.jauth.frame.service.impl.BaseServiceImpl;
 import com.asiainfo.biapp.si.coc.jauth.frame.ssh.extend.SpringContextHolder;
-import com.asiainfo.biapp.si.coc.jauth.frame.util.DateUtil;
-import com.asiainfo.biapp.si.coc.jauth.frame.util.FileUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.LogUtil;
 import com.asiainfo.biapp.si.coc.jauth.frame.util.StringUtil;
 import com.asiainfo.biapp.si.coc.jauth.log.dao.ILogMonitorDetailDao;
@@ -82,15 +75,12 @@ public class LogMonitorDetailServiceImpl extends BaseServiceImpl<LogMonitorDetai
     
     @Override
     public void taskSave() {
-//        LogUtil.debug(this.getClass().getSimpleName()+".taskSave()入库,缓存入库实体池子大小："+savePool.size());
-        
         if (null != savePool && !savePool.isEmpty()) {  //入库
             for (LogMonitorDetail model : savePool) {
                 //解决:org.hibernate.PersistentObjectException: detached entity passed to persist:
                 if (StringUtil.isNotBlank(model.getLogId())) {
                     model.setLogId(null);
                 }
-//                LogUtil.debug("入库："+model.toString());
                 super.save(model);
             }
             savePool.clear();
