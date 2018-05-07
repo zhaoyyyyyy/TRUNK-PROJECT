@@ -26,6 +26,9 @@ import com.asiainfo.biapp.si.coc.jauth.sysmgr.service.CoconfigService;
 @Transactional
 public class LogMonitorDetailServiceImpl extends BaseServiceImpl<LogMonitorDetail,String> implements ILogMonitorDetailService {
 
+    // 查询每页大小
+    private static final String EXPORT_TO_FILE_PAGESIZE = "LOC_CONFIG_APP_EXPORT_TO_FILE_PAGESIZE";
+
     /** 缓存要入库的实体的池子 */
     private List<LogMonitorDetail> savePool = new LinkedList<>();
 
@@ -43,7 +46,7 @@ public class LogMonitorDetailServiceImpl extends BaseServiceImpl<LogMonitorDetai
 	        	}
         }
         
-        Coconfig pageSzieConf = configService.getCoconfigByKey("EXPORT_TO_FILE_PAGESIZE"); // 查询每页大小
+        Coconfig pageSzieConf = configService.getCoconfigByKey(EXPORT_TO_FILE_PAGESIZE); // 查询每页大小
         if (null != pageSzieConf) {
 	        	if (StringUtil.isNotEmpty(pageSzieConf.getConfigVal())) {
 	        		bufferedRowSize = Integer.parseInt(pageSzieConf.getConfigVal());
