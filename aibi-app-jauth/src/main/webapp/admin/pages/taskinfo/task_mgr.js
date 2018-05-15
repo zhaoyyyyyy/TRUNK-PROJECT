@@ -193,9 +193,26 @@ function fun_to_update(id) {
 	}
 }
 function fun_to_up(item) {
-	var dg = $.dialog('立即执行-参数', $.ctx + '/admin/pages/taskinfo/task_exe.html', 430, 210);
-	dg.getParam = function () {
-		return item;
+	if (item.sysId) {
+		var dg = $.dialog('立即执行-参数', $.ctx + '/admin/pages/taskinfo/task_exe.html', 430, 210);
+		dg.getParam = function () {
+			return item;
+		}
+	} else {
+		$.commAjax({
+			url:$.ctx + '/api/schedule/taskExeInfo/start',
+			postData:{
+				taskExeId:item.taskExeId,
+				sysId:$.toStr(item.sysId)
+			},
+			onSuccess:function(data) {
+				if (data.res) {
+					$.alert("执行成功");
+				} else {
+					$.alert("执行失败");
+				}
+			}
+		});
 	}
 }
 function fun_to_detail(id) {
