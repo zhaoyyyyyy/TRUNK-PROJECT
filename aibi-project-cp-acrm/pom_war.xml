@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.asiainfo.biapp</groupId>
@@ -9,7 +10,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<packaging>war</packaging>
-	
+
 	<groupId>com.asiainfo.prd</groupId>
 	<artifactId>aibi-project-cp-acrm</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
@@ -24,41 +25,43 @@
 	</properties>
 
 
-	  <!-- 设置现场打包参数 -->
-  	<profiles>
-  		<profile>
-            <id>as-dev</id>    <!-- 亚信-开发（默认）-->
-            <properties>
-                <env>as-dev</env>
-                <port>8080</port>
-            </properties>
-            <activation><activeByDefault>true</activeByDefault></activation>
-        </profile>
-        <profile>
-            <id>as-qa</id>    <!-- 亚信-测试 -->
-            <properties>
-                <env>as-qa</env>
-                <port>8080</port>
-            </properties>
-        </profile>
-        <profile>
-            <id>cp-yw-dev</id> <!-- 中邮-邮务-开发-->
-            <properties>
-                <env>cp-yw-dev</env>
-                <port>8080</port>
-            </properties>
-        </profile>
-        <profile>
-            <id>cp-yw-prod</id><!-- 中邮-邮务-生产-->
-            <properties>
-                <env>cp-yw-prod</env>
-                <port>8080</port>
-            </properties>
-        </profile>
-    </profiles>
-    
-    
-    
+	<!-- 设置现场打包参数 -->
+	<profiles>
+		<profile>
+			<id>as-dev</id>    <!-- 亚信-开发（默认） -->
+			<properties>
+				<env>as-dev</env>
+				<port>8080</port>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>as-qa</id>    <!-- 亚信-测试 -->
+			<properties>
+				<env>as-qa</env>
+				<port>8080</port>
+			</properties>
+		</profile>
+		<profile>
+			<id>cp-yw-dev</id> <!-- 中邮-邮务-开发 -->
+			<properties>
+				<env>cp-yw-dev</env>
+				<port>8080</port>
+			</properties>
+		</profile>
+		<profile>
+			<id>cp-yw-prod</id><!-- 中邮-邮务-生产 -->
+			<properties>
+				<env>cp-yw-prod</env>
+				<port>8080</port>
+			</properties>
+		</profile>
+	</profiles>
+
+
+
 	<dependencies>
 
 		<!-- 注册springbootadmin客户端 -->
@@ -67,7 +70,7 @@
 			<artifactId>spring-boot-admin-starter-client</artifactId>
 			<version>1.5.1</version>
 		</dependency>
-		
+
 		<!-- eureka client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -75,24 +78,24 @@
 		</dependency>
 
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        
-         <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-starter-test</artifactId>
-	        <scope>test</scope>
-	     </dependency>
-	     	 
-        <!-- SSO集成开始 -->	
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- SSO集成开始 -->
 		<dependency>
 			<groupId>com.ai.sso.client</groupId>
 			<artifactId>ssologinclient</artifactId>
@@ -109,7 +112,7 @@
 			<version>1.2.8</version>
 		</dependency>
 		<!-- SSO集成结束 -->
-		
+
 		<!-- USPA集成开始 -->
 		<dependency>
 			<groupId>com.ai.aif</groupId>
@@ -121,11 +124,11 @@
 			<artifactId>appframe_exeframe_cache</artifactId>
 			<version>1.0</version>
 		</dependency>
-<dependency>
-   <groupId>com.ai.chinapostcrm.paas</groupId>
-   <artifactId>uspa-server</artifactId>
-   <version>0.0.1</version>
-  </dependency>
+		<dependency>
+			<groupId>com.ai.chinapostcrm.paas</groupId>
+			<artifactId>uspa-server</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 		<!-- USPA集成结束 -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -133,24 +136,24 @@
 			<version>3.12</version>
 		</dependency>
 		<dependency>
-		  <groupId>fakepath</groupId>
-		  <artifactId>poi-ooxml</artifactId>
-		  <version>3.10</version>
+			<groupId>fakepath</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.10</version>
 		</dependency>
 		<dependency>
-		  <groupId>org.apache.xmlbeans</groupId>
-		  <artifactId>xmlbeans</artifactId>
-		  <version>2.3.0</version>
-		</dependency>	
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<version>2.3.0</version>
+		</dependency>
 		<dependency>
-		  <groupId>fakepath</groupId>
-		  <artifactId>poi-ooxml-schemas</artifactId>
-		  <version>3.10</version>
+			<groupId>fakepath</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>3.10</version>
 		</dependency>
 	</dependencies>
 	<build>
-    		<finalName>acrm</finalName>
-    		<testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
+		<finalName>acrm</finalName>
+		<testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
 		<testOutputDirectory>target/test-classes</testOutputDirectory>
 	</build>
 </project>

@@ -12,7 +12,7 @@ div.mcdropdown {
 	padding: 0;
 }
 
-div.mcdropdown input.emptyField{
+div.mcdropdown input.emptyField {
 	color: gray;
 }
 /* style either the input or div where the plug-in is attached to */
@@ -37,7 +37,7 @@ div.mcdropdown a {
 	*margin-top: 4px;
 }
 
-div.mcdropdown a:hover,div.mcdropdown a:focus {
+div.mcdropdown a:hover, div.mcdropdown a:focus {
 	background-position: -34px 0 !important;
 }
 
@@ -59,21 +59,26 @@ div.mcdropdownDisabled a {
 
 div.mcdropdownDisabled input {
 	cursor: default;
-	background:url(../images/read_input.jpg) repeat-x;
-	color:#7C7C7C;
+	background: url(../images/read_input.jpg) repeat-x;
+	color: #7C7C7C;
 }
 
-div.mcdropdownDisabled a:hover,div.mcdropdownDisabled a:focus {
-	background-position: 0 0!important;
+div.mcdropdownDisabled a:hover, div.mcdropdownDisabled a:focus {
+	background-position: 0 0 !important;
 	cursor: default;
 }
 
-.triggerIcon{
-	background: transparent url(../images/search-trigger.gif) no-repeat -17px 0 !important;
+.triggerIcon {
+	background: transparent url(../images/search-trigger.gif) no-repeat
+		-17px 0 !important;
 }
-.date_triggerIcon{
-	background: transparent url(../images/date-trigger.gif) no-repeat -17px 0 !important;
+
+.date_triggerIcon {
+	background: transparent url(../images/date-trigger.gif) no-repeat -17px
+		0 !important;
 }
-.clear_triggerIcon{
-	background: transparent url(../images/clear-trigger.gif) no-repeat -17px 0 !important;
+
+.clear_triggerIcon {
+	background: transparent url(../images/clear-trigger.gif) no-repeat -17px
+		0 !important;
 }

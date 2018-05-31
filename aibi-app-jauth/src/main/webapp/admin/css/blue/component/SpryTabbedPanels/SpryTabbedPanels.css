@@ -31,7 +31,8 @@
 	padding: 0px;
 	float: left;
 	clear: none;
-	width: 100%; /* IE Hack to force proper layout when preceded by a paragraph. (hasLayout Bug)*/
+	width: 100%;
+	/* IE Hack to force proper layout when preceded by a paragraph. (hasLayout Bug)*/
 }
 
 /* This is the selector for the TabGroup. The TabGroup container houses
@@ -76,7 +77,7 @@
 	border-left: solid 1px #72A7AB;
 	border-bottom: solid 1px #72A7AB;
 	border-top: solid 1px #72A7AB;
-	border-right: solid 1px #72A7AB;	
+	border-right: solid 1px #72A7AB;
 	text-align: center;
 	white-space: nowrap;
 	background-image: url(image_68.gif);
@@ -86,11 +87,11 @@
 	font-weight: bold;
 	color: #FFFFFF;
 	cursor: pointer;
-	height:15px;
+	height: 15px;
 }
 
 .TabbedPanelsTab_g {
-position: relative;
+	position: relative;
 	top: 1px;
 	float: left;
 	padding: 4px 10px;
@@ -101,7 +102,7 @@ position: relative;
 	border-left: solid 1px #72A7AB;
 	border-bottom: solid 1px #72A7AB;
 	border-top: solid 1px #72A7AB;
-	border-right: solid 1px #72A7AB;	
+	border-right: solid 1px #72A7AB;
 	text-align: center;
 	white-space: nowrap;
 	background-image: url(image_69.gif);
@@ -109,10 +110,11 @@ position: relative;
 	font-family: "宋体";
 	font-size: 12px;
 	font-weight: bold;
-	color:#CCC;
+	color: #CCC;
 	cursor: pointer;
-	height:15px;
+	height: 15px;
 }
+
 .TabbedPanelsTab1 {
 	position: relative;
 	top: 1px;
@@ -125,7 +127,7 @@ position: relative;
 	border-left: solid 1px #72A7AB;
 	border-bottom: solid 1px #72A7AB;
 	border-top: solid 1px #72A7AB;
-	border-right: solid 1px #72A7AB;	
+	border-right: solid 1px #72A7AB;
 	text-align: center;
 	white-space: nowrap;
 	background-image: url(image_90.gif);
@@ -135,7 +137,6 @@ position: relative;
 	font-weight: bold;
 	color: #FFFFFF;
 	cursor: pointer;
-	
 }
 /* This selector is an example of how to change the appearnce of a tab button
  * container as the mouse enters it. The class "TabbedPanelsTabHover" is
@@ -151,7 +152,7 @@ position: relative;
 	font-size: 12px;
 	font-weight: bold;
 	color: #134E6E;
-	height:15px;
+	height: 15px;
 }
 
 /* This selector is an example of how to change the appearance of a tab button
@@ -180,7 +181,7 @@ position: relative;
 	font-size: 12px;
 	font-weight: bold;
 	color: #134E6E;
-    border-left: solid 1px #72A7AB;
+	border-left: solid 1px #72A7AB;
 	border-bottom: solid 0px #fff;
 	border-top: solid 1px #72A7AB;
 	border-right: solid 1px #72A7AB;
@@ -234,6 +235,7 @@ position: relative;
  * is activated/deactivated.
  */
 .TabbedPanelsContentVisible {
+	
 }
 
 /* Vertical Tabbed Panels
@@ -253,10 +255,10 @@ position: relative;
  * the group container to make it look like a list container.
  */
 .VTabbedPanels {
-    width: 100%;
-    position: relative;
+	width: 100%;
+	position: relative;
 }
- 
+
 .VTabbedPanels .TabbedPanelsTabGroup {
 	width: 120px;
 	border-top: solid 1px #72A7AB;
@@ -274,7 +276,7 @@ position: relative;
  */
 .VTabbedPanels .TabbedPanelsTab {
 	float: none;
-    width: 100px;
+	width: 100px;
 	margin: 0px;
 	border-top: none;
 	border-left: none;
@@ -288,7 +290,7 @@ position: relative;
  * the TabGroup, and its top border from the TabGroup or tab button above it.
  */
 .VTabbedPanels .TabbedPanelsTabSelected {
-    width: 101px;
+	width: 101px;
 	background-color: #fff;
 	border-right: 1px solid #fff;
 	border-bottom: solid 1px #72A7AB;
@@ -304,4 +306,3 @@ position: relative;
 	min-height: 15em;
 	_height: 15em;
 }
-

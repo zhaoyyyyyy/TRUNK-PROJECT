@@ -12,87 +12,77 @@
 </style>
 </head>
 <body>
-<form id="saveDataForm" v-cloak>
-	<table border="0" width="100%" cellpadding="0" cellspacing="0" class="commTable" >
-		<tbody> 
-			<tr>
-				<th>组织Code</th>
-				<td>
-					<input type="hidden" id="orgCode" v-model="orgCode" />
-					{{orgCode}}
-				</td>
-				<th>组织名称缩写</th>
-				<td>
-					{{simpleName}}
-				</td>
-			</tr>
-			<tr>
-				<th>排序序号</th>
-				<td>
-					{{orderNum}}
-				</td>
-				<th>组织类型</th>
-				<td>
-					{{orgType}}
-				</td>
-			</tr>
-			<tr>
-				<th>父组织名称</th>
-				<td>
-					{{parentName}}
-				</td>
-				<th>组织层级</th>
-				<td>
-					{{levelId}}
-				</td>
-			</tr>
-			<tr>
-				<th>创建人姓名</th>
-				<td>
-					{{createrName}}
-				</td>
-				<th>创建人账号</th>
-				<td>
-					{{creater}}
-				</td>
-			</tr>
-			<tr>
-				<th>创建时间</th>
-				<td colspan="3">
-					{{createTime}}
-				</td>
-			</tr>
-			<tr>
-				<th>审核方式</th>
-				<td>
-					{{interrogateType}}
-				</td>
-				<th>组织状态</th>
-				<td>
-					{{orgStatus}}
-				</td>
-			</tr>
-			<tr>
-				<th>树路径</th>
-				<td colspan="3">
-					{{treePath}}
-				</td>
-			</tr>	
-			<tr>
-				<th>组织全名</th>
-				<td colspan="3">
-					{{fullName}}
-				</td>
-			</tr>
-		</tbody>		
-	</table>
-	
-	<!-- 批量创建  -->
-    	<div class="buttonArea operation">
-    		<div v-if="showadd" class="left newButton"><div><input type="button" id="btn_creatChild" value="创建下级节点" title="创建下级节点" class="add" /></div></div>
-    		<div v-if="showedit" class="left newButton"><div><input type="button" id="btn_updateThis" value="修改当前节点" title="修改当前节点" class="edit" /></div></div>
-    		<div v-if="showdelete" class="left newButton"><div><input type="button" id="btn_deleteThis" value="删除当前节点" title="删除当前节点" class="delete" /></div></div>
+	<form id="saveDataForm" v-cloak>
+		<table border="0" width="100%" cellpadding="0" cellspacing="0"
+			class="commTable">
+			<tbody>
+				<tr>
+					<th>组织Code</th>
+					<td><input type="hidden" id="orgCode" v-model="orgCode" />
+						{{orgCode}}</td>
+					<th>组织名称缩写</th>
+					<td>{{simpleName}}</td>
+				</tr>
+				<tr>
+					<th>排序序号</th>
+					<td>{{orderNum}}</td>
+					<th>组织类型</th>
+					<td>{{orgType}}</td>
+				</tr>
+				<tr>
+					<th>父组织名称</th>
+					<td>{{parentName}}</td>
+					<th>组织层级</th>
+					<td>{{levelId}}</td>
+				</tr>
+				<tr>
+					<th>创建人姓名</th>
+					<td>{{createrName}}</td>
+					<th>创建人账号</th>
+					<td>{{creater}}</td>
+				</tr>
+				<tr>
+					<th>创建时间</th>
+					<td colspan="3">{{createTime}}</td>
+				</tr>
+				<tr>
+					<th>审核方式</th>
+					<td>{{interrogateType}}</td>
+					<th>组织状态</th>
+					<td>{{orgStatus}}</td>
+				</tr>
+				<tr>
+					<th>树路径</th>
+					<td colspan="3">{{treePath}}</td>
+				</tr>
+				<tr>
+					<th>组织全名</th>
+					<td colspan="3">{{fullName}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<!-- 批量创建  -->
+		<div class="buttonArea operation">
+			<div v-if="showadd" class="left newButton">
+				<div>
+					<input type="button" id="btn_creatChild" value="创建下级节点"
+						title="创建下级节点" class="add" />
+				</div>
+			</div>
+			<div v-if="showedit" class="left newButton">
+				<div>
+					<input type="button" id="btn_updateThis" value="修改当前节点"
+						title="修改当前节点" class="edit" />
+				</div>
+			</div>
+			<div v-if="showdelete" class="left newButton">
+				<div>
+					<input type="button" id="btn_deleteThis" value="删除当前节点"
+						title="删除当前节点" class="delete" />
+				</div>
+			</div>
 		</div>
 	</form>
-	</body>
+</body>
 </html>

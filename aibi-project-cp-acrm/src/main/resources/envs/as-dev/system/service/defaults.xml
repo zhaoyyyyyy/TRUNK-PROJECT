@@ -1,157 +1,181 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-全局默认配置信息
--->
+<!-- 全局默认配置信息 -->
 <defaults>
-    <!--中心的类型和实现类的对应关系-->
-    <center>
-    </center>
-    <!--默认代理调用方式.默认采用pojo的模式进行调用，采用的实现类为配置的实现类-->
-    <proxy invoke="pojo" type="primitive">
-        <clazz name="com.ai.appframe2.complex.service.impl.LocalServiceInvokeImpl"/>
-    </proxy>
-    <!--默认事务信息.默认采用Required的方式进行事务操作，采用的实现类为配置的实现类-->
-    <transaction type="Required">
-        <!--<clazz name="com.ai.appframe2.complex.transaction.impl.LocalTransactionImpl"/>-->
-        <clazz name="com.ai.appframe2.complex.transaction.impl.LocalMutilTransactionImpl"/>
-        <!--<listener name="com.ai.appframe2.complex.transaction.listener.TestListenerImpl"/>-->
-        <!--映射每个服务模块对应的事务数据源，可以具体到类名-->
-        <mapping>
-            <property name="com.ai.appframe2.complex.self.dao.base" value="base"/>
-            <property name="com.ai.appframe2.complex.self.service.base" value="base"/>
-            <property name="com.ai.appframe2.complex.self.service.check" value="base"/>
-            <property name="com.ai.common.dao.base" value="base"/>
-            <property name="com.asiainfo.demo" value="base"/>
-            <property name="com.asiainfo.tools.dao" value="base"/>
-            <property name="com.asiainfo.pageframe" value="base"/>
-            <property name="com.asiainfo.appframe.ext.exeframe" value="base"/>
-            <property name="com.ai.secframe.author" value="sec"/>
-            <property name="com.ai.secframe.bsdistrict" value="sec"/>
-            <property name="com.ai.secframe.client" value="sec"/>
-            <property name="com.ai.secframe.common" value="sec"/>
-            <property name="com.ai.secframe.extend" value="sec"/>
-            <property name="com.ai.secframe.factory" value="sec"/>
-            <property name="com.ai.secframe.orgmodel" value="sec"/>
-            <property name="com.ai.secframe.web" value="sec"/>
-            <property name="com.ai.secframe.bean.sysmgr" value="sec"/>
-            <property name="com.ai.secframe.csf" value="sec"/>
-            <property name="com.ai.secframe.exception" value="sec"/>
-            <property name="com.ai.secframe.mem" value="sec"/>
-            <property name="com.ai.secframe.model" value="sec"/>
-            <property name="com.ai.secframe.sync2cmop" value="sec"/>
-            <property name="com.ai.secframe.sync2foura" value="sec"/>
-            <property name="com.ai.secframe.sysmgr" value="sec"/>
-            <property name="com.ai.servlet" value="base"/>
-            <property name="com.asiainfo.management.frame" value="CSF"/>
-            <property name="com.asiainfo.management.servicemap" value="CSF"/>
-            <property name="com.ai.comframe.config" value="CSF"/>
-            <property name="com.asiainfo.boss.common" value="CSF"/>
-            <property name="com.asiainfo.management.system" value="CSF"/>
-            <property name="com.asiainfo.common.log.config" value="CSF"/>
-            <property name="com.asiainfo.common.log.bomc.core.db" value="CSF"/>
-            <property name="com.asiainfo.common.exception" value="CSF"/>
-            <property name="com.asiainfo.workflow.servicePack" value="CSF"/>
-            <property name="com.asiainfo.workflow.asyncMsg" value="CSF"/>
-            <property name="com.asiainfo.workflow.comframe" value="CSF"/>
-            <property name="com.ai.aif.csf" value="CSF"/>
+	<!--中心的类型和实现类的对应关系 -->
+	<center>
+	</center>
+	<!--默认代理调用方式.默认采用pojo的模式进行调用，采用的实现类为配置的实现类 -->
+	<proxy invoke="pojo" type="primitive">
+		<clazz
+			name="com.ai.appframe2.complex.service.impl.LocalServiceInvokeImpl" />
+	</proxy>
+	<!--默认事务信息.默认采用Required的方式进行事务操作，采用的实现类为配置的实现类 -->
+	<transaction type="Required">
+		<!--<clazz name="com.ai.appframe2.complex.transaction.impl.LocalTransactionImpl"/> -->
+		<clazz
+			name="com.ai.appframe2.complex.transaction.impl.LocalMutilTransactionImpl" />
+		<!--<listener name="com.ai.appframe2.complex.transaction.listener.TestListenerImpl"/> -->
+		<!--映射每个服务模块对应的事务数据源，可以具体到类名 -->
+		<mapping>
+			<property name="com.ai.appframe2.complex.self.dao.base"
+				value="base" />
+			<property name="com.ai.appframe2.complex.self.service.base"
+				value="base" />
+			<property name="com.ai.appframe2.complex.self.service.check"
+				value="base" />
+			<property name="com.ai.common.dao.base" value="base" />
+			<property name="com.asiainfo.demo" value="base" />
+			<property name="com.asiainfo.tools.dao" value="base" />
+			<property name="com.asiainfo.pageframe" value="base" />
+			<property name="com.asiainfo.appframe.ext.exeframe"
+				value="base" />
+			<property name="com.ai.secframe.author" value="sec" />
+			<property name="com.ai.secframe.bsdistrict" value="sec" />
+			<property name="com.ai.secframe.client" value="sec" />
+			<property name="com.ai.secframe.common" value="sec" />
+			<property name="com.ai.secframe.extend" value="sec" />
+			<property name="com.ai.secframe.factory" value="sec" />
+			<property name="com.ai.secframe.orgmodel" value="sec" />
+			<property name="com.ai.secframe.web" value="sec" />
+			<property name="com.ai.secframe.bean.sysmgr" value="sec" />
+			<property name="com.ai.secframe.csf" value="sec" />
+			<property name="com.ai.secframe.exception" value="sec" />
+			<property name="com.ai.secframe.mem" value="sec" />
+			<property name="com.ai.secframe.model" value="sec" />
+			<property name="com.ai.secframe.sync2cmop" value="sec" />
+			<property name="com.ai.secframe.sync2foura" value="sec" />
+			<property name="com.ai.secframe.sysmgr" value="sec" />
+			<property name="com.ai.servlet" value="base" />
+			<property name="com.asiainfo.management.frame" value="CSF" />
+			<property name="com.asiainfo.management.servicemap"
+				value="CSF" />
+			<property name="com.ai.comframe.config" value="CSF" />
+			<property name="com.asiainfo.boss.common" value="CSF" />
+			<property name="com.asiainfo.management.system" value="CSF" />
+			<property name="com.asiainfo.common.log.config" value="CSF" />
+			<property name="com.asiainfo.common.log.bomc.core.db"
+				value="CSF" />
+			<property name="com.asiainfo.common.exception" value="CSF" />
+			<property name="com.asiainfo.workflow.servicePack"
+				value="CSF" />
+			<property name="com.asiainfo.workflow.asyncMsg" value="CSF" />
+			<property name="com.asiainfo.workflow.comframe" value="CSF" />
+			<property name="com.ai.aif.csf" value="CSF" />
 
-        </mapping>
-    </transaction>
+		</mapping>
+	</transaction>
 
-    <!--默认数据源信息-->
-    <datasource>
-        <!--根据base取数据库配置，然后以本配置中的覆盖除base以外的连接池的配置-->
-        <clazz name="com.ai.appframe2.complex.datasource.impl.LocalMutilDataSourceImpl">
-            <property name="tableName" value="cfg_db_acct"/>
-        </clazz>
+	<!--默认数据源信息 -->
+	<datasource>
+		<!--根据base取数据库配置，然后以本配置中的覆盖除base以外的连接池的配置 -->
+		<clazz
+			name="com.ai.appframe2.complex.datasource.impl.LocalMutilDataSourceImpl">
+			<property name="tableName" value="cfg_db_acct" />
+		</clazz>
 
-        <pool name="base" primary="true" db="pointbase" type="dbcp">
-            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-            <property name="url" value="jdbc:mysql://192.168.248.139:3306/base"/>
-            <property name="username" value="base_kf"/>
-            <property name="password" value="base_kf"/>
-            <property name="initialSize" value="0"/>
-            <property name="maxActive" value="2"/>
-            <property name="maxIdle" value="2"/>
-            <property name="validationQuery" value="select 1"/>
-            <property name="testWhileIdle" value="true"/>
-            <property name="testOnBorrow" value="true"/>
-            <property name="testOnReturn" value="true"/>
-            <property name="timeBetweenEvictionRunsMillis" value="600000"/>
-            <property name="minEvictableIdleTimeMillis" value="-1"/>
-            <property name="softMinEvictableIdleTimeMillis" value="1800000"/>
-            <property name="numTestsPerEvictionRun" value="2"/>
-        </pool>
+		<pool name="base" primary="true" db="pointbase" type="dbcp">
+			<property name="driverClassName"
+				value="com.mysql.jdbc.Driver" />
+			<property name="url"
+				value="jdbc:mysql://192.168.248.139:3306/base" />
+			<property name="username" value="base_kf" />
+			<property name="password" value="base_kf" />
+			<property name="initialSize" value="0" />
+			<property name="maxActive" value="2" />
+			<property name="maxIdle" value="2" />
+			<property name="validationQuery" value="select 1" />
+			<property name="testWhileIdle" value="true" />
+			<property name="testOnBorrow" value="true" />
+			<property name="testOnReturn" value="true" />
+			<property name="timeBetweenEvictionRunsMillis"
+				value="600000" />
+			<property name="minEvictableIdleTimeMillis" value="-1" />
+			<property name="softMinEvictableIdleTimeMillis"
+				value="1800000" />
+			<property name="numTestsPerEvictionRun" value="2" />
+		</pool>
 
-        <pool name="sec" db="MYSQL" type="dbcp">
-            <property name="initialSize" value="0"/>
-            <property name="maxActive" value="2"/>
-            <property name="maxIdle" value="2"/>
-            <property name="validationQuery" value="select 1"/>
-            <property name="testWhileIdle" value="true"/>
-            <property name="testOnBorrow" value="true"/>
-            <property name="testOnReturn" value="true"/>
-            <property name="timeBetweenEvictionRunsMillis" value="600000"/>
-            <property name="minEvictableIdleTimeMillis" value="-1"/>
-            <property name="softMinEvictableIdleTimeMillis" value="1800000"/>
-            <property name="numTestsPerEvictionRun" value="2"/>
-        </pool>
+		<pool name="sec" db="MYSQL" type="dbcp">
+			<property name="initialSize" value="0" />
+			<property name="maxActive" value="2" />
+			<property name="maxIdle" value="2" />
+			<property name="validationQuery" value="select 1" />
+			<property name="testWhileIdle" value="true" />
+			<property name="testOnBorrow" value="true" />
+			<property name="testOnReturn" value="true" />
+			<property name="timeBetweenEvictionRunsMillis"
+				value="600000" />
+			<property name="minEvictableIdleTimeMillis" value="-1" />
+			<property name="softMinEvictableIdleTimeMillis"
+				value="1800000" />
+			<property name="numTestsPerEvictionRun" value="2" />
+		</pool>
 
-        <pool name="csf" db="MYSQL" type="dbcp">
-            <property name="initialSize" value="0"/>
-            <property name="maxActive" value="2"/>
-            <property name="maxIdle" value="2"/>
-            <property name="validationQuery" value="select 1"/>
-            <property name="testWhileIdle" value="true"/>
-            <property name="testOnBorrow" value="true"/>
-            <property name="testOnReturn" value="true"/>
-            <property name="timeBetweenEvictionRunsMillis" value="600000"/>
-            <property name="minEvictableIdleTimeMillis" value="-1"/>
-            <property name="softMinEvictableIdleTimeMillis" value="1800000"/>
-            <property name="numTestsPerEvictionRun" value="2"/>
-        </pool>
+		<pool name="csf" db="MYSQL" type="dbcp">
+			<property name="initialSize" value="0" />
+			<property name="maxActive" value="2" />
+			<property name="maxIdle" value="2" />
+			<property name="validationQuery" value="select 1" />
+			<property name="testWhileIdle" value="true" />
+			<property name="testOnBorrow" value="true" />
+			<property name="testOnReturn" value="true" />
+			<property name="timeBetweenEvictionRunsMillis"
+				value="600000" />
+			<property name="minEvictableIdleTimeMillis" value="-1" />
+			<property name="softMinEvictableIdleTimeMillis"
+				value="1800000" />
+			<property name="numTestsPerEvictionRun" value="2" />
+		</pool>
 
-        <mapping>
-            <property name="com.ai.appframe2.complex.self.dao.base" value="base"/>
-            <property name="com.ai.appframe2.complex.self.service.base" value="base"/>
-            <property name="com.ai.appframe2.complex.self.service.check" value="base"/>
-            <property name="com.ai.common.dao.base" value="base"/>
-            <property name="com.asiainfo.demo" value="base"/>
-            <property name="com.asiainfo.tools.dao" value="base"/>
-            <property name="com.asiainfo.pageframe" value="base"/>
-            <property name="com.asiainfo.appframe.ext.exeframe" value="base"/>
-            <property name="com.ai.secframe.author" value="sec"/>
-            <property name="com.ai.secframe.bsdistrict" value="sec"/>
-            <property name="com.ai.secframe.client" value="sec"/>
-            <property name="com.ai.secframe.common" value="sec"/>
-            <property name="com.ai.secframe.extend" value="sec"/>
-            <property name="com.ai.secframe.factory" value="sec"/>
-            <property name="com.ai.secframe.orgmodel" value="sec"/>
-            <property name="com.ai.secframe.web" value="sec"/>
-            <property name="com.ai.secframe.bean.sysmgr" value="sec"/>
-            <property name="com.ai.secframe.csf" value="sec"/>
-            <property name="com.ai.secframe.exception" value="sec"/>
-            <property name="com.ai.secframe.mem" value="sec"/>
-            <property name="com.ai.secframe.model" value="sec"/>
-            <property name="com.ai.secframe.sync2cmop" value="sec"/>
-            <property name="com.ai.secframe.sync2foura" value="sec"/>
-            <property name="com.ai.secframe.sysmgr" value="sec"/>
-            <property name="com.ai.servlet" value="base"/>
-            <property name="com.asiainfo.management.frame" value="CSF"/>
-            <property name="com.asiainfo.management.servicemap" value="CSF"/>
-            <property name="com.ai.comframe.config" value="CSF"/>
-            <property name="com.asiainfo.boss.common" value="CSF"/>
-            <property name="com.asiainfo.management.system" value="CSF"/>
-            <property name="com.asiainfo.common.log.config" value="CSF"/>
-            <property name="com.asiainfo.common.log.bomc.core.db" value="CSF"/>
-            <property name="com.asiainfo.common.exception" value="CSF"/>
-            <property name="com.asiainfo.workflow.servicePack" value="CSF"/>
-            <property name="com.asiainfo.workflow.asyncMsg" value="CSF"/>
-            <property name="com.asiainfo.workflow.comframe" value="CSF"/>
-            <property name="com.ai.aif.csf" value="CSF"/>
-        </mapping>
-    </datasource>
+		<mapping>
+			<property name="com.ai.appframe2.complex.self.dao.base"
+				value="base" />
+			<property name="com.ai.appframe2.complex.self.service.base"
+				value="base" />
+			<property name="com.ai.appframe2.complex.self.service.check"
+				value="base" />
+			<property name="com.ai.common.dao.base" value="base" />
+			<property name="com.asiainfo.demo" value="base" />
+			<property name="com.asiainfo.tools.dao" value="base" />
+			<property name="com.asiainfo.pageframe" value="base" />
+			<property name="com.asiainfo.appframe.ext.exeframe"
+				value="base" />
+			<property name="com.ai.secframe.author" value="sec" />
+			<property name="com.ai.secframe.bsdistrict" value="sec" />
+			<property name="com.ai.secframe.client" value="sec" />
+			<property name="com.ai.secframe.common" value="sec" />
+			<property name="com.ai.secframe.extend" value="sec" />
+			<property name="com.ai.secframe.factory" value="sec" />
+			<property name="com.ai.secframe.orgmodel" value="sec" />
+			<property name="com.ai.secframe.web" value="sec" />
+			<property name="com.ai.secframe.bean.sysmgr" value="sec" />
+			<property name="com.ai.secframe.csf" value="sec" />
+			<property name="com.ai.secframe.exception" value="sec" />
+			<property name="com.ai.secframe.mem" value="sec" />
+			<property name="com.ai.secframe.model" value="sec" />
+			<property name="com.ai.secframe.sync2cmop" value="sec" />
+			<property name="com.ai.secframe.sync2foura" value="sec" />
+			<property name="com.ai.secframe.sysmgr" value="sec" />
+			<property name="com.ai.servlet" value="base" />
+			<property name="com.asiainfo.management.frame" value="CSF" />
+			<property name="com.asiainfo.management.servicemap"
+				value="CSF" />
+			<property name="com.ai.comframe.config" value="CSF" />
+			<property name="com.asiainfo.boss.common" value="CSF" />
+			<property name="com.asiainfo.management.system" value="CSF" />
+			<property name="com.asiainfo.common.log.config" value="CSF" />
+			<property name="com.asiainfo.common.log.bomc.core.db"
+				value="CSF" />
+			<property name="com.asiainfo.common.exception" value="CSF" />
+			<property name="com.asiainfo.workflow.servicePack"
+				value="CSF" />
+			<property name="com.asiainfo.workflow.asyncMsg" value="CSF" />
+			<property name="com.asiainfo.workflow.comframe" value="CSF" />
+			<property name="com.ai.aif.csf" value="CSF" />
+		</mapping>
+	</datasource>
 
-    <include type="sv" classpath="system/service/secframe-service.xml"/>
+	<include type="sv"
+		classpath="system/service/secframe-service.xml" />
 </defaults>

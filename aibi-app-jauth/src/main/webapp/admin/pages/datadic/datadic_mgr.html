@@ -8,21 +8,16 @@
 </head>
 <body>
 	<!-- 索引 -->
-	<div class="title" id="_title" width="1px">
-	</div>
+	<div class="title" id="_title" width="1px"></div>
 	<!-- 查询条件 -->
 	<div class="formContent">
 		<form id="formSearch">
 			<table class="searchTable">
 				<tr>
 					<th>字典编码</th>
-					<td colspan="3" id="dicCode">
-						<span>{{dic.dicCode}}</span>
-					</td>
+					<td colspan="3" id="dicCode"><span>{{dic.dicCode}}</span></td>
 					<th>字典名称</th>
-					<td colspan="3" id="dicName">
-						<span>{{dic.dicName}} </span>
-					</td>
+					<td colspan="3" id="dicName"><span>{{dic.dicName}} </span></td>
 				</tr>
 				<tr>
 					<th>编码</th>
@@ -57,10 +52,15 @@
 
 	<!-- 分页 -->
 	<div id="mainGridPager"></div>
-	
+
 	<div class="buttonArea operation">
-				<div class="right newButton"><div>	<input type="button" onclick="window.history.back(-1);" value="返回" title="返回" class="return"/></div></div>
-				<div class="clear"></div>
+		<div class="right newButton">
+			<div>
+				<input type="button" onclick="window.history.back(-1);" value="返回"
+					title="返回" class="return" />
+			</div>
+		</div>
+		<div class="clear"></div>
 	</div>
 </body>
 </html>

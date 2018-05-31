@@ -1,22 +1,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-		<title>树示例代码</title>
-		
-		<!-- 
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>树示例代码</title>
+
+<!-- 
 			必须引入的文件：jquery-1.4.2.js、jquery.util.js、jquery.simple.tree.js、jquery.simple.tree.css。
 		-->
-			<script type="text/javascript" src="../../../jquery-1.5.2.js"></script>
-			<script type="text/javascript" src="../../../jquery.util.js"></script>
-		<link rel="stylesheet" type="text/css" href="../../../../../admin/css/blue/component/simpletree/css/jquery.simple.tree.css"/>
-		<script type="text/javascript" src="../../../component/triggerfield/js/jquery.triggerfield.js"></script>
-				<script type="text/javascript" src="../js/jquery.simple.tree.js"></script>
-		
-		<!-- 
+<script type="text/javascript" src="../../../jquery-1.5.2.js"></script>
+<script type="text/javascript" src="../../../jquery.util.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="../../../../../admin/css/blue/component/simpletree/css/jquery.simple.tree.css" />
+<script type="text/javascript"
+	src="../../../component/triggerfield/js/jquery.triggerfield.js"></script>
+<script type="text/javascript" src="../js/jquery.simple.tree.js"></script>
+
+<!-- 
 			按照如下代码初始化树，可以选择的属性为：
 		 -->
-		<script>
+<script>
 			$(function(){
 				// 构建树。
 				var mySimpleTree = $('.simpleTree').simpleTree({
@@ -105,9 +107,9 @@
 				});
 			});
 		</script>
-	</head>
-	<body style="margin: 50px; padding: 50px;">
-		<!--
+</head>
+<body style="margin: 50px; padding: 50px;">
+	<!--
 		<div>						
 			<ul class="simpleTree">
 				<li class="root">
@@ -147,41 +149,34 @@
 			</ul>
 		</div>
 		-->
-		<div id="infoDiv" style="color:red;"></div>
-		<!-- ajax的方式去请求，提供数据，生成树。 -->
-		<div>						
-			<ul class="simpleTree">
-				<li class="root">
-					<span>根节点</span>
-					<ul class="ajax">
-					    <li>{url: simpleTreeData.htm}</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<br />
-		<br />
-		<!-- 下拉选择树。 -->
-		<form>
-			<table>
-				<tr>
-					<td>
-						<label>
-							下拉选择树：&nbsp;
-						</label>
-					</td>
-					<td>
-						<input type="text" id="myTreeCombox" name="myTreeCombox" readonly="readonly" />
-					</td>
-				</tr>
-			</table>
-		</form>
-		<br />
-		<br />
-		<!-- 显示选中值按钮。 -->
-		<button id="showTreeValue" class="but">显示树选中值</button>
-		<button id="showComboxValue" class="but">显示下拉框选中值</button>
-		<button id="addTreeNode" class="but">添加树节点</button>
-		<button id="clearSelectedTreeNodes" class="but">清除选中节点</button>
-	</body>
+	<div id="infoDiv" style="color: red;"></div>
+	<!-- ajax的方式去请求，提供数据，生成树。 -->
+	<div>
+		<ul class="simpleTree">
+			<li class="root"><span>根节点</span>
+				<ul class="ajax">
+					<li>{url: simpleTreeData.htm}</li>
+				</ul></li>
+		</ul>
+	</div>
+	<br />
+	<br />
+	<!-- 下拉选择树。 -->
+	<form>
+		<table>
+			<tr>
+				<td><label> 下拉选择树：&nbsp; </label></td>
+				<td><input type="text" id="myTreeCombox" name="myTreeCombox"
+					readonly="readonly" /></td>
+			</tr>
+		</table>
+	</form>
+	<br />
+	<br />
+	<!-- 显示选中值按钮。 -->
+	<button id="showTreeValue" class="but">显示树选中值</button>
+	<button id="showComboxValue" class="but">显示下拉框选中值</button>
+	<button id="addTreeNode" class="but">添加树节点</button>
+	<button id="clearSelectedTreeNodes" class="but">清除选中节点</button>
+</body>
 </html>

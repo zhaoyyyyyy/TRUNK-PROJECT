@@ -1,13 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-		<jsp:include page="/admin/common/includes.jsp"></jsp:include>
-		<title>组织机构</title>
-		<script src="OrgType.js" type="text/javascript"></script>
-		<script type="text/javascript">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<jsp:include page="/admin/common/includes.jsp"></jsp:include>
+<title>组织机构</title>
+<script src="OrgType.js" type="text/javascript"></script>
+<script type="text/javascript">
 		
  		$(function(){
 			var mySimpleTree;
@@ -96,14 +97,13 @@
 		});
 		
  	</script>
-	</head>
-	<body style="height: 415px; overflow: auto;">
-		<ul class="simpleTree" id="tree" style="margin-left: 5px; margin-top: 5px;" >	
-			<li class="root">
-				<span class='text' id="root">资源平台</span>
-			</li>
-		</ul>
-		
-	
-	</body>
+</head>
+<body style="height: 415px; overflow: auto;">
+	<ul class="simpleTree" id="tree"
+		style="margin-left: 5px; margin-top: 5px;">
+		<li class="root"><span class='text' id="root">资源平台</span></li>
+	</ul>
+
+
+</body>
 </html>
